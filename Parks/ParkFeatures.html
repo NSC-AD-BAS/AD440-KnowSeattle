@@ -2,17 +2,38 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link href="css/style.css" type="text/css" rel="stylesheet"/>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="ParkFeatures.js"></script>
     <script>
         $(document).ready(function () {
-            getData();
+            document.getElementById('submit').onclick = function () {
+                loc = {
+                    lat: document.getElementById('lat').value,
+                    lng: document.getElementById('long').value,
+                    rad: parseInt(document.getElementById('rad').value) * 1609
+                };
+                document.getElementById('results').innerHTML = "Getting parks...";
+                getParks(loc, function success(results) {
+                    document.getElementById('results').innerHTML = results;
+                }, function error(error) {
+                    document.getElementById('results').innerHTML = error;
+                });
+            }
         });
     </script>
-    <title>Seattle Police Department 911 Incident Response</title>
+    <title>Parks in Seattle!</title>
 </head>
 <body>
-<div id="message"></div>
+<h1>Parks within your area</h1>
+<label for="lat">Latitude</label>
+<input type="text" id="lat" size="20" placeholder="Latitude" value="47.63"/>
+<label for="long">Longitude</label>
+<input type="text" id="long" size="20" placeholder="Longitude" value="-122.34"/>
+<label for="rad">Radius (in miles)</label>
+<input type="text" id="rad" size="20" placeholder="Radius (Miles)" value="2"/>
+<input type="submit" id="submit" value="Get Parks!"/>
+<p></p>
 <div id="results"></div>
 </body>
 </html>
