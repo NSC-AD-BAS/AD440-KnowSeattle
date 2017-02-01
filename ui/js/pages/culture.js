@@ -7,8 +7,9 @@
 /* global type */
 
 function getCultureData(loc) {
-   //  var loc = { passing this in from the index now };
+   //  var loc = { passing this in from the main index.html / geocode.js now };
     $.ajax({
+       async: false,
         url: "https://data.seattle.gov/resource/3c4b-gdxv.json?$$app_token=IZLnwcjjGNvFpmxfooid8p5VI",
         type: "GET",
         data: {
@@ -40,12 +41,11 @@ function parseCityFeatures(data) {
             }
         }
     }
-    displayCultureData(typeMap);
+    displayCultureData(dataMap);
 }
 
 function displayCultureData(typeMap) {
     var content = "<table><tr><th>Name</th><th>Address</th><th>City Feature</th><th>Website</th></tr>";
-    console.log(content);
     for (var i = 0; i < typeMap.length; i++) {
         if (typeMap[i] !== null) {
            console.log(typeMap[i]);
@@ -60,5 +60,5 @@ function displayCultureData(typeMap) {
         }
     }
     content += "</table>";
-    return content;
+   document.getElementById("left-content").innerHTML = content;
 }

@@ -34,8 +34,8 @@ function render_page(name) {
          str = getHospData(loc, true);
          break;
       case "Culture":
-         str = getCultureData(loc);
-         break;
+         getCultureData(loc);
+         return;
       case "Transit":
          str = getTransitData(loc);
          break;
