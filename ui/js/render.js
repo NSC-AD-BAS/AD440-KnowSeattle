@@ -1,5 +1,5 @@
 //global vars
-var pages = ["Home", "Culture", "Crime", "Food", "Walk Score", "Parks", "Hospitals"];
+var pages = ["Home", "Culture", "Crime", "Food", "Walk Score", "Parks", "Hospitals", "Transit"];
 var currentPage = pages[0];
 
 //Render functions
@@ -23,17 +23,25 @@ function render_tickboxes() {
 function render_page(name) {
    var str;
    currentPage = name;
-   if (name == "Home") {
-      render_tiles();
-      return;
-   } else if (name == "Crime") {
-      str = getCrimeData(null, null);
-   } else if (name == "Hospitals") {
-      str = getHospData(loc, true);
-   } else if (name == "Culture") {
-      str = getCultureData(loc);
-   } else {
-      str = "Hey, now we're going to render " + name;
+   switch (name) {
+      case "Home":
+         render_tiles();
+         return;
+      case "Crime":
+         str = getCrimeData(null, null);
+         break;
+      case "Hospitals":
+         str = getHospData(loc, true);
+         break;
+      case "Culture":
+         str = getCultureData(loc);
+         break;
+      case "Transit":
+         str = getTransitData(loc);
+         break;
+      default:
+         str = "Hey, now we're going to render " + name;
+         break;
    }
    document.getElementById("left-content").innerHTML = str;
 }
