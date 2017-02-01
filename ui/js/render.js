@@ -1,5 +1,5 @@
 //global vars
-var pages = ["Home", "Crime", "Food", "Walk Score", "Parks", "Hospitals"];
+var pages = ["Home", "Culture", "Crime", "Food", "Walk Score", "Parks", "Hospitals"];
 var currentPage = pages[0];
 
 //Render functions
@@ -30,6 +30,8 @@ function render_page(name) {
       str = getCrimeData(null, null);
    } else if (name == "Hospitals") {
       str = getHospData(loc, true);
+   } else if (name == "Culture") {
+      str = getCultureData(loc);
    } else {
       str = "Hey, now we're going to render " + name;
    }
@@ -63,20 +65,11 @@ function get_summary(page) {
       case "Hospitals":
          sum += get_hospital_summary();
          break;
-      // case "Crime":
-      //    sum += "fa-balance-scale fa-5x";
-      //    break;
-      // case "Food":
-      //    sum += "fa-yelp fa-5x";
-      //    break;
       case "WalkScore":
          sum += "<li>Walk: 87</li>" +
                "<li>Bike: 79</li>" +
                "<li>Transit: 83</li>";
          break;
-      // case "Parks":
-      //    sum += "fa-tree fa-5x";
-      //    break;
       default:
          sum += "<li>Pertinent Point</li>" +
             "<li>Salient Stat</li>";
