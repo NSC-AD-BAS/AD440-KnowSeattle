@@ -1,0 +1,111 @@
+//global vars
+var pages = ["Home", "Crime", "Food", "Walk Score", "Parks", "Hospitals"];
+var currentPage = pages[0];
+
+//Render functions
+function render_nav() {
+   var ul = "<ul>";
+   for (var i = 0; i < pages.length; i++) {
+      ul += "<li class='left'>" + linkify(pages[i]) + "</li>";
+   }
+   ul += "</ul>";
+   document.getElementById("nav").innerHTML = ul;
+}
+
+function render_tickboxes() {
+   var str = "";
+   for (var i = 0; i < pages.length; i++) {
+      str += "<input type=radio id=\"" + pages[i] + "\" >" + pages[i] + "<br/>";
+   }
+   document.getElementById("tickboxes").innerHTML = str;
+}
+
+function render_page(name) {
+   var str;
+   currentPage = name;
+   if (name == "Home") {
+      render_tiles();
+      return;
+   } else if (name == "Crime") {
+      str = getCrimeData(null, null);
+   } else if (name == "Hospitals") {
+      str = getHospData(loc, true);
+   } else {
+      str = "Hey, now we're going to render " + name;
+   }
+   document.getElementById("left-content").innerHTML = str;
+}
+
+function render_tiles() {
+   //Initialize live tile data, if applicable
+   getHospData(loc, false);
+   var tiles = "<div style='display: flex; flex-wrap: wrap'>";
+   for (var i = 1; i < pages.length; i++) {     //Start at 1 to skip 'Home' tile
+      var tile = "", page = pages[i].replace(" ", "");
+      tile += "<a href='#' onclick='render_page(\"" + page +"\"); return false;'>";
+      tile += "<div class='tile " + page + "'><span class='" + get_icon(pages[i]) + "'></span>";
+      tile += get_summary(page);
+      tile += "</div></a>";
+      tiles += tile;
+   }
+   tiles += "</div>";
+   document.getElementById("left-content").innerHTML = tiles;
+}
+
+//Utility functions
+function linkify(text) {
+   return "<a href='#' onclick='render_page(text); return false;'>" + text + "</a>";
+}
+
+function get_summary(page) {
+   var sum = "&nbsp;" + page + "<br/><ul>";
+   switch (page) {
+      case "Hospitals":
+         sum += get_hospital_summary();
+         break;
+      // case "Crime":
+      //    sum += "fa-balance-scale fa-5x";
+      //    break;
+      // case "Food":
+      //    sum += "fa-yelp fa-5x";
+      //    break;
+      case "WalkScore":
+         sum += "<li>Walk: 87</li>" +
+               "<li>Bike: 79</li>" +
+               "<li>Transit: 83</li>";
+         break;
+      // case "Parks":
+      //    sum += "fa-tree fa-5x";
+      //    break;
+      default:
+         sum += "<li>Pertinent Point</li>" +
+            "<li>Salient Stat</li>";
+         break;
+   }
+   return sum + "</ul>";
+}
+
+function get_icon(page) {
+   var icon = "fa ";
+   switch (page) {
+      case "Hospitals":
+         icon += "fa-ambulance fa-2x";
+         break;
+      case "Crime":
+         icon += "fa-balance-scale fa-2x";
+         break;
+      case "Food":
+         icon += "fa-yelp fa-2x";
+         break;
+      case "Walk Score":
+         icon += "fa-map-o fa-2x";
+         break;
+      case "Parks":
+         icon += "fa-tree fa-2x";
+         break;
+      default:
+         icon += "fa-question-circle-o fa-5";
+         break;
+   }
+   return icon;
+}
