@@ -1,5 +1,5 @@
 //global vars
-var pages = ["Home", "Culture", "Crime", "Food", "Walk Score", "Parks", "Hospitals"];
+var pages = ["Home", "Walk Score", "Hospitals", "Culture", "Crime", "Food", "Parks"];
 var currentPage = pages[0];
 
 //Render functions
@@ -103,6 +103,9 @@ function get_icon(page) {
          break;
       case "Parks":
          icon += "fa-tree fa-2x";
+         break;
+      case "Culture":
+         icon += "fa-smile-o fa-2x";
          break;
       default:
          icon += "fa-question-circle-o fa-5";
