@@ -112,7 +112,6 @@ function getZip(obj, loc) {
       if (isValid && zipSearch < 2) {
          loc.zip = obj[i].short_name;
          zipSearch = 0;
-         console.log("ZIP CODE! " + loc.zip);
          return;
       }
    }

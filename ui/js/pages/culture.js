@@ -47,7 +47,6 @@ function displayCultureData(typeMap) {
    var content = "<table><tr><th>Name</th><th>Address</th><th>City Feature</th><th>Website</th></tr>";
    for (var i = 0; i < typeMap.length; i++) {
       if (typeMap[i] !== null) {
-         console.log(typeMap[i]);
          var name = typeMap[i].common_name == null ? "" : typeMap[i].common_name;
          var address = typeMap[i].address == null ? "" : typeMap[i].address;
          var city_feature = typeMap[i].city_feature == null ? "" : typeMap[i].city_feature;
