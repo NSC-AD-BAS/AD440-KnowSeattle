@@ -1,11 +1,42 @@
 var yelpProvider = require('./yelpProvider');
-var ratingsAggregator = require('./ratingsAggregator');
-var urlBuilder = require('./urlBuilder');
 
 function AreaSpecification(latitude, longitude, radius) {
     this.latitude = latitude;
     this.longitude = longitude;
     this.radius = radius;
+}
+
+function aggregateRatings(data) {
+    var count = 0;
+    var countByRating = data.reduce(function(aggregateStars, business) {
+        var rating = business.rating.toString();
+        count++;
+        if(rating in aggregateStars) {
+            aggregateStars[rating]++;
+        }
+        else {
+            aggregateStars[rating] = 1;
+        }
+        return aggregateStars;
+    },
+    {});
+    return countByRating;
+}
+
+function createUrl(areaSpecification) {
+    var milesPerCoordinate = 0.01449;
+	var gpsDelta = areaSpecification.radius * milesPerCoordinate / 1.25;
+	var gpsBox = {
+		southWestLatitude : areaSpecification.latitude - gpsDelta,
+		southWestLongitude: areaSpecification.longitude - gpsDelta,
+		northWestLatitude: areaSpecification.latitude + gpsDelta,
+		northWestLongitude: areaSpecification.longitude + gpsDelta };
+	
+	return 'https://www.yelp.com/search?cflt=restaurants&start=0&l=g:' +
+		gpsBox.southWestLongitude + ',' +
+		gpsBox.southWestLatitude + ',' +
+		gpsBox.northWestLongitude + ',' +
+		gpsBox.northWestLatitude;
 }
 
 function getFoodData(latitude, longitude, radius, callback) {
@@ -17,19 +48,9 @@ function getFoodData(latitude, longitude, radius, callback) {
         }
         
         callback(null, {
-            ratings: ratingsAggregator.aggregate(results),
-            url: urlBuilder.create(areaSpecification)});
+            ratings: aggregateRatings(results),
+            url: createUrl(areaSpecification)});
     });
 }
 
 module.exports.getFoodData = getFoodData;
-
-//Example usage
-getFoodData(47.51, -122.25, 3, function(error, data) {
-    if(error) {
-        console.log('Error:\n' + error);
-    }
-    else {
-        console.log(data);
-    }
-});
