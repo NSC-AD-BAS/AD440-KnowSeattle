@@ -1,5 +1,5 @@
 //global vars
-var pages = ["Home", "Culture", "Crime", "Food", "Walk Score", "Parks", "Hospitals", "Transit"];
+var pages = ["Home", "Culture", "Crime", "Food", "Walk Score", "Parks", "Hospitals"];
 var currentPage = pages[0];
 
 //Render functions
@@ -36,9 +36,9 @@ function render_page(name) {
       case "Culture":
          getCultureData(loc);
          return;
-      case "Transit":
-         str = getTransitData(loc);
-         break;
+      case "WalkScore":
+         getWalkScoreData(loc, true);
+         return;
       default:
          str = "Hey, now we're going to render " + name;
          break;
@@ -54,7 +54,7 @@ function render_tiles() {
       var tile = "", page = pages[i].replace(" ", "");
       tile += "<a href='#' onclick='render_page(\"" + page +"\"); return false;'>";
       tile += "<div class='tile " + page + "'><span class='" + get_icon(pages[i]) + "'></span>";
-      tile += get_summary(page);
+      tile += get_summary(pages[i]);
       tile += "</div></a>";
       tiles += tile;
    }
@@ -64,6 +64,7 @@ function render_tiles() {
 
 //Utility functions
 function linkify(text) {
+   text = text.replace(" ", "");
    return "<a href='#' onclick='render_page(text); return false;'>" + text + "</a>";
 }
 
@@ -73,16 +74,15 @@ function get_summary(page) {
       case "Hospitals":
          sum += get_hospital_summary();
          break;
-      case "WalkScore":
-         sum += "<li>Walk: 87</li>" +
-               "<li>Bike: 79</li>" +
-               "<li>Transit: 83</li>";
+      case "Walk Score":
+         sum += getWalkScoreSummary(loc);
          break;
       default:
          sum += "<li>Pertinent Point</li>" +
             "<li>Salient Stat</li>";
          break;
    }
+
    return sum + "</ul>";
 }
 
