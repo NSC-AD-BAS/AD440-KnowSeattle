@@ -12,14 +12,6 @@ function render_nav() {
    document.getElementById("nav").innerHTML = ul;
 }
 
-function render_tickboxes() {
-   var str = "";
-   for (var i = 0; i < pages.length; i++) {
-      str += "<input type=radio id=\"" + pages[i] + "\" >" + pages[i] + "<br/>";
-   }
-   document.getElementById("tickboxes").innerHTML = str;
-}
-
 function render_page(name) {
    var str;
    currentPage = name;
@@ -27,9 +19,6 @@ function render_page(name) {
       case "Home":
          render_tiles();
          return;
-      case "Crime":
-         str = getCrimeData(null, null);
-         break;
       case "Hospitals":
          str = getHospData(loc, true);
          break;
