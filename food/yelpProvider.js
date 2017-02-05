@@ -9,7 +9,7 @@ function getNextOffset(data, offset) {
         var resultCount = data.businesses.length;
         var total = data.total;
         var nextOffset = offset + resultCount;
-        if (nextOffset < total)
+        if (nextOffset < total && nextOffset < 1000)
             return nextOffset;
 }
 
