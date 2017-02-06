@@ -1,5 +1,5 @@
 //global vars
-var pages = ["Home", "Walk Score", "Hospitals", "Parks", "Culture", "Crime", "Food" ];
+var pages = ["Home", "Walk Score", "Hospitals", "Parks", "Culture", "Property", "Crime", "Food" ];
 var currentPage = pages[0];
 
 //Render functions
@@ -21,6 +21,9 @@ function render_page(name) {
          return;
       case "Hospitals":
          str = getHospData(loc, true);
+         break;
+      case "Property":
+         str = getNeighborhood(loc);
          break;
       case "Parks":
          getParks(loc,
@@ -106,6 +109,9 @@ function get_icon(page) {
          break;
       case "Culture":
          icon += "fa-smile-o fa-2x";
+         break;
+      case "Property":
+         icon += "fa-home fa-2x";
          break;
       default:
          icon += "fa-question-circle-o fa-5";
