@@ -6,7 +6,7 @@
 
 /* global type */
 
-function getCultureData(loc) {
+function getCultureData(loc, success, error) {
    //  var loc = { passing this in from the main index.html / geocode.js now };
    $.ajax({
       url: "https://data.seattle.gov/resource/3c4b-gdxv.json?$$app_token=IZLnwcjjGNvFpmxfooid8p5VI",
@@ -20,7 +20,10 @@ function getCultureData(loc) {
          "OR city_feature = 'Public Art' OR city_feature = 'Libraries')"
       }
    }).done(function (data) {
-      parseCityFeatures(data);
+      success(parseCityFeatures(data));
+   }).fail(function(data){
+      var out = '<div>There was a problem getting the culture data in your area. </div>';
+      error(out);
    });
 }
 function parseCityFeatures(data) {
@@ -40,7 +43,7 @@ function parseCityFeatures(data) {
          }
       }
    }
-   displayCultureData(dataMap);
+   return displayCultureData(dataMap);
 }
 
 function displayCultureData(typeMap) {
@@ -59,5 +62,5 @@ function displayCultureData(typeMap) {
       }
    }
    content += "</table>";
-   document.getElementById("left-content").innerHTML = content;
+   return content;
 }

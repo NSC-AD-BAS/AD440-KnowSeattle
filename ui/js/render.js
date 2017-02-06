@@ -1,5 +1,5 @@
 //global vars
-var pages = ["Home", "Walk Score", "Hospitals", "Culture", "Crime", "Food", "Parks"];
+var pages = ["Home", "Walk Score", "Hospitals", "Parks", "Culture", "Crime", "Food" ];
 var currentPage = pages[0];
 
 //Render functions
@@ -22,8 +22,15 @@ function render_page(name) {
       case "Hospitals":
          str = getHospData(loc, true);
          break;
+      case "Parks":
+         getParks(loc,
+            function(success) { update_div("left-content", success);},
+            function(error)   { update_div("left-content", error); });
+         return;
       case "Culture":
-         getCultureData(loc);
+         getCultureData(loc,
+            function(success) { update_div("left-content", success);},
+            function(error)   { update_div("left-content", error); });
          return;
       case "WalkScore":
          getWalkScoreData(loc, true);
@@ -32,7 +39,11 @@ function render_page(name) {
          str = "Hey, now we're going to render " + name;
          break;
    }
-   document.getElementById("left-content").innerHTML = str;
+   update_div("left-content", str);
+}
+
+function update_div(div, html) {
+   document.getElementById(div).innerHTML = html;
 }
 
 function render_tiles() {

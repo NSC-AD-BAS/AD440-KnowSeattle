@@ -30,15 +30,15 @@ function getParks(loc, success, error)
                     if (wordInString(data[i].common_name, "park"))
                     {
                         var p = createParkObject(data[i].common_name, data[i].address, data[i].city_feature);
-                        console.log("Successful parkObject creation of park: " + p.parkname);
+                        // console.log("Successful parkObject creation of park: " + p.parkname);
 
                         if (parks.length == 0) {
                             parks.push(p);
-                            console.log("Pushed parkObject first time: " + p.parkname);
+                            // console.log("Pushed parkObject first time: " + p.parkname);
                         } else {
                             var check = false;
                             var index;
-                            console.log("Checking the array for existing parkobject: " + p.parkname);
+                            // console.log("Checking the array for existing parkobject: " + p.parkname);
                             for (j = 0; j < parks.length || check; j++) {
                                 var indexCheck = j + 1;
                                 //console.log("Current index position: " + indexCheck + " of " + parks.length);
@@ -47,26 +47,26 @@ function getParks(loc, success, error)
                                 if (check)
                                 {
                                     index = j;
-                                    console.log("parkobject found at index: " + index + ".");
+                                    // console.log("parkobject found at index: " + index + ".");
                                     break;
                                 }
                             }
                             if (!check) {
                                 parks.push(p);
-                                console.log("This parkobject, " + p.parkname + ", is not in the array. ADDED TO ARRAY.");
+                                // console.log("This parkobject, " + p.parkname + ", is not in the array. ADDED TO ARRAY.");
                             } else {
-                                console.log("This parkobject, " + p.parkname + ", already exists, adding feature");
-                                console.log("Current parkfeature: " + parks[index].parkfeature + ".");
-                                console.log("Feature to add: " + p.parkfeature + ".");
+                                // console.log("This parkobject, " + p.parkname + ", already exists, adding feature");
+                                // console.log("Current parkfeature: " + parks[index].parkfeature + ".");
+                                // console.log("Feature to add: " + p.parkfeature + ".");
                                 var feature = parks[index].parkfeature;
                                 var sep = ", ";
                                 var newFeature = parks[index].parkfeature.concat(sep, p.parkfeature);
                                 addFeature(parks[index], newFeature);
-                                console.log("Pushed the feature");
+                                // console.log("Pushed the feature");
                             }
                         }
                     } else {
-                        console.log("Not a park");
+                        // console.log("Not a park");
                     }
                 }
 
@@ -81,7 +81,7 @@ function getParks(loc, success, error)
             out += '</table></div>';
             success(out);
         }).fail(function(data){
-            var out = '<div>There was a problem finding parks in your area: ' + data.responseJSON.message + '</dib>';
+            var out = '<div>There was a problem finding parks in your area: ' + data.responseJSON.message + '</div>';
             error(out);
         });
 }
@@ -102,7 +102,7 @@ function wordInString(s, word){
 }
 
 function addFeature(parkObject, newFeature) {
-    console.log("addFeature call, adding" + newFeature + " to current park listing");
+    // console.log("addFeature call, adding" + newFeature + " to current park listing");
     parkObject.parkfeature = newFeature;
 }
 
