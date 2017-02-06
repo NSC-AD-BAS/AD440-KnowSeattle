@@ -1,5 +1,5 @@
 //global vars
-var pages = ["Home", "Walk Score", "Hospitals", "Parks", "Culture", "Property", "Crime", "Food" ];
+var pages = ["Home", "Walk Score", "Hospitals", "Parks", "Culture", "Property", "Schools", "Crime", "Food" ];
 var currentPage = pages[0];
 
 //Render functions
@@ -32,6 +32,11 @@ function render_page(name) {
          return;
       case "Culture":
          getCultureData(loc,
+            function(success) { update_div("left-content", success);},
+            function(error)   { update_div("left-content", error); });
+         return;
+      case "Schools":
+         getSchoolsData(loc,
             function(success) { update_div("left-content", success);},
             function(error)   { update_div("left-content", error); });
          return;
@@ -112,6 +117,9 @@ function get_icon(page) {
          break;
       case "Property":
          icon += "fa-home fa-2x";
+         break;
+      case "Schools":
+         icon += "fa-university fa-2x";
          break;
       default:
          icon += "fa-question-circle-o fa-5";

@@ -85,6 +85,11 @@ a { text-decoration: none;  }
     color: darkblue;
 }
 
+.Schools {
+    border: 1px solid forestgreen;
+    color: forestgreen;
+}
+
 /* Style the tile links */
 a.tile:visited { color: inherit; }
 
