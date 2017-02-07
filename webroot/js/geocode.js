@@ -6,7 +6,7 @@ var zipSearch = 0;
 var loc = {
    lat: 47.6062095,
    lng: -122.3320708,
-   zip: null,
+   zip: 98101,
    rad: 1500,
    err: null,
    pid: null
@@ -107,25 +107,14 @@ function geocodeUserInput(geocoder, map) {
 }
 
 function getZip(obj, loc) {
-   for (var i = 0; i < obj.length; i++) {
+   for (var i = obj.length - 1; i >= 0; i--) {
       var isValid = /^[0-9]{5}(?:-[0-9]{4})?$/.test(obj[i].short_name);
-      if (isValid && zipSearch < 2) {
-         loc.zip = obj[i].short_name;
-         zipSearch = 0;
+      if (isValid) {
+         loc.zip = parseInt(obj[i].short_name);
+         console.log(loc.zip); /* correct zip */
+         // quick fix to jobs not being able to get zip
+         update_jobs_summary(loc);
          return;
-      }
-   }
-   for (i = 0; i < obj.length; i++) {
-      if (obj[i].types.includes("neighborhood")) {
-         geocoder.geocode({'address': obj[i].short_name, 'componentRestrictions': {'locality': 'Seattle'}}, function(results, status) {
-            if (status === 'OK') {
-               loc.err = null;
-               zipSearch++;
-               getZip(results[0], loc);
-            } else {
-               loc.err = "Could not get zipcode for address";
-            }
-         });
       }
    }
    loc.err = "Could not get zipcode for address";
@@ -140,8 +129,8 @@ function reverseGeocodeAddress(geocoder, map, loc) {
       geocoder.geocode({'location': latlng}, function(results, status) {
          if (status === 'OK') {
             loc.err = null;
-            if (results[1]) {
-               getZip(results[1].address_components, loc);
+            if (results[0]) {
+               getZip(results[0].address_components, loc);
             } else {
                loc.err = "No results from reverseGeocodeAddress";
             }

@@ -93,8 +93,8 @@ function createParkObject(pName, pAddress, pFeature)
         parkname: new RegExp(/(\*)+/g).test(pName) ? pName.replace(new RegExp(/(\*)+/g, '')) : pName,
         parkaddress: pAddress,
         parkfeature: pFeature
-    };;;;;;;;;
-    return parkObject
+    };
+    return parkObject;
 }
 
 function wordInString(s, word){

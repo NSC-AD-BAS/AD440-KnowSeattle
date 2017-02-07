@@ -1,5 +1,5 @@
 //global vars
-var pages = ["Home", "Walk Score", "Hospitals", "Parks", "Culture", "Property", "Schools", "Crime", "Food" ];
+var pages = ["Home", "Walk Score", "Hospitals", "Jobs", "Parks", "Culture", "Property", "Schools", "Crime", "Food"];
 var currentPage = pages[0];
 
 //Render functions
@@ -43,6 +43,11 @@ function render_page(name) {
       case "WalkScore":
          getWalkScoreData(loc, true);
          return;
+      case "Jobs":
+         getJobsData(loc,
+            function(success) { update_div("left-content", success);},
+            function(error)   { update_div("left-content", error); });
+         return;
       default:
          str = "Hey, now we're going to render " + name;
          break;
@@ -85,12 +90,14 @@ function get_summary(page) {
       case "Walk Score":
          sum += getWalkScoreSummary(loc);
          break;
+      case "Jobs":
+         sum += getJobsDefault(loc);
+         break;
       default:
          sum += "<li>Pertinent Point</li>" +
             "<li>Salient Stat</li>";
          break;
    }
-
    return sum + "</ul>";
 }
 
@@ -120,6 +127,9 @@ function get_icon(page) {
          break;
       case "Schools":
          icon += "fa-university fa-2x";
+         break;
+      case "Jobs":
+         icon += "fa-money fa-2x";
          break;
       default:
          icon += "fa-question-circle-o fa-5";
