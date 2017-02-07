@@ -11,7 +11,8 @@ var hospitalData =
             "longitude": "-122.366238",
             "latitude": "47.534193",
             "url": "https://www.navos.org/",
-            "rating": "marginal"
+            "rating": "marginal",
+              "mortality_rate" : "same as national average"
          },
          {
             "id": "1",
@@ -23,7 +24,8 @@ var hospitalData =
             "longitude": "-122.309169",
             "latitude": "47.562454",
             "url": "http://www.pugetsound.va.gov/",
-            "rating": "sub-standard"
+            "rating": "sub-standard",
+            "mortality_rate" : "above national average"
          },
          {
             "id": "2",
@@ -35,7 +37,8 @@ var hospitalData =
             "longitude": "-122.329169",
             "latitude": "47.626672",
             "url": "http://www.seattlecca.org/",
-            "rating": "excellent"
+            "rating": "excellent",
+            "mortality_rate": "below national average"
          },
          {
             "id": "3",
@@ -47,7 +50,8 @@ var hospitalData =
             "longitude": "-122.380473",
             "latitude": "47.668019",
             "url": "http://www.swedish.org/locations/ballard-campus/",
-            "rating": "standard"
+            "rating": "standard",
+            "mortality_rate": "same as national average"
          },
          {
             "id": "4",
@@ -59,7 +63,8 @@ var hospitalData =
             "longitude": "-122.31131",
             "latitude": "47.607411",
             "url": "http://www.swedish.org/locations/cherry-hill-campus",
-            "rating": "Average"
+            "rating": "Average",
+           "mortality_rate": "same as national average"
          },
          {
             "id": "5",
@@ -71,7 +76,8 @@ var hospitalData =
             "longitude": "-122.321928",
             "latitude": "47.608842",
             "url": "http://www.swedish.org/locations/first-hill-campus",
-            "rating": "Average"
+            "rating": "Average",
+           "mortality_rate": "same as national average"
          },
          {
             "id": "6",
@@ -83,7 +89,8 @@ var hospitalData =
             "longitude": "-122.345039",
             "latitude": "47.507575",
             "url": "http://www.kindredhospitalseattle.com",
-            "rating": "above average"
+            "rating": "above average",
+           "mortality_rate": "above national average"
          },
          {
             "id": "7",
@@ -95,7 +102,8 @@ var hospitalData =
             "longitude": "-122.311817",
             "latitude": "47.619195",
             "url": "https://www.ghc.org/html/public/locations/capitol-hill",
-            "rating": "Average"
+            "rating": "Average",
+            "mortality_rate": "same as national average"
          },
          {
             "id": "8",
@@ -119,7 +127,8 @@ var hospitalData =
             "longitude": "-122.336888",
             "latitude": "47.714248",
             "url": "https://www.nwhospital.org/",
-            "rating": "Standard"
+            "rating": "Standard",
+            "mortality_rate": "same as national average"
          },
          {
             "id": "10",
@@ -131,7 +140,8 @@ var hospitalData =
             "longitude": "-122.282298",
             "latitude": "47.661131",
             "url": "https://www.seattlechildrens.org/",
-            "rating": "Excellent"
+            "rating": "Excellent",
+           "mortality_rate": "lower than national average"
          },
          {
             "id": "11",
@@ -143,7 +153,8 @@ var hospitalData =
             "longitude": "-122.323769",
             "latitude": "47.603993",
             "url": "http://www.uwmedicine.org/harborview",
-            "rating": "Below average"
+            "rating": "Below average",
+         "mortality_rate": "higher than national average"
          },
          {
             "id": "12",
@@ -155,7 +166,8 @@ var hospitalData =
             "longitude": "-122.309072",
             "latitude": "47.650344",
             "url": "http://www.uwmedicine.org/uw-medical-center",
-            "rating": "Excellent"
+            "rating": "Excellent",
+        "mortality_rate": "lower than national average"
          }
       ]
    };
