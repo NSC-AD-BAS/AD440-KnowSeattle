@@ -2,6 +2,7 @@
     padding: 5px 5px;
     height: 400px;
 }
+
 html, body {
     height: 100%;
     margin: 0;
@@ -9,6 +10,7 @@ html, body {
     font-family: Arial, Helvetica, sans-serif;
     color: black;
 }
+
 #floating-panel {
     z-index: 5;
     background-color: #fff;
@@ -55,6 +57,7 @@ main {
 
 a { text-decoration: none;  }
 
+/* Page-sensitive tile styles */
 .Crime {
     border: 1px solid darkblue;
     color: darkblue;
@@ -90,9 +93,13 @@ a { text-decoration: none;  }
     color: forestgreen;
 }
 
+.Jobs {
+    border: 1px solid goldenrod;
+    color: goldenrod;
+}
+
 /* Style the tile links */
 a.tile:visited { color: inherit; }
-
 
 #right-content {
     width: 30%;
@@ -110,14 +117,14 @@ nav {
 }
 
 nav ul {
-    list-style-type: none; 						/* No list style in nav list */
-    text-align: center;							/* Center each element */
-    display: inline-block;						/* Display in-line */
-    border: none;								/* Clear borders */
+    list-style-type: none;  /* No list style in nav list */
+    text-align: center;     /* Center each element */
+    display: inline-block;  /* Display in-line */
+    border: none;           /* Clear borders */
     padding: 10px 0 10px 0;
     margin: 0 10px 0 10px;
-    width: 80%;									/* Extend nav bar 80% across page */
-    border-radius: 3px;							/* round off the nav bar corners */
+    width: 80%;             /* Extend nav bar 80% across page */
+    border-radius: 3px;	    /* round off the nav bar corners */
 }
 
 nav a {
@@ -125,9 +132,8 @@ nav a {
     padding-left: 15px;
     font-weight: bold;
 }
+
 nav a:link { color: #000033; }
 nav a:visited { color: #344873; }
 
 .left { float: left; }
-
-
