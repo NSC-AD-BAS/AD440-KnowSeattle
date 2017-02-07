@@ -9,7 +9,7 @@
 // Global vars
 var avg_rating;
 var indeed_query = "";
-var zipcode = "chicken";
+var zipcode;
 var zipcode_flag = false;
 var job_radius_miles;
 var job_type = "fulltime";
