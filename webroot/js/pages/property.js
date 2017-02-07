@@ -1,18 +1,35 @@
 /* This function is used when an address is not provided by the user
   and will instead use the latitude and longitude from the device position.
   It will provide the neighborhood ID and name from the Zillow database.
-  Author: Austin Amort */
+  Author: Austin Amort, Sai Chang */
 
 var eyes = require('eyes');
 var http = require('http');
 var https = require('https');
 var fs = require('fs');
 var MongoClient = require('mongodb').MongoClient;
-// sample values for location, replace this with the global variable from Jeremy
 
-function getNeighborhood(loc) {
+// Sample location object used for testing locally
+var loc = {
+  lng:"-122.364312",
+  lat:"47.688395",
+  addr:"620 NW 82nd St"
+};
+// initialize variable for street. Used when the street is not passed with the loc object
+var st = "";
+var id = documentid;
+
+if(loc.addr == !null) {
+  gethousingprices(loc);
+}
+else {
+  st = getNeighborhood(loc);
+  gethousingprices(st, id);
+}
+
+function getNeighborhood(location) {
   // Connect to the db
-   var long = loc.lng, lat = loc.lat;
+   var long = location.lng, lat = location.lat;
    MongoClient.connect("mongodb://localhost:27017/knowSeattle", function (err, db) {
        db.collection('neighborhoods', function (err, collection) {
            var query = { geometry: { $geoIntersects: { $geometry: { type: "Point", coordinates: [ long, lat ] } } } }
@@ -20,7 +37,8 @@ function getNeighborhood(loc) {
              if(err) {
                throw err;
              }
-             console.log(document.properties.REGIONID);
+             //console.log(document.properties.REGIONID);
+             return document.properties.REGIONID;
            })
 
        });
@@ -28,7 +46,7 @@ function getNeighborhood(loc) {
    });
 }
 
-function gethousingprices(street, documentid) {
+function gethousingprices(street, id) {
    var newstreet = street.replace(/ /g, '+');
 
    var options = {
@@ -52,7 +70,7 @@ function gethousingprices(street, documentid) {
 
          price = (data.split("<zindexValue>")[1]).split("</zindexValue>")[0];
          //console.log("The housing costs for the " + neighborhood + " neighborhood is: " + price);
-         document.getElementById(documentid).innerHTML = ("The housing costs for the " + neighborhood + " neighborhood is: " + price);
+         document.getElementById(id).innerHTML = ("The housing costs for the " + neighborhood + " neighborhood is: " + price);
          //return price;
       });
    }).on('error', function(e) {
