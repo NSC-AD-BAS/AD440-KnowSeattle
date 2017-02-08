@@ -1,5 +1,5 @@
 //global vars
-var pages = ["Home", "Walk Score", "Hospitals", "Jobs", "Parks", "Culture", "Property", "Schools", "Crime", "Food"];
+var pages = ["Home", "Walk Score", "Hospitals", "Jobs", "Parks", "Culture", "Property", "Schools", "Crime", "Food", "Public Art"];
 var currentPage = pages[0];
 
 //Render functions
@@ -48,6 +48,12 @@ function render_page(name) {
             function(success) { update_div("left-content", success);},
             function(error)   { update_div("left-content", error); });
          return;
+      case "PublicArt":
+         getPublicArtData(loc,
+            function(success) { update_div("left-content", success);},
+            function(error)   { update_div("left-content", error); },
+            true);
+         return;
       default:
          str = "Hey, now we're going to render " + name;
          break;
@@ -62,6 +68,8 @@ function update_div(div, html) {
 function render_tiles() {
    //Initialize live tile data, if applicable
    getHospData(loc, false);
+   getPublicArtSummary(loc);
+   getCultureDataSummary(loc);
    var tiles = "<div style='display: flex; flex-wrap: wrap'>";
    for (var i = 1; i < pages.length; i++) {     //Start at 1 to skip 'Home' tile
       var tile = "", page = pages[i].replace(" ", "");
@@ -93,6 +101,12 @@ function get_summary(page) {
       case "Jobs":
          sum += getJobsSummary(loc);
          break;
+      case "Public Art":
+        sum += getPublicArtSummaryCount();
+        break;
+      case "Culture":
+        sum += getCultureSummaryCount();
+        break;
 	  case "Crime":
 		 sum += '<li>Loading Data...</li>';
 		 getCrimeSummary(loc,
