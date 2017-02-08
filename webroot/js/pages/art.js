@@ -58,9 +58,7 @@ function countPublicArtFeatures(data) {
     var content = "";
     content += "<li>Art Pieces: " + data.length + "</li>";
     content += "<li>Sculptures: " + typeMap.Sculpture + "</li>";
-    
     summary_art_data = content;
-//    return 
 }
 
 //counts the different amount of art features

@@ -1,5 +1,5 @@
 //global vars
-var pages = ["Home", "Walk Score", "Hospitals", "Jobs", "Parks", "Culture", "Property", "Schools", "Crime", "Food", "Public Art"];
+var pages = ["Home", "Walk Score", "Hospitals", "Parks", "Culture", "Jobs", "Schools", "Public Art", "Property", "Crime", "Food"];
 var currentPage = pages[0];
 
 //Render functions
@@ -49,7 +49,7 @@ function render_page(name) {
             function(error)   { update_div("left-content", error); });
          return;
       case "PublicArt":
-         getPublicArtData(loc, 
+         getPublicArtData(loc,
             function(success) { update_div("left-content", success);},
             function(error)   { update_div("left-content", error); },
             true);
@@ -99,14 +99,20 @@ function get_summary(page) {
          sum += getWalkScoreSummary(loc);
          break;
       case "Jobs":
-         sum += getJobsDefault(loc);
+         sum += getJobsSummary(loc);
          break;
       case "Public Art":
         sum += getPublicArtSummaryCount();
         break;
-      case "Culture": 
+      case "Culture":
         sum += getCultureSummaryCount();
         break;
+	  case "Crime":
+		 sum += '<li>Loading Data...</li>';
+		 getCrimeSummary(loc,
+            function(success) {$("div.tile.Crime ul").html(success);},
+            function(error)   {$("div.tile.Crime ul").html(error); });
+		 break;
       default:
          sum += "<li>Pertinent Point</li>" +
             "<li>Salient Stat</li>";
