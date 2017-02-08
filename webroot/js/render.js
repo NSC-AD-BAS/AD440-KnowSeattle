@@ -38,7 +38,7 @@ function render_page(name) {
       case "Schools":
          getSchoolsData(loc,
             function(success) { update_div("left-content", success);},
-            function(error)   { update_div("left-content", error); });
+            function(error)   { update_div("left-content", error); },true);
          return;
       case "WalkScore":
          getWalkScoreData(loc, true);
