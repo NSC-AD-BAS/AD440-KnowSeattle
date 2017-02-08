@@ -125,7 +125,7 @@ var hospitalData =
             "latitude": "47.60953",
             "url": "https://www.virginiamason.org/",
             "rating": "above average",
-             mortality_rate:"below national average",
+             "mortality_rate":"below national average",
              "heart_surgery":"$26,702"
          },
          {
