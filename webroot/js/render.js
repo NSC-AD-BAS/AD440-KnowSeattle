@@ -1,5 +1,5 @@
 //global vars
-var pages = ["Home", "Walk Score", "Hospitals", "Parks", "Culture", "Jobs", "Schools", "Public Art", "Property", "Crime", "Food"];
+var pages = ["Home", "Walk Score", "Hospitals", "Jobs", "Parks", "Culture", "Schools", "Public Art", "Property", "Crime", "Food"];
 var currentPage = pages[0];
 
 //Render functions
@@ -100,9 +100,10 @@ function get_summary(page) {
          break;
       case "Jobs":
          sum += '<li>Loading Data...</li>';
-         getJobsSummary(loc, function(totalJobs) {
-             var html = "<li>Fulltime Jobs: " + totalJobs + "</li>";
-             document.getElementById("Jobs_tile").innerHTML = html;
+         getJobsSummary(loc, function(totalJobs, avgCompany) {
+            var html = "<li>Fulltime Jobs: " + totalJobs + "</li>" +
+               "<li>Avg Company: " + avgCompany + "</li>";
+            document.getElementById("Jobs_tile").innerHTML = html;
          });
          break;
       case "Public Art":
