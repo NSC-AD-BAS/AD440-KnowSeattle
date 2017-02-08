@@ -10,10 +10,12 @@
 var avg_rating;
 var indeed_query = "";
 var zipcode;
-var job_radius_miles;
+var job_radius_miles = 1;
 var job_type = "fulltime";
 var limit = 1000;
-var jobs_loc;
+
+// Indeed JSON to avoid redundant API requests
+var indeed_jobs_json;
 
 // CORS bypass
 var cors_api_url = 'https://cors-anywhere.herokuapp.com/';
@@ -21,20 +23,24 @@ var cors_api_url = 'https://cors-anywhere.herokuapp.com/';
 function getJobsDefault() {
    return "<li>Full-time Jobs: ???</li><li>Avg Company: ???</li>";
 }
-function getJobsSummary(loc) {
+
+function getJobsSummary(loc, callback) {
    if (!loc.zip) {
        return getJobsDefault();
    }
    // console.log(loc.zip);
    var indeed_options = getIndeedOptions(loc.zip);
+   var indeed_total_jobs = 0;
    doCORSRequest({
       method: 'GET',
       url: "http://api.indeed.com/ads/apisearch" + indeed_options,
       data: ""
    }, function printResult(result) {
-      // console.log(result);
-      return result;
-  });
+      indeed_jobs_json = xmlToJSON.parseString(result);
+      indeed_total_jobs = indeed_jobs_json.response[0].totalresults[0]._text;
+      console.log(indeed_total_jobs);
+      callback(indeed_total_jobs);
+   });
 }
 
 function getJobsData(loc, successCallback, errCallback) {
@@ -66,11 +72,7 @@ function doCORSRequest(options, printResult) {
    var x = new XMLHttpRequest();
    x.open(options.method, cors_api_url + options.url);
    x.onload = x.onerror = function() {
-      printResult(
-         options.method + ' ' + options.url + '\n' +
-         x.status + ' ' + x.statusText + '\n\n' +
-         (x.responseText || '')
-      );
+      return printResult(x.responseText);
    };
 
    if (/^POST/i.test(options.method)) {

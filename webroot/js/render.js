@@ -90,7 +90,7 @@ function linkify(text) {
 }
 
 function get_summary(page) {
-   var sum = "&nbsp;" + page + "<br/><ul>";
+   var sum = "&nbsp;" + page + "<br/><ul id=\"" + page + "_tile\">";
    switch (page) {
       case "Hospitals":
          sum += get_hospital_summary();
@@ -99,7 +99,11 @@ function get_summary(page) {
          sum += getWalkScoreSummary(loc);
          break;
       case "Jobs":
-         sum += getJobsSummary(loc);
+         sum += '<li>Loading Data...</li>';
+         getJobsSummary(loc, function(totalJobs) {
+             var html = "<li>Fulltime Jobs: " + totalJobs + "</li>";
+             document.getElementById("Jobs_tile").innerHTML = html;
+         });
          break;
       case "Public Art":
         sum += getPublicArtSummaryCount();
@@ -109,9 +113,9 @@ function get_summary(page) {
         break;
 	  case "Crime":
 		 sum += '<li>Loading Data...</li>';
-		 getCrimeSummary(loc,
+		 /*getCrimeSummary(loc,
             function(success) {$("div.tile.Crime ul").html(success);},
-            function(error)   {$("div.tile.Crime ul").html(error); });
+            function(error)   {$("div.tile.Crime ul").html(error); });*/
 		 break;
       default:
          sum += "<li>Pertinent Point</li>" +
