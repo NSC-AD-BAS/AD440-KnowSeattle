@@ -17,7 +17,7 @@
 
         		for (i = 0; i < 10; i++)//data.Info.TotalResults for all results, currently returns just 50
         		{
-        		json += data.Events[i].Artists[0].Name + " at " + data.Events[i].Venue.Name + " on " + data.Events[i].Date + "</br>";
+        		json += "<ul><li>" + data.Events[i].Artists[0].Name + " </li><li> at " + data.Events[i].Venue.Name + "</li><li> on " + data.Events[i].Date + "</li></ul>";
 				// shows 1st artists, venue, date
         			//document.write("<br>");
 
