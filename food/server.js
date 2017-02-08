@@ -6,9 +6,9 @@ var port = process.env.PORT;
 var ip = process.env.IP
 
 app.get('/food/summary', function(req, res) {
-    var latitude = req.query.lat;
-    var longitude = req.query.long;
-    var radius = req.query.rad;
+    var latitude = Number(req.query.lat);
+    var longitude = Number(req.query.long);
+    var radius = Number(req.query.rad);
     
     console.log(req.query);
     
