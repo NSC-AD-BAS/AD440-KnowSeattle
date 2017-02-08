@@ -12,7 +12,9 @@ var hospitalData =
             "latitude": "47.534193",
             "url": "https://www.navos.org/",
             "rating": "marginal",
-              "mortality_rate" : "same as national average"
+            "mortality_rate" : "same as national average",
+            "heart_surgery": "$20,104"
+
          },
          {
             "id": "1",
@@ -25,7 +27,8 @@ var hospitalData =
             "latitude": "47.562454",
             "url": "http://www.pugetsound.va.gov/",
             "rating": "sub-standard",
-            "mortality_rate" : "above national average"
+            "mortality_rate" : "above national average",
+            "heart_surgery":"$24,905"
          },
          {
             "id": "2",
@@ -38,7 +41,8 @@ var hospitalData =
             "latitude": "47.626672",
             "url": "http://www.seattlecca.org/",
             "rating": "excellent",
-            "mortality_rate": "below national average"
+            "mortality_rate": "below national average",
+            "heart_surgery":"$28,984"
          },
          {
             "id": "3",
@@ -51,7 +55,8 @@ var hospitalData =
             "latitude": "47.668019",
             "url": "http://www.swedish.org/locations/ballard-campus/",
             "rating": "standard",
-            "mortality_rate": "same as national average"
+            "mortality_rate": "same as national average",
+            "heart_surgery":"$24,091"
          },
          {
             "id": "4",
@@ -64,7 +69,8 @@ var hospitalData =
             "latitude": "47.607411",
             "url": "http://www.swedish.org/locations/cherry-hill-campus",
             "rating": "Average",
-           "mortality_rate": "same as national average"
+            "mortality_rate": "same as national average",
+            "heart_surgery":"$23,078"
          },
          {
             "id": "5",
@@ -77,7 +83,8 @@ var hospitalData =
             "latitude": "47.608842",
             "url": "http://www.swedish.org/locations/first-hill-campus",
             "rating": "Average",
-           "mortality_rate": "same as national average"
+            "mortality_rate": "same as national average",
+            "heart_surgery":"$24,001"
          },
          {
             "id": "6",
@@ -90,7 +97,8 @@ var hospitalData =
             "latitude": "47.507575",
             "url": "http://www.kindredhospitalseattle.com",
             "rating": "above average",
-           "mortality_rate": "above national average"
+            "mortality_rate": "above national average",
+            "heart_surgery":"$22,056"
          },
          {
             "id": "7",
@@ -103,7 +111,8 @@ var hospitalData =
             "latitude": "47.619195",
             "url": "https://www.ghc.org/html/public/locations/capitol-hill",
             "rating": "Average",
-            "mortality_rate": "same as national average"
+            "mortality_rate": "same as national average",
+            "heart_surgery":"$21,003"
          },
          {
             "id": "8",
@@ -115,7 +124,9 @@ var hospitalData =
             "longitude": "-122.32793",
             "latitude": "47.60953",
             "url": "https://www.virginiamason.org/",
-            "rating": "above average"
+            "rating": "above average",
+            "mortality_rate":"below national average",
+            "heart_surgery":"$26,702"
          },
          {
             "id": "9",
@@ -128,7 +139,8 @@ var hospitalData =
             "latitude": "47.714248",
             "url": "https://www.nwhospital.org/",
             "rating": "Standard",
-            "mortality_rate": "same as national average"
+            "mortality_rate": "same as national average",
+            "heart_surgery":"$21,102"
          },
          {
             "id": "10",
@@ -141,7 +153,8 @@ var hospitalData =
             "latitude": "47.661131",
             "url": "https://www.seattlechildrens.org/",
             "rating": "Excellent",
-           "mortality_rate": "lower than national average"
+            "mortality_rate": "lower than national average",
+            "heart_surgery":"$29,940"
          },
          {
             "id": "11",
@@ -154,7 +167,8 @@ var hospitalData =
             "latitude": "47.603993",
             "url": "http://www.uwmedicine.org/harborview",
             "rating": "Below average",
-         "mortality_rate": "higher than national average"
+            "mortality_rate": "higher than national average",
+            "heart_surgery":"$26,506"
          },
          {
             "id": "12",
@@ -167,7 +181,8 @@ var hospitalData =
             "latitude": "47.650344",
             "url": "http://www.uwmedicine.org/uw-medical-center",
             "rating": "Excellent",
-        "mortality_rate": "lower than national average"
+            "mortality_rate": "lower than national average",
+            "heart_surgery":"$27,013"
          }
       ]
    };
@@ -188,7 +203,9 @@ function getHospData(loc, display) {
          state: hospitals[i].state,
          zip: hospitals[i].zip_code,
          dist: getRadius(hospitals[i].latitude, hospitals[i].longitude, loc.lat, loc.lng, miles),
-         rating: hospitals[i].rating
+         rating: hospitals[i].rating,
+         mortality:hospitals[i].mortality_rate,
+         heart:hospitals[i].heart_surgery
       };
       arr.push(hosp);
       if (hosp.dist <= 3) {
@@ -211,12 +228,17 @@ function getHospData(loc, display) {
 
 
    if (display) {
-      var str = "<table><tr><th>Hospital Name</th><th>Address</th><th>Distance</th></tr>";
+      var str = "<table><tr><th>Hospital Name</th><th>Address</th><th>Distance</th><th>Mortality Rate</th> <th>Cost for Heart Surgery</th></tr>";
       for (var i = 0; i < arr.length; i++) {
          str += "<tr>";
          str += "<td><a href='" + arr[i].url + "'>" + arr[i].name + "</a></td>";
-         str += "<td>" + arr[i].address + " " + arr[i].city + ", " + arr[i].state + "  " + arr[i].zip + "</td>";
+         str += "<td>" + arr[i].address + "</td>";
          str += "<td>" + arr[i].dist + "</td>";
+
+         str += "<td>" + arr[i].mortality + "</td>";
+
+         str += "<td>" + arr[i].heart + "</td>";
+
          str += "<tr>";
       }
       str += "</table>";
