@@ -58,7 +58,6 @@ function getGlassdoorCompanies(indeed_tot_jobs, indeed_jobs_arr, callback) {
    for (var i = 0; i < indeed_jobs_arr.length; i++) {
       var jobTitle = indeed_jobs_arr[i].jobtitle[0]._text;
       var companyName = indeed_jobs_arr[i].company[0]._text;
-      console.log(companyName);
       var glassdoorOptions = getGlassdoorOptions(companyName);
 
       doCORSRequest({
