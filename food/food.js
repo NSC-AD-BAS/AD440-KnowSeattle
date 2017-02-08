@@ -39,7 +39,7 @@ function createUrl(areaSpecification) {
 		gpsBox.northWestLatitude;
 }
 
-function getFoodData(latitude, longitude, radius, callback) {
+module.exports.getFoodData = function(latitude, longitude, radius, callback) {
     var areaSpecification = new AreaSpecification(latitude, longitude, radius);
     
     yelpProvider.find(areaSpecification, function(error, results) {
@@ -52,5 +52,3 @@ function getFoodData(latitude, longitude, radius, callback) {
             url: createUrl(areaSpecification)});
     });
 }
-
-module.exports.getFoodData = getFoodData;
