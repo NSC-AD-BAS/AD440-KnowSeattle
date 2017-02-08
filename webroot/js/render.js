@@ -98,6 +98,9 @@ function get_summary(page) {
       case "Jobs":
          sum += getJobsDefault(loc);
          break;
+      case "Concerts":
+         sum += getConcertSummary(loc);
+         break;
       default:
          sum += "<li>Pertinent Point</li>" +
             "<li>Salient Stat</li>";
