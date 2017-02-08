@@ -1,5 +1,5 @@
 //global vars
-var pages = ["Home", "Walk Score", "Hospitals", "Jobs", "Parks", "Culture", "Property", "Schools", "Crime", "Food"];
+var pages = ["Home", "Walk Score", "Hospitals", "Jobs", "Parks", "Culture", "Property", "Schools", "Crime", "Food", "Concerts"];
 var currentPage = pages[0];
 
 //Render functions
@@ -45,6 +45,11 @@ function render_page(name) {
          return;
       case "Jobs":
          getJobsData(loc,
+            function(success) { update_div("left-content", success);},
+            function(error)   { update_div("left-content", error); });
+         return;
+      case "Concerts":
+         getConcertData(loc,
             function(success) { update_div("left-content", success);},
             function(error)   { update_div("left-content", error); });
          return;
@@ -130,6 +135,9 @@ function get_icon(page) {
          break;
       case "Jobs":
          icon += "fa-money fa-2x";
+         break;
+      case "Concerts":
+         icon += "fa-music fa-2x";
          break;
       default:
          icon += "fa-question-circle-o fa-5";
