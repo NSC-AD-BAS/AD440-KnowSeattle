@@ -91,7 +91,7 @@ function get_summary(page) {
          sum += getWalkScoreSummary(loc);
          break;
       case "Jobs":
-         sum += getJobsDefault(loc);
+         sum += getJobsSummary(loc);
          break;
       default:
          sum += "<li>Pertinent Point</li>" +
