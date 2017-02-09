@@ -1,7 +1,7 @@
 var fs = require('fs');
 var Yelp = require('yelp');
 
-var credentials = JSON.parse(fs.readFileSync('yelp_secrets.json', 'utf8'));
+var credentials = JSON.parse(fs.readFileSync('./food/yelp_secrets.json', 'utf8'));
 var yelp = new Yelp(credentials);
 var resultsPerCall = 40;
 

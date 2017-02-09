@@ -6,21 +6,11 @@ function AreaSpecification(latitude, longitude, radius) {
     this.radius = radius;
 }
 
-function aggregateRatings(data) {
-    var count = 0;
-    var countByRating = data.reduce(function(aggregateStars, business) {
-        var rating = business.rating.toString();
-        count++;
-        if(rating in aggregateStars) {
-            aggregateStars[rating]++;
-        }
-        else {
-            aggregateStars[rating] = 1;
-        }
-        return aggregateStars;
-    },
-    {});
-    return countByRating;
+function calculateAverageRating(data) {
+    var ratingSum = data.reduce(function(sum, business) {
+        return sum + business.rating
+    }, 0);
+    return ratingSum / data.length;
 }
 
 function createUrl(areaSpecification) {
@@ -39,6 +29,28 @@ function createUrl(areaSpecification) {
 		gpsBox.northWestLatitude;
 }
 
+function getNearestYelpRating(rating) {
+    var yelpRating = Math.round(rating * 2) / 2;
+    return yelpRating === 0.5 ? 0 : yelpRating;
+}
+
+var imageIndexesByRating = {
+    0:   ['0','0','0','0','0'],
+    1:   ['1','0','0','0','0'],
+    1.5: ['1','1-5','0','0','0'],
+    2:   ['2','2','0','0','0'],
+    2.5: ['2','2','2-5','0','0'],
+    3:   ['3','3','3','0','0'],
+    3.5: ['3','3','3','3-5','0'],
+    4:   ['4','4','4','4','0'],
+    4.5: ['4','4','4','4','4-5'],
+    5:   ['5','5','5','5','5']
+};
+
+function getImageNamesFor(rating) {
+    return imageIndexesByRating[rating].map(function(imageIndex) {return "20x20_" + imageIndex + ".png";})
+}
+
 module.exports.getFoodData = function(latitude, longitude, radius, callback) {
     var areaSpecification = new AreaSpecification(latitude, longitude, radius);
     
@@ -47,8 +59,12 @@ module.exports.getFoodData = function(latitude, longitude, radius, callback) {
             callback(error);
         }
         
+        var averageRating = calculateAverageRating(results);
+        var nearestYelpRating = getNearestYelpRating(averageRating);
+        var imageNames = getImageNamesFor(nearestYelpRating);
+        
         callback(null, {
-            ratings: aggregateRatings(results),
+            ratingImages: imageNames,
             url: createUrl(areaSpecification)});
     });
 }

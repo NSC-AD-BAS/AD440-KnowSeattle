@@ -1,9 +1,13 @@
 var express = require('express');
-var food = require('./food')
+var food = require('./food/food')
 var app = express();
 
 var port = process.env.PORT;
 var ip = process.env.IP
+
+app.set('views', './views/food');
+app.set('view engine', 'ejs');
+app.use('/food/images',express.static('images/food'))
 
 app.get('/food/summary', function(req, res) {
     var latitude = Number(req.query.lat);
@@ -18,12 +22,7 @@ app.get('/food/summary', function(req, res) {
             console.log(error);
         }
         else {
-            console.log(data);
-            res.writeHead(200 , {
-                'Content-Type': 'text/html'
-            });
-            res.write(JSON.stringify(data));
-            res.end();
+            res.render('summary', data);
         }
 });
   
