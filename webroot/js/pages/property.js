@@ -15,15 +15,12 @@ var loc = {
   lat:"47.688395",
   addr:"620 NW 82nd St"
 };
-// initialize variable for street. Used when the street is not passed with the loc object
-var st = "";
+
 var id = documentid;
 
-getNeighborhood(loc, gethousingprices) {
-
-}
-
-
+/* getNeighborhood is used to retrieve the regionId from the DB
+  it takes a callback argument for gethousingprices so that it waits until
+  the query resolves before trying to use gethousingprices */
 function getNeighborhood(location, callback) {
   // Connect to the db
    var long = location.lng, lat = location.lat;
@@ -34,8 +31,8 @@ function getNeighborhood(location, callback) {
              if(err) {
                throw err;
              }
-             //console.log(document.properties.REGIONID);
-             return document.properties.REGIONID;
+             // This line calls gethousingprices, note that we are inside the query callback
+             callback(return document.properties.REGIONID, id);
            })
 
        });
@@ -74,3 +71,5 @@ function gethousingprices(regionid, id) {
       console.log("Got error: " + e.message);
    });
 }
+
+module.exports.getRegion = getNeighborhood;
