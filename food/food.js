@@ -48,7 +48,7 @@ var imageIndexesByRating = {
 };
 
 function getImageNamesFor(rating) {
-    return imageIndexesByRating[rating].map(function(imageIndex) {return "20x20_" + imageIndex + ".png";})
+    return imageIndexesByRating[rating].map(function(imageIndex) { return "20x20_" + imageIndex + ".png"; })
 }
 
 module.exports.getFoodData = function(latitude, longitude, radius, callback) {
@@ -65,6 +65,9 @@ module.exports.getFoodData = function(latitude, longitude, radius, callback) {
         
         callback(null, {
             ratingImages: imageNames,
-            url: createUrl(areaSpecification)});
+            url: createUrl(areaSpecification),
+            averageRating: nearestYelpRating,
+            count: results.length
+        });
     });
 }
