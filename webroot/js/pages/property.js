@@ -19,15 +19,12 @@ var loc = {
 var st = "";
 var id = documentid;
 
-if(loc.addr == !null) {
-  gethousingprices(loc);
-}
-else {
-  st = getNeighborhood(loc);
-  gethousingprices(st, id);
+getNeighborhood(loc, gethousingprices) {
+
 }
 
-function getNeighborhood(location) {
+
+function getNeighborhood(location, callback) {
   // Connect to the db
    var long = location.lng, lat = location.lat;
    MongoClient.connect("mongodb://localhost:27017/knowSeattle", function (err, db) {
@@ -46,13 +43,13 @@ function getNeighborhood(location) {
    });
 }
 
-function gethousingprices(street, id) {
+function gethousingprices(regionid, id) {
    var newstreet = street.replace(/ /g, '+');
 
    var options = {
       host: 'www.zillow.com',
       port: 80,
-      path: '/webservice/GetSearchResults.htm?zws-id=X1-ZWz19eifb82423_85kuc&address=' + newstreet + '&citystatezip=Seattle%2C+WA',
+      path: '/webservice/GetRegionChildren.htm?zws-id=X1-ZWz19eifb82423_85kuc&regionId=' + regionid + '&state=wa&city=seattle&childtype=neighborhood',
       method: 'GET'
    };
 
