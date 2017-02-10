@@ -10,6 +10,7 @@ app.set('views', './views');
 
 app.use('/food/images', express.static('images/food'))
 app.use('/food', foodRouter);
+app.use('/', express.static('webroot'))
 app.listen(port, ip);
 
 
