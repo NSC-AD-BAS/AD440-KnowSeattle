@@ -10,7 +10,6 @@
 var avg_rating;
 var indeed_query = "";
 var zipcode;
-var zipcode_flag = false;
 var job_radius_miles;
 var job_type = "fulltime";
 var limit = 1000;
@@ -19,40 +18,47 @@ var jobs_loc;
 // CORS bypass
 var cors_api_url = 'https://cors-anywhere.herokuapp.com/';
 
-// Indeed API request options
-var indeed_options = "?publisher=9876703242051712" +
-   "&q=" + indeed_query +
-   "&l=98102" +
-   "&sort=" +
-   "&radius=" + job_radius_miles +
-   "&st=" +
-   "&jt=" + job_type +
-   "&start=" +
-   "&limit=" + limit +
-   "&fromage=" +
-   "&filter=" +
-   "&latlong=1" + /* always return latlong */
-   "&co=us" + /* always in USA */
-   "&chnl=" +
-   "&userip=1.2.3.4" + /* dummy IP */
-   "&useragent=Mozilla/%2F4.0%28Firefox%29" +
-   "&v=2"; /* always v2 */
-
-function getJobsDefault(loc) {
+function getJobsDefault() {
    return "<li>Full-time Jobs: ???</li><li>Avg Company: ???</li>";
 }
 function getJobsSummary(loc) {
-   console.log(jobs_loc);
-   zipcode_flag = false;
-
+   if (!loc.zip) {
+       return getJobsDefault();
+   }
+   // console.log(loc.zip);
+   var indeed_options = getIndeedOptions(loc.zip);
    doCORSRequest({
       method: 'GET',
       url: "http://api.indeed.com/ads/apisearch" + indeed_options,
       data: ""
    }, function printResult(result) {
-      //console.log(result);
+      // console.log(result);
       return result;
   });
+}
+
+function getJobsData(loc, successCallback, errCallback) {
+    successCallback("Welcome to the Jobs page!");
+}
+
+function getIndeedOptions(zip) {
+   return "?publisher=9876703242051712" +
+      "&q=" + indeed_query +
+      "&l=" + zip +
+      "&sort=" +
+      "&radius=" + job_radius_miles +
+      "&st=" +
+      "&jt=" + job_type +
+      "&start=" +
+      "&limit=" + limit +
+      "&fromage=" +
+      "&filter=" +
+      "&latlong=1" + /* always return latlong */
+      "&co=us" + /* always in USA */
+      "&chnl=" +
+      "&userip=1.2.3.4" + /* dummy IP */
+      "&useragent=Mozilla/%2F4.0%28Firefox%29" +
+      "&v=2"; /* always v2 */
 }
 
 /* CORS-anywhere API request */
@@ -87,9 +93,4 @@ function get_stars(rating) {
       str += "<span class='fa-star-half'></span>";
    }
    return str + "</div>";
-}
-
-function update_jobs_summary(loc) {
-    jobs_loc = loc;
-    console.log("jobs can access " + loc.zip);
 }

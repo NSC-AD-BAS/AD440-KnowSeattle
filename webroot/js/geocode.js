@@ -6,7 +6,7 @@ var zipSearch = 0;
 var loc = {
    lat: 47.6062095,
    lng: -122.3320708,
-   zip: 98101,
+   zip: null,
    rad: 1500,
    err: null,
    pid: null
@@ -111,9 +111,6 @@ function getZip(obj, loc) {
       var isValid = /^[0-9]{5}(?:-[0-9]{4})?$/.test(obj[i].short_name);
       if (isValid) {
          loc.zip = parseInt(obj[i].short_name);
-         console.log(loc.zip); /* correct zip */
-         // quick fix to jobs not being able to get zip
-         update_jobs_summary(loc);
          return;
       }
    }
@@ -137,9 +134,9 @@ function reverseGeocodeAddress(geocoder, map, loc) {
          } else {
             loc.err = 'Geocoder failed due to: ' + status;
          }
+         updateDOM(map, loc);
       });
    }
-   updateDOM(map, loc);
 }
 
 function updateDOM(map, loc) {
