@@ -6,7 +6,7 @@ function getWalkScoreSummary(loc) {
 }
 
 function getWalkScoreData(loc, display) {
-   var url="php/cors_helper.php?f=walkscore";
+   var url="cors_Helper/walkscore";
    $.ajax( {
          url: url,
          type:'GET',
