@@ -1,5 +1,5 @@
 //global vars
-var pages = ["Home", "Walk Score", "Hospitals", "Parks", "Culture", "Jobs", "Schools", "Public Art", "Property", "Crime", "Food"];
+var pages = ["Home", "Walk Score", "Hospitals", "Jobs", "Parks", "Culture", "Schools", "Public Art", "Property", "Crime", "Food"];
 var currentPage = pages[0];
 
 //Render functions
@@ -38,7 +38,7 @@ function render_page(name) {
       case "Schools":
          getSchoolsData(loc,
             function(success) { update_div("left-content", success);},
-            function(error)   { update_div("left-content", error); });
+            function(error)   { update_div("left-content", error); },true);
          return;
       case "WalkScore":
          getWalkScoreData(loc, true);
@@ -90,7 +90,7 @@ function linkify(text) {
 }
 
 function get_summary(page) {
-   var sum = "&nbsp;" + page + "<br/><ul>";
+   var sum = "&nbsp;" + page + "<br/><ul id=\"" + page + "_tile\">";
    switch (page) {
       case "Hospitals":
          sum += get_hospital_summary();
@@ -99,7 +99,12 @@ function get_summary(page) {
          sum += getWalkScoreSummary(loc);
          break;
       case "Jobs":
-         sum += getJobsSummary(loc);
+         sum += '<li>Loading Data...</li>';
+         getJobsSummary(loc, function(totalJobs, avgCompany) {
+            var html = "<li>Fulltime Jobs: " + totalJobs + "</li>" +
+               "<li>Avg Company: " + avgCompany + "</li>";
+            document.getElementById("Jobs_tile").innerHTML = html;
+         });
          break;
       case "Public Art":
         sum += getPublicArtSummaryCount();
@@ -109,9 +114,9 @@ function get_summary(page) {
         break;
 	  case "Crime":
 		 sum += '<li>Loading Data...</li>';
-		 getCrimeSummary(loc,
+		 /*getCrimeSummary(loc,
             function(success) {$("div.tile.Crime ul").html(success);},
-            function(error)   {$("div.tile.Crime ul").html(error); });
+            function(error)   {$("div.tile.Crime ul").html(error); });*/
 		 break;
       default:
          sum += "<li>Pertinent Point</li>" +
