@@ -16,7 +16,8 @@ function initMap() {
    //Initialize and center map
    var map = new google.maps.Map(document.getElementById('map'), {
       zoom: 10,
-      center: loc
+      center: loc,
+      scroll: false
    });
 
    //Stand up the google services
@@ -53,8 +54,15 @@ function initMap() {
       } else {
          reverseGeocodeAddress(geocoder, map, loc);
       }
+      //Clear glassdoor vars when clicked
+      clear_glassdoor_vars();
+      this.setOptions({scrollwheel:true});
    });
 
+   //Disable map scrollwheel when not selected
+   google.maps.event.addListener(map, 'mouseout', function(event){
+      this.setOptions({scrollwheel:false});
+   });
    //Address search bar, geocode button
    document.getElementById('submit').addEventListener('click', function() {
       geocodeUserInput(geocoder, map);
@@ -159,7 +167,6 @@ function updateDOM(map, loc) {
       }
       infoWindow.setContent(resultString);
    }
-   document.getElementById("latlong").innerHTML = resultString;
    render_page(currentPage);
 }
 
