@@ -11,7 +11,7 @@ var fs = require('fs');
 var MongoClient = require('mongodb').MongoClient;
 
 // Establish route for node.js
-var router = express.router();
+var router = express.Router();
 
 router.route('/summary').get(function(req, res) {
     // collect the location from the URL

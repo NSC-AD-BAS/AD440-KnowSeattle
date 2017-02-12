@@ -14,5 +14,5 @@ module.exports = function() {
     } 
     
     // by default: bind server to all IPs and port 81.
-    return new Config('81', '0.0.0.0');
+    return new Config('0.0.0.0', '8888');
 }();
