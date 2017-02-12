@@ -1,13 +1,7 @@
-    <h3 style="margin: 0; font-family: Avenir">Average Rating: <%=averageRating%></h3>
-    <ul style="padding: 0; margin: 0;">
-        <% for(index in ratingImages) {%>
-            <li style="padding-right: 3px; display: table-cell; vertical-align: middle;"><img src="images/<%=ratingImages[index]%>"></img></li>
-        <%}%>
-        <li style="display: table-cell;">
-            <a href='<%=url%>'>
-                <img src="images/Yelp_trademark_RGB_outline.png" width="75" height="48" ></img>
-            </a>
-        </li>
-    </ul>
-    <div style="margin: 0; font-family: Avenir">Based on <%=count%> restaurants</div>
+<ul>
+    <li>Average Rating: <%=averageRating%></li>
+    <li>Based on <%=count%> restaurants</li>
+    <li><a href="<%=url%>">Goto Yelp</a></li>
+</ul>
+    
     
