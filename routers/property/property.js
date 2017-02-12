@@ -3,12 +3,17 @@
   It will provide the neighborhood ID and name from the Zillow database.
   Author: Austin Amort, Sai Chang */
 
+var express = require('express');
 var eyes = require('eyes');
 var http = require('http');
 var https = require('https');
 var fs = require('fs');
 var MongoClient = require('mongodb').MongoClient;
 
+// Establish route for node.js
+var router = express.router();
+
+router.route('/summary').get(function(req, res) {});
 // Sample location object used for testing locally
 var loc = {
   lng:"-122.364312",
@@ -32,7 +37,7 @@ function getNeighborhood(location, callback) {
                throw err;
              }
              // This line calls gethousingprices, note that we are inside the query callback
-             callback(return document.properties.REGIONID, id);
+             callback(document.properties.REGIONID, id);
            })
 
        });
@@ -72,4 +77,4 @@ function gethousingprices(regionid, id) {
    });
 }
 
-module.exports.getRegion = getNeighborhood;
+module.exports = router;
