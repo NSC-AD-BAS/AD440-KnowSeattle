@@ -1,9 +1,5 @@
 //global vars
-<<<<<<< HEAD
-var pages = ["Home", "Walk Score", "Hospitals", "Jobs", "Parks", "Culture", "Property", "Schools", "Crime", "Food", "Concerts"];
-=======
-var pages = ["Home", "Walk Score", "Hospitals", "Parks", "Culture", "Jobs", "Schools", "Public Art", "Property", "Crime", "Food"];
->>>>>>> dev
+var pages = ["Home", "Walk Score", "Hospitals", "Parks", "Culture", "Jobs", "Schools", "Public Art", "Concerts", "Property", "Crime", "Food"];
 var currentPage = pages[0];
 
 //Render functions
@@ -52,18 +48,16 @@ function render_page(name) {
             function(success) { update_div("left-content", success);},
             function(error)   { update_div("left-content", error); });
          return;
-<<<<<<< HEAD
       case "Concerts":
          getConcertData(loc,
             function(success) { update_div("left-content", success);},
             function(error)   { update_div("left-content", error); });
-=======
+         return;
       case "PublicArt":
          getPublicArtData(loc,
             function(success) { update_div("left-content", success);},
             function(error)   { update_div("left-content", error); },
             true);
->>>>>>> dev
          return;
       default:
          str = "Hey, now we're going to render " + name;
@@ -112,11 +106,9 @@ function get_summary(page) {
       case "Jobs":
          sum += getJobsSummary(loc);
          break;
-<<<<<<< HEAD
       case "Concerts":
          sum += getConcertSummary(loc);
          break;
-=======
       case "Public Art":
         sum += getPublicArtSummaryCount();
         break;
@@ -129,7 +121,6 @@ function get_summary(page) {
             function(success) {$("div.tile.Crime ul").html(success);},
             function(error)   {$("div.tile.Crime ul").html(error); });
 		 break;
->>>>>>> dev
       default:
          sum += "<li>Pertinent Point</li>" +
             "<li>Salient Stat</li>";
