@@ -12,6 +12,6 @@ app.use('/cors_helper', corsRouter);
 app.use('/', express.static('webroot'));
 
 var config = require('./serverConfig');
-app.listen.apply(app, config);
+app.listen(config.port, config.ip);
 
-console.log('Server running at http://' + config[1] + ':' + config[0]);
+console.log('Server running at http://' + config.ip + ':' + config.port);
