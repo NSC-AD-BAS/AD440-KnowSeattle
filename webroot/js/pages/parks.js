@@ -5,7 +5,7 @@ var parks = [];
 
 function getParksSummary(loc) {
     if(parks.length !== 0) {
-        return "<li>There are " + parks.length + "in your area</li>";
+        return "<li>There are " + parks.length + " parks in your area</li>";
     }else {
         getParks(loc);
         return "<li>loading park data...</li>";
