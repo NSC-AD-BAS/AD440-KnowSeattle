@@ -13,15 +13,28 @@ var MongoClient = require('mongodb').MongoClient;
 // Establish route for node.js
 var router = express.router();
 
-router.route('/summary').get(function(req, res) {});
+router.route('/summary').get(function(req, res) {
+    // collect the location from the URL
+    var latitude = Number(req.query.lat);
+    var longitude = Number(req.query.long);
+    
+    var loc = {
+        lng: longitude,
+        lat: latitude
+    };
+    
+    getNeighborhood(loc, gethousingprices);
+});
+
+var id = 1;
+/*
 // Sample location object used for testing locally
 var loc = {
   lng:"-122.364312",
   lat:"47.688395",
   addr:"620 NW 82nd St"
 };
-
-var id = documentid;
+*/
 
 /* getNeighborhood is used to retrieve the regionId from the DB
   it takes a callback argument for gethousingprices so that it waits until
@@ -30,7 +43,13 @@ function getNeighborhood(location, callback) {
   // Connect to the db
    var long = location.lng, lat = location.lat;
    MongoClient.connect("mongodb://localhost:27017/knowSeattle", function (err, db) {
+       if(err) {
+           throw err;
+       }
        db.collection('neighborhoods', function (err, collection) {
+           if(err) {
+               throw err;
+           }
            var query = { geometry: { $geoIntersects: { $geometry: { type: "Point", coordinates: [ long, lat ] } } } }
            collection.findOne(query, [], function(err, document) {
              if(err) {
