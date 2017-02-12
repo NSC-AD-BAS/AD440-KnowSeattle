@@ -1,89 +1,89 @@
+var currentLoc;
+//var radiusMeters = radius;// * 1609;
+//1609 Meters in a mile
+var parks = [];
 
+function getParksSummary(loc) {
+    if(parks.length !== 0) {
+        return "<li>There are " + parks.length + "in your area</li>";
+    }else {
+        getParks(loc);
+        return "<li>loading park data...</li>";
+    }
+}
 
-function getParks(loc, success, error)
+function getParks(loc, display, error)
 {
-    var lat = loc.lat;
-    var long = loc.lng;
-    var radius = loc.rad;
-    var radiusMeters = radius * 1609;
-    //1609 Meters in a mile
+    if(null == currentLoc) {
+        currentLoc = loc;
+    }
+    if(parks.length != 0) {
+        if (compareLocations(currentLoc, loc)) {
+            if (display) {
+                displayParks(display);
+            }
+            return;
+        }
+        parks = [];
+        currentLoc = loc;
+    }
 
     $.ajax({
-            //url: "https://data.seattle.gov/resource/ye65-jqxk.json",
             url: "https://data.seattle.gov/resource/3c4b-gdxv.json",
             type: "GET",
             data: {
                 "$where" : "within_circle(location, "
-                + lat + ", " + long + ", "+ radiusMeters + ")"
+                + currentLoc.lat + ", " + currentLoc.lng + ", "+ currentLoc.rad + ")"
             }
         }).done(function(data){
-            var i;
-            var j;
-            var parks = [];
-            var out = '<table class=tg><th>Park Name</th><th>Park Address</th><th>Park Features</th>';
 
-            for(i = 0; i < data.length; i++)
+            for(var i = 0; i < data.length; i++)
             {
-                //console.log(data[i]);
                 // Check the name of the location for the word park. If contained, move on, else next item in the dataset
                 if(data[i].common_name != null) {
                     if (wordInString(data[i].common_name, "park"))
                     {
                         var p = createParkObject(data[i].common_name, data[i].address, data[i].city_feature);
-                        // console.log("Successful parkObject creation of park: " + p.parkname);
 
                         if (parks.length == 0) {
                             parks.push(p);
-                            // console.log("Pushed parkObject first time: " + p.parkname);
                         } else {
                             var check = false;
                             var index;
-                            // console.log("Checking the array for existing parkobject: " + p.parkname);
-                            for (j = 0; j < parks.length || check; j++) {
+                            for (var j = 0; j < parks.length || check; j++) {
                                 var indexCheck = j + 1;
-                                //console.log("Current index position: " + indexCheck + " of " + parks.length);
-                                //console.log("Current park at index is: " + parks[j].parkname);
                                 check = wordInString(parks[j].parkname, p.parkname);
                                 if (check)
                                 {
                                     index = j;
-                                    // console.log("parkobject found at index: " + index + ".");
                                     break;
                                 }
                             }
                             if (!check) {
                                 parks.push(p);
-                                // console.log("This parkobject, " + p.parkname + ", is not in the array. ADDED TO ARRAY.");
                             } else {
-                                // console.log("This parkobject, " + p.parkname + ", already exists, adding feature");
-                                // console.log("Current parkfeature: " + parks[index].parkfeature + ".");
-                                // console.log("Feature to add: " + p.parkfeature + ".");
                                 var feature = parks[index].parkfeature;
                                 var sep = ", ";
                                 var newFeature = parks[index].parkfeature.concat(sep, p.parkfeature);
                                 addFeature(parks[index], newFeature);
-                                // console.log("Pushed the feature");
                             }
                         }
-                    } else {
-                        // console.log("Not a park");
                     }
                 }
-
             }
-
-            for(i = 0; i < parks.length; i++)
-            {
-                out += '<tr><td>' + parks[i].parkname + '</td><td>' + parks[i].parkaddress + '</td><td>'
-                    + parks[i].parkfeature + '</td></tr>';
-
+            if(display) {
+                displayParks(display);
             }
-            out += '</table></div>';
-            success(out);
         }).fail(function(data){
-            var out = '<div>There was a problem finding parks in your area: ' + data.responseJSON.message + '</div>';
-            error(out);
+            if(error) {
+                var out = '<div>There was a problem finding parks in your area: ' + data.responseJSON.message + '</div>';
+                error(out);
+            }
         });
+}
+
+function compareLocations(currentLoc, loc){
+    return currentLoc.lat === loc.lat && currentLoc.lng === loc.lng && currentLoc.rad === loc.rad;
 }
 
 // Function to add park objects
@@ -106,21 +106,15 @@ function addFeature(parkObject, newFeature) {
     parkObject.parkfeature = newFeature;
 }
 
-function getFeatureList() {
-    $.ajax({
-        url: "https://data.seattle.gov/resource/64yg-jvpt.json",
-        type: "GET",
-        data: {
-            "$limit" : 5000,
-            "$select" : "feature_desc",
-            "$group" : "feature_desc"
-        }
-    }).done(function (data) {
-        console.log(data);
-    }).fail(function (error) {
-        alert("Error retrieving data: " + error);
-        console.log(error);
-    });
+function displayParks(display) {
+    var out = '<table class=tg><th>Park Name</th><th>Park Address</th><th>Park Features</th>';
+    for (i = 0; i < parks.length; i++) {
+        out += '<tr><td>' + parks[i].parkname + '</td><td>' + parks[i].parkaddress + '</td><td>'
+            + parks[i].parkfeature + '</td></tr>';
+
+    }
+    out += '</table></div>';
+    display(out);
 }
 
 function getLocation() {

@@ -75,6 +75,7 @@ function render_tiles() {
    getHospData(loc, false);
    getPublicArtSummary(loc);
    getCultureDataSummary(loc);
+   getParks(loc);
    var tiles = "<div style='display: flex; flex-wrap: wrap'>";
    for (var i = 1; i < pages.length; i++) {     //Start at 1 to skip 'Home' tile
       var tile = "", page = pages[i].replace(" ", "");
@@ -125,6 +126,9 @@ function get_summary(page) {
          /*getCrimeSummary(loc,
           function(success) {$("div.tile.Crime ul").html(success);},
           function(error)   {$("div.tile.Crime ul").html(error); });*/
+         break;
+      case "Parks":
+         sum += getParksSummary();
          break;
       default:
          sum += "<li>Pertinent Point</li>" +
