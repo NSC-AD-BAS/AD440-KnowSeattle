@@ -115,17 +115,17 @@ function get_summary(page) {
          sum += getConcertSummary(loc);
          break;
       case "Public Art":
-        sum += getPublicArtSummaryCount();
-        break;
+         sum += getPublicArtSummaryCount();
+         break;
       case "Culture":
-        sum += getCultureSummaryCount();
-        break;
-	  case "Crime":
-		 sum += '<li>Loading Data...</li>';
-		 /*getCrimeSummary(loc,
-            function(success) {$("div.tile.Crime ul").html(success);},
-            function(error)   {$("div.tile.Crime ul").html(error); });*/
-		 break;
+         sum += getCultureSummaryCount();
+         break;
+      case "Crime":
+         sum += '<li>Loading Data...</li>';
+         /*getCrimeSummary(loc,
+          function(success) {$("div.tile.Crime ul").html(success);},
+          function(error)   {$("div.tile.Crime ul").html(error); });*/
+         break;
       default:
          sum += "<li>Pertinent Point</li>" +
             "<li>Salient Stat</li>";
