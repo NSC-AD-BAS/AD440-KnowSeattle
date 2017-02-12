@@ -7,9 +7,9 @@ app.set('view engine', 'ejs');
 app.set('views', './views');
 app.use('/food', food);
 app.use('/cors_helper', corsRouter);
-app.use('/', express.static('webroot'))
+app.use('/', express.static('webroot'));
 
-var config = require('./serverConfig')
-console.log(config);
+var config = require('./serverConfig');
 app.listen.apply(app, config);
+
 console.log('Server running at http://' + config[1] + ':' + config[0]);
