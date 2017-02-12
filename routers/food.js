@@ -40,25 +40,26 @@ function getFoodData(areaSpecification, callback) {
         }
         
         var averageRating = calculateAverageRating(results);
-        var nearestYelpRating = getNearestYelpRating(averageRating);
-        var imageNames = getImageNamesFor(nearestYelpRating);
+        var nearestHalfStar = calculateNearestHalfStar(averageRating);
         
         callback(null, {
-            ratingImages: imageNames,
+            averageRating: nearestHalfStar,
             url: createUrl(areaSpecification),
-            averageRating: nearestYelpRating,
             count: results.length
         });
     });
 }
-
-
 
 function calculateAverageRating(data) {
     var ratingSum = data.reduce(function(sum, business) {
         return sum + business.rating
     }, 0);
     return ratingSum / data.length;
+}
+
+function calculateNearestHalfStar(rating) {
+    var yelpRating = Math.round(rating * 2) / 2;
+    return yelpRating === 0.5 ? 0 : yelpRating;
 }
 
 function createUrl(areaSpecification) {
@@ -77,43 +78,9 @@ function createUrl(areaSpecification) {
 		gpsBox.northWestLatitude;
 }
 
-function getNearestYelpRating(rating) {
-    var yelpRating = Math.round(rating * 2) / 2;
-    return yelpRating === 0.5 ? 0 : yelpRating;
-}
-
-var imageIndexesByRating = {
-    0:   ['0','0','0','0','0'],
-    1:   ['1','0','0','0','0'],
-    1.5: ['1','1-5','0','0','0'],
-    2:   ['2','2','0','0','0'],
-    2.5: ['2','2','2-5','0','0'],
-    3:   ['3','3','3','0','0'],
-    3.5: ['3','3','3','3-5','0'],
-    4:   ['4','4','4','4','0'],
-    4.5: ['4','4','4','4','4-5'],
-    5:   ['5','5','5','5','5']
-};
-
-function getImageNamesFor(rating) {
-    return imageIndexesByRating[rating].map(function(imageIndex) { return "20x20_" + imageIndex + ".png"; })
-}
-
-
-
-
-var yelp = new Yelp(credentials);
-var resultsPerCall = 40;
-
-function getNextOffset(data, offset) {
-        var resultCount = data.businesses.length;
-        var total = data.total;
-        var nextOffset = offset + resultCount;
-        if (nextOffset < total && nextOffset < 1000)
-            return nextOffset;
-}
-
 function find(areaSpecification, callback) {
+    var yelp = new Yelp(credentials);
+    var resultsPerCall = 40;
     var coordinates = areaSpecification.latitude + "," + areaSpecification.longitude;
     var radiusInMeters = areaSpecification.radius * 1609;
     
@@ -133,6 +100,14 @@ function find(areaSpecification, callback) {
             .catch(callback);    
     }
     searchRecurrsive(0, []);        
-};
+}
+
+function getNextOffset(data, offset) {
+        var resultCount = data.businesses.length;
+        var total = data.total;
+        var nextOffset = offset + resultCount;
+        if (nextOffset < total && nextOffset < 1000)
+            return nextOffset;
+}
 
 module.exports = router;
