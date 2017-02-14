@@ -49,9 +49,10 @@ function render_page(name) {
             function(error)   { update_div("left-content", error); });
          return;
       case "Concerts":
-         getConcertData(loc,
-            function(success) { update_div("left-content", success);},
-            function(error)   { update_div("left-content", error); });
+         getConcertData(loc, true);
+         // getConcertData(loc,
+         //    function(success) { update_div("left-content", success);},
+         //    function(error)   { update_div("left-content", error); });
          return;
       case "PublicArt":
          getPublicArtData(loc,
