@@ -28,6 +28,11 @@ var indeed_jobs_json;
 var indeed_jobs_array;
 var indeed_total_jobs = 0;
 
+// Stats
+var jobs_in_area;
+var avg_company_rating;
+var industry_popularity = new Map();
+
 // CORS bypass
 var cors_api_url = 'https://cors-anywhere.herokuapp.com/';
 
@@ -72,6 +77,20 @@ function getGlassdoorCompanies(indeed_tot_jobs, indeed_jobs_arr, callback) {
          var employersArray = JSONObject.response.employers;
          var bestMatchObj = employersArray[0];
          if (bestMatchObj && bestMatchObj.exactMatch == true) {
+            glassdoor_companies.push(bestMatchObj);
+
+            // Count industries, skipping missing/empty industries
+            if (bestMatchObj.industry && bestMatchObj.industry !== "") {
+                if (industry_popularity.has(bestMatchObj.industry)) {
+                    // Industry key exists
+                    var count = industry_popularity.get(bestMatchObj.industry);
+                    industry_popularity.set(bestMatchObj.industry, count + 1);
+                } else {
+                    // Industry key doesn't exist
+                    industry_popularity.set(bestMatchObj.industry, 1);
+                }
+            }
+
             var cur_rating = parseFloat(bestMatchObj.overallRating);
             // avoid unrated companies
             if (cur_rating !== 0) {
@@ -81,8 +100,9 @@ function getGlassdoorCompanies(indeed_tot_jobs, indeed_jobs_arr, callback) {
          }
          // invoking the callback when done with jobs requests
          if (total_company_requests == indeed_jobs_arr.length - 1) {
-            var avg_company = Number((rating_sum / total_matches_with_rating).toFixed(2));
-            callback(indeed_tot_jobs, avg_company);
+            jobs_in_area = indeed_tot_jobs;
+            avg_company_rating = Number((rating_sum / total_matches_with_rating).toFixed(2));
+            callback(jobs_in_area, avg_company_rating);
          }
       });
    }
@@ -97,9 +117,56 @@ function clear_glassdoor_vars() {
 
 // handler function for Jobs Detail Page, passes html to both callbacks
 function getJobsData(loc, successCallback, errorCallback) {
-   var html = "<h1> Welcome to the Jobs page!</h1>" +
-      "<div>" + JSON.stringify(indeed_jobs_array) + "</div";
-   successCallback(html);
+    var jobs = indeed_jobs_array;
+    var html = "";
+    // Stats in this area
+    html += "<h1>Jobs stats for this area</h1>";
+    html += "<span>Jobs in this area: " + jobs_in_area + "</span><br />";
+    html += "<span>Average company rating for jobs in this area: " + avg_company_rating + "</span>";
+    // Jobs per Industry (this can be reduced to show less industries)
+    // This sorts industry popularity by keys (industries), don't think you can sort by value (count)
+    var industry_popularity_sort = new Map([...industry_popularity.entries()].sort());
+    console.log(industry_popularity);
+    html += "<h1>Jobs per Industry</h1>";
+    html += "<div>";
+    html +=     "<table>";
+    html +=         "<tr>";
+    html +=             "<th>Industry</th>";
+    html +=             "<th>Job Count</th>";
+    html +=         "</tr>";
+    industry_popularity.forEach(function(count, industry) {
+        html +=     "<tr>";
+        html +=         "<td>" + industry + "</td>";
+        html +=         "<td>" + count + "</td>";
+        html +=     "</tr>";
+    });
+    html +=     "</table>";
+    html += "</div>";
+
+    // Jobs
+    html += "<div>";
+    html +=     "<table>";
+    html +=         "<tr>";
+    html +=             "<th>Job Title</th>";
+    html +=             "<th>Company</th>";
+    html +=         "</tr>";
+    console.log(glassdoor_companies);
+    console.log(jobs);
+    jobs.forEach(function(job) {
+        var lat = job.latitude[0]._text;
+        var long = job.longitude[0]._text;
+        html +=     "<tr>";
+        html +=         "<td>";
+        html +=             "<a href=\"" + job.url[0]._text +"\">" + job.jobtitle[0]._text + "</a>";
+        html +=         "</td>";
+        html +=         "<td>";
+        html +=             job.company[0]._text;
+        html +=         "</td>";
+        html +=     "</tr>";
+    });
+    html +=     "</table>";
+    html += "</div>";
+    successCallback(html);
 }
 
 function getIndeedOptions(zip) {
