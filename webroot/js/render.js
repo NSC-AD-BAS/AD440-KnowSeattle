@@ -126,9 +126,9 @@ function get_summary(page) {
          break;
       case "Crime":
          sum += '<li>Loading Data...</li>';
-         /*getCrimeSummary(loc,
+         getCrimeSummary(loc,
           function(success) {$("div.tile.Crime ul").html(success);},
-          function(error)   {$("div.tile.Crime ul").html(error); });*/
+          function(error)   {$("div.tile.Crime ul").html(error); });
          break;
       case "Parks":
          sum += getParksSummary();
