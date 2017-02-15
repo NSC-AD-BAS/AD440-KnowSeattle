@@ -41,24 +41,24 @@ function getPublicArtSummary(loc) {
 }
 
 function countPublicArtFeatures(data) {
-//    var typeMap = {};
-//    for (var i = 0; i < data.length; i++) {
-//        //string of events saved here
-//        var dat = data[i]["classification"];
-//        //counting the number of times a String appears
-//        if (dat !== null) {
-//            if (typeMap[dat]) {
-//                typeMap[dat]++;
-//            } else {
-//                typeMap[dat] = 1;
-//            }
-//        }
-//    }
+    var typeMap = {};
+    for (var i = 0; i < data.length; i++) {
+        //string of events saved here
+        var dat = data[i]["classification"];
+        //counting the number of times a String appears
+        if (dat !== null) {
+            if (typeMap[dat]) {
+                typeMap[dat]++;
+            } else {
+                typeMap[dat] = 1;
+            }
+        }
+    }
 //    return getArtCount(typeMap);
     var content = "";
-    content += "<li>There are " + data.length + " art pieces</li>";
+    content += "<li>Art Pieces: " + data.length + "</li>";
+    content += "<li>Sculptures: " + typeMap.Sculpture + "</li>";
     summary_art_data = content;
-//    return 
 }
 
 //counts the different amount of art features
