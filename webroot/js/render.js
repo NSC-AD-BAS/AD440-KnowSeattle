@@ -105,11 +105,13 @@ function get_summary(page) {
          sum += getWalkScoreSummary(loc);
          break;
       case "Jobs":
-         sum += '<li>Loading Data...</li>';
+         sum += '<div class=\"loader\"></div>';
          getJobsSummary(loc, function(totalJobs, avgCompany) {
+            $("#Jobs_tile").hide();
             var html = "<li>Fulltime Jobs: " + totalJobs + "</li>" +
                "<li>Avg Company: " + avgCompany + "</li>";
             document.getElementById("Jobs_tile").innerHTML = html;
+            $("#Jobs_tile").fadeIn("slow", function(){});
          });
          break;
       case "Concerts":

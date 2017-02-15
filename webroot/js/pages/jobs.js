@@ -120,14 +120,14 @@ function getJobsData(loc, successCallback, errorCallback) {
     var jobs = indeed_jobs_array;
     var html = "";
     // Stats in this area
-    html += "<h1>Jobs stats for this area</h1>";
-    html += "<span>Jobs in this area: " + jobs_in_area + "</span><br />";
-    html += "<span>Average company rating for jobs in this area: " + avg_company_rating + "</span>";
+    html += "<h1>Jobs In This Area:</h1>";
+    html += "<span>Total Jobs: " + jobs_in_area + "</span><br />";
+    html += "<span>Average Company Rating: " + avg_company_rating + "</span>";
     // Jobs per Industry (this can be reduced to show less industries)
     // This sorts industry popularity by keys (industries), don't think you can sort by value (count)
     var industry_popularity_sort = new Map([...industry_popularity.entries()].sort());
     console.log(industry_popularity);
-    html += "<h1>Jobs per Industry</h1>";
+    html += "<h1>Industries In This Area:</h1>";
     html += "<div>";
     html +=     "<table>";
     html +=         "<tr>";
@@ -144,17 +144,16 @@ function getJobsData(loc, successCallback, errorCallback) {
     html += "</div>";
 
     // Jobs
+    html += "<h1>All Jobs & Companies:</h1>";
     html += "<div>";
     html +=     "<table>";
     html +=         "<tr>";
     html +=             "<th>Job Title</th>";
     html +=             "<th>Company</th>";
     html +=         "</tr>";
-    console.log(glassdoor_companies);
-    console.log(jobs);
     jobs.forEach(function(job) {
-        var lat = job.latitude[0]._text;
-        var long = job.longitude[0]._text;
+        var job_lat = job.latitude[0]._text;
+        var job_long = job.longitude[0]._text;
         html +=     "<tr>";
         html +=         "<td>";
         html +=             "<a href=\"" + job.url[0]._text +"\">" + job.jobtitle[0]._text + "</a>";
@@ -163,6 +162,16 @@ function getJobsData(loc, successCallback, errorCallback) {
         html +=             job.company[0]._text;
         html +=         "</td>";
         html +=     "</tr>";
+        // If you want to use pinpoints
+        // document.getElementById('pins').checked
+        if (true) {
+            var gmap = get_gmap();
+            var marker = new google.maps.Marker({
+                position: new google.maps.LatLng(job_lat, job_long),
+                map: gmap,
+                title: 'job',
+            });
+        }
     });
     html +=     "</table>";
     html += "</div>";
