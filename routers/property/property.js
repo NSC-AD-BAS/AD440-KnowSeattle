@@ -23,7 +23,7 @@ router.route('/summary').get(function(req, res) {
         lat: latitude
     };
     
-    getNeighborhood(loc, gethousingprices);
+    getNeighborhood(loc, res);
 });
 
 var id = 1;
@@ -39,7 +39,7 @@ var loc = {
 /* getNeighborhood is used to retrieve the regionId from the DB
   it takes a callback argument for gethousingprices so that it waits until
   the query resolves before trying to use gethousingprices */
-function getNeighborhood(location, callback) {
+function getNeighborhood(location, res) {
   // Connect to the db
    var long = location.lng, lat = location.lat;
    MongoClient.connect("mongodb://localhost:27017/knowSeattle", function (err, db) {
@@ -56,21 +56,22 @@ function getNeighborhood(location, callback) {
                throw err;
              }
              // This line calls gethousingprices, note that we are inside the query callback
-             callback(document.properties.REGIONID, id);
+             gethousingprices(document.properties.REGIONID, res);
            })
 
        });
 
    });
+   
+   
 }
 
-function gethousingprices(regionid, id) {
-   var newstreet = street.replace(/ /g, '+');
+function gethousingprices(regionid, response) {
 
    var options = {
       host: 'www.zillow.com',
       port: 80,
-      path: '/webservice/GetRegionChildren.htm?zws-id=X1-ZWz19eifb82423_85kuc&regionId=' + regionid + '&state=wa&city=seattle&childtype=neighborhood',
+      path: '/webservice/GetRegionChildren.htm?zws-id=X1-ZWz19eifb82423_85kuc&state=wa&city=seattle&childtype=neighborhood',
       method: 'GET'
    };
 
@@ -83,12 +84,12 @@ function gethousingprices(regionid, id) {
          //parser.parseString(data, function(err, result) {
          //	console.log('FINISHED', err, result);
          //});
+        data = data.split(regionid)[1];
+         var neighborhood =(data.split("<name>")[1]).split("</name>")[0];
 
-         var neighborhood =(data.split("<region name=\"")[1]).split("\" id=")[0];
-
-         price = (data.split("<zindexValue>")[1]).split("</zindexValue>")[0];
+         price = (data.split("<zindex currency=\"USD\">")[1]).split("</zindex>")[0];
          //console.log("The housing costs for the " + neighborhood + " neighborhood is: " + price);
-         document.getElementById(id).innerHTML = ("The housing costs for the " + neighborhood + " neighborhood is: " + price);
+        response.send("The housing costs for the " + neighborhood + " neighborhood is: " + price);
          //return price;
       });
    }).on('error', function(e) {
