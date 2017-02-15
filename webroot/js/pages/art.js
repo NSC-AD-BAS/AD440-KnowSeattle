@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 var summary_art_data =
-        "<li>No data found</li>";
+        "<li>Loading Art Data...</li>";
 
 function getPublicArtData(loc, success, error, detailed) {
     //variable loc used for testing
@@ -41,40 +41,23 @@ function getPublicArtSummary(loc) {
 }
 
 function countPublicArtFeatures(data) {
-//    var typeMap = {};
-//    for (var i = 0; i < data.length; i++) {
-//        //string of events saved here
-//        var dat = data[i]["classification"];
-//        //counting the number of times a String appears
-//        if (dat !== null) {
-//            if (typeMap[dat]) {
-//                typeMap[dat]++;
-//            } else {
-//                typeMap[dat] = 1;
-//            }
-//        }
-//    }
-//    return getArtCount(typeMap);
-    var content = "";
-    content += "<li>There are " + data.length + " art pieces</li>";
-    summary_art_data = content;
-//    return 
-}
-
-//counts the different amount of art features
-function getArtCount(typeMap) {
-    var content = "";
-    if (typeMap == undefined || typeMap.length === 0) {
-        content += "<li>There are no art pieces</li>";
-    } else {
-        for (var type in typeMap) {
-            if (type !== 'undefined') {
-                content += "<li>" + type + " : " + typeMap[type] + "</li>";
+    var typeMap = {};
+    for (var i = 0; i < data.length; i++) {
+        //string of events saved here
+        var dat = data[i]["classification"];
+        //counting the number of times a String appears
+        if (dat !== null) {
+            if (typeMap[dat]) {
+                typeMap[dat]++;
+            } else {
+                typeMap[dat] = 1;
             }
         }
     }
+    var content = "";
+    content += "<li>Art Pieces: " + data.length + "</li>";
+    content += "<li>Sculptures: " + typeMap.Sculpture + "</li>";
     summary_art_data = content;
-    return content;
 }
 
 function getPublicArtSummaryCount() {
@@ -95,7 +78,7 @@ function parsePublicArtFeatures(data) {
 }
 
 function getArtData(dataMap) {
-    var content = '<table><tr><th>Artist Name</th><th>Title</th><th>Classification</th><th>Address</th>' +
+    var content = '<table><tr><th>Title</th><th>Artist Name</th><th>Classification</th><th>Address</th>' +
             '<th>Location</th><th>Description</th></tr>';
     for (var i = 0; i < dataMap.length; i++) {
         if (dataMap[i] !== null) {
@@ -106,14 +89,12 @@ function getArtData(dataMap) {
             var location = dataMap[i].location == null ? " " : dataMap[i].location;
             var address = dataMap[i].address == null ? " " : dataMap[i].address;
             var description = dataMap[i].description == null ? " " : dataMap[i].description;
-            //var website = dataMap[i].website == null ? "" : dataMap[i].website;
-            content += '<tr><td>' + artist_first_name + " " + artist_last_name + '</td><td>' +
-                    title + '</td><td>' +
+            content += '<tr><td>' + title + '</td><td>' + 
+                    artist_first_name + " " + artist_last_name + '</td><td>' +
                     classification + '</td><td>' +
                     address + '</td><td>' +
                     location + '</td><td>' +
                     description + '</td></tr>';
-            //website + '</td></tr>';
         }
     }
     content += "</table>";

@@ -6,7 +6,7 @@
 
 /* global type */
 var summary_culture_data =
-        "<li>No data found</li>";
+        "<li>Loading culture data...</li>";
 
 function getCultureData(loc, success, error) {
     //  var loc = { passing this in from the main index.html / geocode.js now };
@@ -18,7 +18,7 @@ function getCultureData(loc, success, error) {
             "$where": "within_circle(location, " + loc.lat + ", " + loc.lng + ", " +
                     1500 + ")AND(city_feature = 'Heritage Trees' " +
                     "OR city_feature = 'Viewpoints' OR city_feature = 'Museums and Galleries' " +
-                    "OR city_feature = 'General Attractions' OR city_feature = 'Waterfront' " +
+                    "OR city_feature = 'General Attractions' " +
                     "OR city_feature = 'Libraries')"
         }
     }).done(function (data) {
@@ -39,7 +39,7 @@ function getCultureDataSummary(loc) {
             "$where": "within_circle(location, " + loc.lat + ", " + loc.lng + ", " +
                     1500 + ")AND(city_feature = 'Heritage Trees' " +
                     "OR city_feature = 'Museums and Galleries' " +
-                    "OR city_feature = 'General Attractions' OR city_feature = 'Waterfront' " +
+                    "OR city_feature = 'General Attractions' " +
                     "OR city_feature = 'Libraries')"
         }
     }).done(function (data) {
@@ -94,18 +94,16 @@ function countCultureFeatures(data) {
 }
 
 function displayCultureData(typeMap) {
-    var content = "<table><tr><th>Name</th><th>Address</th><th>City Feature</th><th>Website</th></tr>";
+    var content = "<table><tr><th>Name</th><th>Address</th><th>City Feature</th></tr>";
     for (var i = 0; i < typeMap.length; i++) {
         if (typeMap[i] !== null) {
             var name = typeMap[i].common_name == null ? "" : typeMap[i].common_name;
             var address = typeMap[i].address == null ? "" : typeMap[i].address;
             var city_feature = typeMap[i].city_feature == null ? "" : typeMap[i].city_feature;
-            var website = typeMap[i].website == null ? "" : typeMap[i].website;
             content += '<tr><td>' +
                     name + '</td><td>' +
                     address + '</td><td>' +
-                    city_feature + '</td><td>' +
-                    website + '</td></tr>';
+                    city_feature + '</td></tr>';
         }
     }
     content += "</table>";
