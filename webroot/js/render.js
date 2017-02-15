@@ -118,6 +118,9 @@ function get_summary(page) {
             function(success) {$("div.tile.Crime ul").html(success);},
             function(error)   {$("div.tile.Crime ul").html(error); });*/
 		 break;
+       case "Property":
+         sum+= getPropertySummary(loc);
+         break;
       default:
          sum += "<li>Pertinent Point</li>" +
             "<li>Salient Stat</li>";
