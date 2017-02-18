@@ -17,12 +17,12 @@ router.route('/summary').get(function(req, res) {
     // collect the location from the URL
     var latitude = Number(req.query.lat);
     var longitude = Number(req.query.long);
-    
+
     var loc = {
         lng: longitude,
         lat: latitude
     };
-    
+
     getNeighborhood(loc, res);
 });
 
@@ -62,8 +62,8 @@ function getNeighborhood(location, res) {
        });
 
    });
-   
-   
+
+
 }
 
 function gethousingprices(regionid, response) {
@@ -89,7 +89,7 @@ function gethousingprices(regionid, response) {
 
          price = (data.split("<zindex currency=\"USD\">")[1]).split("</zindex>")[0];
          //console.log("The housing costs for the " + neighborhood + " neighborhood is: " + price);
-        response.send("The housing costs for the " + neighborhood + " neighborhood is: " + price);
+        response.send("<li>Neighborhood: " + neighborhood + "</li><li>Zindex: " + price + "</li>");
          //return price;
       });
    }).on('error', function(e) {
