@@ -15,6 +15,7 @@ var loc = {
 
 function initMap() {
    //Initialize and center map
+
    gmap = new google.maps.Map(document.getElementById('map'), {
       zoom: 10,
       center: loc,

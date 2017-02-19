@@ -1,6 +1,8 @@
 //global vars
 var pages = ["Home", "Walk Score", "Hospitals", "Parks", "Culture", "Jobs", "Schools", "Public Art", "Concerts", "Property", "Crime", "Food"];
 var currentPage = pages[0];
+var showMap = true;
+var leftContentDiv = "left-content";
 
 //Render functions
 function render_nav() {
@@ -27,44 +29,44 @@ function render_page(name) {
          break;
       case "Parks":
          getParks(loc,
-            function(success) { update_div("left-content", success);},
-            function(error)   { update_div("left-content", error); });
+            function(success) { update_div(leftContentDiv, success);},
+            function(error)   { update_div(leftContentDiv, error); });
          return;
       case "Culture":
          getCultureData(loc,
-            function(success) { update_div("left-content", success);},
-            function(error)   { update_div("left-content", error); });
+            function(success) { update_div(leftContentDiv, success);},
+            function(error)   { update_div(leftContentDiv, error); });
          return;
       case "Schools":
          getSchoolsData(loc,
-            function(success) { update_div("left-content", success);},
-            function(error)   { update_div("left-content", error); },true);
+            function(success) { update_div(leftContentDiv, success);},
+            function(error)   { update_div(leftContentDiv, error); },true);
          return;
       case "WalkScore":
          getWalkScoreData(loc, true);
          return;
       case "Jobs":
          getJobsData(loc,
-            function(success) { update_div("left-content", success);},
-            function(error)   { update_div("left-content", error); });
+            function(success) { update_div(leftContentDiv, success);},
+            function(error)   { update_div(leftContentDiv, error); });
          return;
       case "Concerts":
          getConcertData(loc, true);
          // getConcertData(loc,
-         //    function(success) { update_div("left-content", success);},
-         //    function(error)   { update_div("left-content", error); });
+         //    function(success) { update_div(leftContentDiv, success);},
+         //    function(error)   { update_div(leftContentDiv, error); });
          return;
       case "PublicArt":
          getPublicArtData(loc,
-            function(success) { update_div("left-content", success);},
-            function(error)   { update_div("left-content", error); },
+            function(success) { update_div(leftContentDiv, success);},
+            function(error)   { update_div(leftContentDiv, error); },
             true);
          return;
       default:
          str = "Hey, now we're going to render " + name;
          break;
    }
-   update_div("left-content", str);
+   update_div(leftContentDiv, str);
 }
 
 function update_div(div, html) {
@@ -87,7 +89,7 @@ function render_tiles() {
       tiles += tile;
    }
    tiles += "</div>";
-   document.getElementById("left-content").innerHTML = tiles;
+   document.getElementById(leftContentDiv).innerHTML = tiles;
 }
 
 //Utility functions
@@ -179,6 +181,14 @@ function get_icon(page) {
          break;
    }
    return icon;
+}
+
+function toggle_map() {
+   showMap = !showMap;
+   leftContentDiv = showMap ? "left-content" : "left-content-full";
+   document.getElementById(showMap ? "hide_map" : "show_map").setAttribute("id", showMap ? "show_map" : "hide_map");
+   document.getElementById(showMap ? "left-content-full" : "left-content").setAttribute("id", showMap ? "left-content" : "left-content-full");
+   document.getElementById(showMap ? "right-content-full" : "right-content").setAttribute("id", showMap ? "right-content" : "right-content-full");
 }
 
 window.onhashchange = function () {

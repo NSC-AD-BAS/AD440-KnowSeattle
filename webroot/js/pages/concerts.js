@@ -60,7 +60,7 @@
                 var json = JSON.parse(data);
                 summary = "<li>Parsed Data goes here (object is logged to console)...</li>";
                 console.log(json);
-                display ? document.getElementById("left-content").innerHTML = summary : "";
+                display ? document.getElementById(leftContentDiv).innerHTML = summary : "";
              },
              error: function(){
                 console.error("Error getting WalkScore data");

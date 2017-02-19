@@ -14,7 +14,7 @@ function getWalkScoreData(loc, display) {
          success: function(data) {
             var json = JSON.parse(data);
             summary = "<li>Walk: " + json.walkscore + "</li><li>Transit: " + json.transit.score + "</li><li>Bike: " + json.bike.score + "</li>";
-            display ? document.getElementById("left-content").innerHTML = summary : "";
+            display ? document.getElementById(leftContentDiv).innerHTML = summary : "";
          },
          error: function(){
             console.error("Error getting WalkScore data");

@@ -44,13 +44,6 @@ input#address, input#submit {
     color: black;
 }
 
-#left-content {
-    width: 70%;
-    color: black;
-    padding: 30px;
-    text-align: left;
-}
-
 .tile-container {
     display: flex;
     flex-wrap: wrap;
@@ -113,11 +106,6 @@ a { text-decoration: none;  }
 /* Style the tile links */
 a.tile:visited { color: inherit; }
 
-#right-content {
-    width: 30%;
-    float: right;
-    color: black;
-}
 
 /* nav */
 nav {
@@ -170,4 +158,78 @@ nav a:visited { color: #344873; }
 @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
+}
+
+@keyframes hide_map {
+    from { width: 100%;}
+    to   { width: 0; }
+}
+
+@keyframes show_map {
+    from { width: 0;}
+    to   { width: 100%;}
+}
+
+@keyframes expand_left {
+    from { width: 70%; }
+    to   { width: 100%;}
+}
+
+@keyframes contract_left {
+    from { width: 100%;}
+    to   { width: 70%; }
+}
+
+@keyframes expand_right {
+    from { width: 0;  }
+    to   { width: 30%;}
+}
+
+@keyframes contract_right {
+    from { width: 30%;}
+    to   { width: 0;  }
+}
+
+#hide_map {
+    float: right;
+    color: black;
+    width: 0;
+    animation: hide_map 500ms 0s;
+}
+
+#show_map {
+    float: right;
+    color: black;
+    width: 100%;
+    animation: show_map 500ms 0s;
+}
+
+#right-content {
+    width: 30%;
+    float: right;
+    color: black;
+    animation: expand_right 500ms 0s;
+}
+
+#right-content-full {
+    width: 0;
+    float: right;
+    color: black;
+    animation: contract_right 500ms 0s;
+}
+
+#left-content {
+    width: 70%;
+    color: black;
+    padding: 30px;
+    text-align: left;
+    animation: contract_left 500ms 0s;
+}
+
+#left-content-full {
+    width: 100%;
+    color: black;
+    padding: 30px;
+    text-align: left;
+    animation: expand_left 500ms 0s;
 }
