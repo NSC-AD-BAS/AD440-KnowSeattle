@@ -80,7 +80,7 @@ function render_tiles() {
    var tiles = "<div style='display: flex; flex-wrap: wrap'>";
    for (var i = 1; i < pages.length; i++) {     //Start at 1 to skip 'Home' tile
       var tile = "", page = pages[i].replace(" ", "");
-      tile += "<a href='#' onclick='render_page(\"" + page +"\"); return false;'>";
+      tile += "<a href='#" + page + "'>";
       tile += "<div class='tile " + page + "'><span class='" + get_icon(pages[i]) + "'></span>";
       tile += get_summary(pages[i]);
       tile += "</div></a>";
@@ -91,9 +91,9 @@ function render_tiles() {
 }
 
 //Utility functions
-function linkify(text) {
-   text = text.replace(" ", "");
-   return "<a href='#' onclick='render_page(text); return false;'>" + text + "</a>";
+function linkify(page) {
+   page = page.replace(" ", "");
+   return "<a href='#" + page + "'>" + page + "</a>";
 }
 
 function get_summary(page) {
@@ -180,3 +180,8 @@ function get_icon(page) {
    }
    return icon;
 }
+
+window.onhashchange = function () {
+   var data = document.location.hash.substr(1);
+   !!data ? render_page(data) : render_page(pages[0]);
+};
