@@ -4,7 +4,6 @@
   "description": "Learn about Seattle neighborhoods",
   "main": "server.js",
   "dependencies": {
-    "ejs": "^2.5.5",
     "express": "^4.14.1",
     "eyes": "^0.1.8",
     "mongodb": "^2.2.22",

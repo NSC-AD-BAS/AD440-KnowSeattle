@@ -19,7 +19,7 @@ router.route('/summary')
             if(error) {
                 console.log(error);
                 res.status(500)
-                res.render('error');
+                res.send('Error while retrieving yelp data.');
             }
             else {
                 res.json(data);
