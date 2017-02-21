@@ -54,7 +54,9 @@ function countPublicArtFeatures(data) {
     }
     var content = "";
     content += "<li>Art Pieces: " + data.length + "</li>";
-    content += "<li>Sculptures: " + typeMap.Sculpture + "</li>";
+    if (typeMap.hasOwnProperty("Sculpture")) {
+        content += "<li>Sculptures: " + typeMap.Sculpture + "</li>";
+    }
     return content;
 }
 
@@ -83,7 +85,7 @@ function getArtData(dataMap) {
             var location = dataMap[i].location == null ? " " : dataMap[i].location;
             var address = dataMap[i].address == null ? " " : dataMap[i].address;
             var description = dataMap[i].description == null ? " " : dataMap[i].description;
-            content += '<tr><td>' + title + '</td><td>' + 
+            content += '<tr><td>' + title + '</td><td>' +
                     artist_first_name + " " + artist_last_name + '</td><td>' +
                     classification + '</td><td>' +
                     address + '</td><td>' +

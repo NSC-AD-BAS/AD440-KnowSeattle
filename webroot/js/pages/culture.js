@@ -73,9 +73,12 @@ function countCultureFeatures(data) {
             }
         }
     }
+    if(data.length === 0){
+        content += "<li>Museums and Galleries: 0" + "</li>";
+    }
     for (var type in typeMap) {
-        if (type == "Libraries" || type == "Museums and Galleries") {
-            content += "<li>" + type + " : " + typeMap[type] + "</li>";
+        if (type == "Libraries" || type == "Museums and Galleries" || type == "General Attractions") {
+            content += "<li>" + type + ": " + typeMap[type] + "</li>";
         }
     }
     return content;
