@@ -50,7 +50,7 @@
       return summary;
    }
 
-    function getConcertData(loc, display) {
+    function getConcertData(loc, success, error) {
        var url="cors_helper/concerts";
        //var url="php/cors_helper.php?f=concerts";
        $.ajax( {
@@ -59,23 +59,17 @@
              data: {loc: loc},
              success: function(data) {
                 var json = JSON.parse(data);
-                summary = "<li>Parsed Data goes here (object is logged to console)...</li>";
+                summary = "<li>Summary Data goes here...</li>";
+                success(summary);
                 console.log(json);
-                display ? document.getElementById("left-content").innerHTML = summary : "";
              },
              error: function(){
-                console.error("Error getting WalkScore data");
-                // displayWalkScores("");
+                summary = "Error getting Concert data";
+                console.error(summary);
+                error(summary);
              }
           }
        );
 	 }
 
-
-    function getConcertSummary(loc){
-    	
-    	summary_json = "hot dog";
-
-		return summary_json;
-		}
 
