@@ -233,3 +233,15 @@ nav a:visited { color: #344873; }
     text-align: left;
     animation: expand_left 500ms 0s;
 }
+
+#button-toggle {
+    width: 30%;
+    float: right;
+    color: black;
+    text-align: center;
+}
+
+#controls {
+    width: 100%;
+    height: 25px;
+}
