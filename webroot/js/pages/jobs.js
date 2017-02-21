@@ -9,7 +9,6 @@
 // Global vars
 var avg_rating;
 var indeed_query = "";
-var zipcode;
 var job_radius_miles = 1;
 var job_type = "fulltime";
 var limit = 1000;
@@ -41,6 +40,8 @@ function getJobsDefault() {
 }
 
 function getJobsSummary(loc, callback) {
+   // clear vars to create clean requests system
+   clear_jobs_vars();
    if (!loc.zip) {
       return getJobsDefault();
    }
@@ -108,74 +109,92 @@ function getGlassdoorCompanies(indeed_tot_jobs, indeed_jobs_arr, callback) {
    }
 }
 
-// clear glassdoor vars, and vars to calculate average company rating
-function clear_glassdoor_vars() {
+// clear glassdoor vars, indeed vars,
+// and vars to calculate average company rating.
+function clear_jobs_vars() {
    rating_sum = 0.0;
    total_matches_with_rating = 0;
    total_company_requests = 0;
+   indeed_total_jobs = 0;
+   indeed_jobs_json = null;
+   indeed_jobs_array = null;
+   avg_rating = null;
+   total_company_requests = 0;
+   total_companies_recieved = 0;
+   industry_popularity = new Map();
 }
 
-// handler function for Jobs Detail Page, passes html to both callbacks
+// handler function for Jobs Detail Page, passes html to both callbacks.
+// UPDATE: now supports async calling from anywhere in KnowSeattle.
 function getJobsData(loc, successCallback, errorCallback) {
-    var jobs = indeed_jobs_array;
-    var html = "";
-    // Stats in this area
-    html += "<h1>Jobs In This Area:</h1>";
-    html += "<span>Total Jobs: " + jobs_in_area + "</span><br />";
-    html += "<span>Average Company Rating: " + avg_company_rating + "</span>";
-    // Jobs per Industry (this can be reduced to show less industries)
-    // This sorts industry popularity by keys (industries), don't think you can sort by value (count)
-    var industry_popularity_sort = new Map([...industry_popularity.entries()].sort());
-    console.log(industry_popularity);
-    html += "<h1>Industries In This Area:</h1>";
-    html += "<div>";
-    html +=     "<table>";
-    html +=         "<tr>";
-    html +=             "<th>Industry</th>";
-    html +=             "<th>Job Count</th>";
-    html +=         "</tr>";
-    industry_popularity.forEach(function(count, industry) {
-        html +=     "<tr>";
-        html +=         "<td>" + industry + "</td>";
-        html +=         "<td>" + count + "</td>";
-        html +=     "</tr>";
-    });
-    html +=     "</table>";
-    html += "</div>";
 
-    // Jobs
-    html += "<h1>All Jobs & Companies:</h1>";
-    html += "<div>";
-    html +=     "<table>";
-    html +=         "<tr>";
-    html +=             "<th>Job Title</th>";
-    html +=             "<th>Company</th>";
-    html +=         "</tr>";
-    jobs.forEach(function(job) {
-        var job_lat = job.latitude[0]._text;
-        var job_long = job.longitude[0]._text;
-        html +=     "<tr>";
-        html +=         "<td>";
-        html +=             "<a href=\"" + job.url[0]._text +"\">" + job.jobtitle[0]._text + "</a>";
-        html +=         "</td>";
-        html +=         "<td>";
-        html +=             job.company[0]._text;
-        html +=         "</td>";
-        html +=     "</tr>";
-        // If you want to use pinpoints
-        // document.getElementById('pins').checked
-        if (true) {
-            var gmap = get_gmap();
-            var marker = new google.maps.Marker({
-                position: new google.maps.LatLng(job_lat, job_long),
-                map: gmap,
-                title: 'job',
-            });
-        }
+    // fancy loader animation ;p
+    leftContentDiv.innerHTML = '<div class=\"loader\"></div>';
+
+    getJobsSummary(loc, function(totalJobs, avgCompany) {
+       $("#left-content").hide();
+
+       var jobs = indeed_jobs_array;
+       var html = "";
+       // Stats in this area
+       html += "<h1>Jobs In This Area:</h1>";
+       html += "<span>Total Jobs: " + jobs_in_area + "</span><br />";
+       html += "<span>Average Company Rating: " + avg_company_rating + "</span>";
+       // Jobs per Industry (this can be reduced to show less industries)
+       // This sorts industry popularity by keys (industries), don't think you can sort by value (count)
+       var industry_popularity_sort = new Map([...industry_popularity.entries()].sort());
+       html += "<h1>Industries In This Area:</h1>";
+       html += "<div>";
+       html +=     "<table>";
+       html +=         "<tr>";
+       html +=             "<th>Industry</th>";
+       html +=             "<th>Job Count</th>";
+       html +=         "</tr>";
+       industry_popularity.forEach(function(count, industry) {
+           html +=     "<tr>";
+           html +=         "<td>" + industry + "</td>";
+           html +=         "<td>" + count + "</td>";
+           html +=     "</tr>";
+       });
+       html +=     "</table>";
+       html += "</div>";
+
+       // Jobs
+       html += "<h1>All Jobs & Companies:</h1>";
+       html += "<div>";
+       html +=     "<table>";
+       html +=         "<tr>";
+       html +=             "<th>Job Title</th>";
+       html +=             "<th>Company</th>";
+       html +=         "</tr>";
+       jobs.forEach(function(job) {
+           var job_lat = job.latitude[0]._text;
+           var job_long = job.longitude[0]._text;
+           html +=     "<tr>";
+           html +=         "<td>";
+           html +=             "<a href=\"" + job.url[0]._text +"\">" + job.jobtitle[0]._text + "</a>";
+           html +=         "</td>";
+           html +=         "<td>";
+           html +=             job.company[0]._text;
+           html +=         "</td>";
+           html +=     "</tr>";
+           // If you want to use pinpoints in UI
+           // document.getElementById('pins').checked
+           if (true) {
+               var gmap = get_gmap();
+               var marker = new google.maps.Marker({
+                   position: new google.maps.LatLng(job_lat, job_long),
+                   map: gmap,
+                   title: 'job',
+               });
+           }
+       });
+       html +=     "</table>";
+       html += "</div>";
+       successCallback(html);
+
+       $("#left-content").fadeIn("slow", function(){});
     });
-    html +=     "</table>";
-    html += "</div>";
-    successCallback(html);
 }
 
 function getIndeedOptions(zip) {
@@ -232,20 +251,4 @@ function doCORSRequest(options, printResult) {
       console.log("An error occured sending the request");
       console.log(cors_api_url + options.url);
    }
-}
-
-function get_stars(rating) {
-   var str = "<div class='fa'>";
-   var i = 1;
-   while (i < avg_rating) {
-      str += "<span class='fa-star'></span>";
-      i++;
-   }
-   var temp_rating = avg_rating - i;
-   if (temp_rating >= 0.51) {
-      str += "<span class='fa-star'></span>";
-   } else if (temp_rating >= 0.333) {
-      str += "<span class='fa-star-half'></span>";
-   }
-   return str + "</div>";
 }

@@ -15,6 +15,7 @@ var loc = {
 
 function initMap() {
    //Initialize and center map
+
    gmap = new google.maps.Map(document.getElementById('map'), {
       zoom: 10,
       center: loc,
@@ -34,8 +35,6 @@ function initMap() {
             rad: 1500
          };
          reverseGeocodeAddress(geocoder, gmap, loc);
-      }, function() {
-         //no-op
       });
    } else {
       console.error("Browser doesn't support Geolocation");
@@ -55,8 +54,7 @@ function initMap() {
       } else {
          reverseGeocodeAddress(geocoder, gmap, loc);
       }
-      //Clear glassdoor vars when clicked
-      clear_glassdoor_vars();
+      // Enable scrolling zoom when map is in focus
       this.setOptions({scrollwheel:true});
    });
 

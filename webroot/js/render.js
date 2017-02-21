@@ -1,6 +1,8 @@
 //global vars
-var pages = ["Home", "Walk Score", "Hospitals", "Parks", "Culture", "Jobs", "Schools", "Public Art", "Concerts", "Property", "Crime", "Food"];
+var pages = ["Home", "Walk Score", "Hospitals", "Parks", "Culture", "Jobs", "Schools", "Public Art", "Crime", "Property", "Concerts", "Food"];
 var currentPage = pages[0];
+var showMap = true;
+var leftContentDiv = "left-content";
 
 //Render functions
 function render_nav() {
@@ -27,44 +29,44 @@ function render_page(name) {
          break;
       case "Parks":
          getParks(loc,
-            function(success) { update_div("left-content", success);},
-            function(error)   { update_div("left-content", error); });
+            function(success) { update_div(leftContentDiv, success);},
+            function(error)   { update_div(leftContentDiv, error); });
          return;
       case "Culture":
          getCultureData(loc,
-            function(success) { update_div("left-content", success);},
-            function(error)   { update_div("left-content", error); });
+            function(success) { update_div(leftContentDiv, success);},
+            function(error)   { update_div(leftContentDiv, error); });
          return;
       case "Schools":
          getSchoolsData(loc,
-            function(success) { update_div("left-content", success);},
-            function(error)   { update_div("left-content", error); },true);
+            function(success) { update_div(leftContentDiv, success);},
+            function(error)   { update_div(leftContentDiv, error); },true);
          return;
       case "WalkScore":
          getWalkScoreData(loc, true);
          return;
       case "Jobs":
          getJobsData(loc,
-            function(success) { update_div("left-content", success);},
-            function(error)   { update_div("left-content", error); });
+            function(success) { update_div(leftContentDiv, success);},
+            function(error)   { update_div(leftContentDiv, error); });
          return;
       case "Concerts":
          getConcertData(loc, true);
          // getConcertData(loc,
-         //    function(success) { update_div("left-content", success);},
-         //    function(error)   { update_div("left-content", error); });
+         //    function(success) { update_div(leftContentDiv, success);},
+         //    function(error)   { update_div(leftContentDiv, error); });
          return;
       case "PublicArt":
          getPublicArtData(loc,
-            function(success) { update_div("left-content", success);},
-            function(error)   { update_div("left-content", error); },
+            function(success) { update_div(leftContentDiv, success);},
+            function(error)   { update_div(leftContentDiv, error); },
             true);
          return;
       default:
          str = "Hey, now we're going to render " + name;
          break;
    }
-   update_div("left-content", str);
+   update_div(leftContentDiv, str);
 }
 
 function update_div(div, html) {
@@ -72,38 +74,65 @@ function update_div(div, html) {
 }
 
 function render_tiles() {
-   //Initialize live tile data, if applicable
-   getHospData(loc, false);
-   getPublicArtSummary(loc);
-   getCultureDataSummary(loc);
-   getParks(loc);
    var tiles = "<div style='display: flex; flex-wrap: wrap'>";
    for (var i = 1; i < pages.length; i++) {     //Start at 1 to skip 'Home' tile
       var tile = "", page = pages[i].replace(" ", "");
-      tile += "<a href='#' onclick='render_page(\"" + page +"\"); return false;'>";
+      tile += "<a href='#" + page + "'>";
       tile += "<div class='tile " + page + "'><span class='" + get_icon(pages[i]) + "'></span>";
       tile += get_summary(pages[i]);
       tile += "</div></a>";
       tiles += tile;
    }
    tiles += "</div>";
-   document.getElementById("left-content").innerHTML = tiles;
+   document.getElementById(leftContentDiv).innerHTML = tiles;
 }
 
 //Utility functions
-function linkify(text) {
-   text = text.replace(" ", "");
-   return "<a href='#' onclick='render_page(text); return false;'>" + text + "</a>";
+function linkify(page) {
+   page = page.replace(" ", "");
+   return "<a href='#" + page + "'>" + page + "</a>";
 }
 
 function get_summary(page) {
    var sum = "&nbsp;" + page + "<br/><ul id=\"" + page + "_tile\">";
    switch (page) {
       case "Hospitals":
-         sum += get_hospital_summary();
+         sum += getHospSummary();
          break;
       case "Walk Score":
-         sum += getWalkScoreSummary(loc);
+         sum += "<li>Loading WalkScore Data...</li>";
+         getWalkScoreData(loc,
+            function(success) {update_div("Walk Score_tile", success);},
+            function(error)   {update_div("Walk Score_tile",  error); });
+         break;
+      case "Public Art":
+         sum += "<li>Loading Art Data...</li>";
+         getPublicArtSummary(loc,
+            function(success) {update_div("Public Art_tile", success);},
+            function(error)   {update_div("Public Art_tile",  error); });
+         break;
+      case "Culture":
+         getCultureDataSummary(loc,
+            function(success) {update_div("Culture_tile", success);},
+            function(error)   {update_div("Culture_tile",  error); });
+         break;
+      case "Crime":
+         sum += '<li>Loading Crime Data...</li>';
+         getCrimeSummary(loc,
+            function(success) {update_div("Crime_tile", success);},
+            function(error)   {update_div("Crime_tile", error);  });
+         break;
+      case "Parks":
+         sum += "<li>Loading Parks Data...</li>";
+         getParks(loc, false,
+            function(success) {update_div("Parks_tile", success);},
+            function(error)   {update_div("Parks_tile", error);  });
+         break;
+      case "Concerts":
+         sum += "<li>Loading Concert Data...</li>";
+         getConcertData(loc,
+            function(success) {update_div("Concerts_tile", success);},
+            function(error)   {update_div("Concerts_tile", error);  });
          break;
       case "Jobs":
          sum += '<div class=\"loader\"></div>';
@@ -115,27 +144,9 @@ function get_summary(page) {
             $("#Jobs_tile").fadeIn("slow", function(){});
          });
          break;
-      case "Concerts":
-         sum += getConcertSummary(loc);
-         break;
-      case "Public Art":
-         sum += getPublicArtSummaryCount();
-         break;
-      case "Culture":
-         sum += getCultureSummaryCount();
-         break;
-      case "Crime":
-         sum += '<li>Loading Data...</li>';
-         /*getCrimeSummary(loc,
-          function(success) {$("div.tile.Crime ul").html(success);},
-          function(error)   {$("div.tile.Crime ul").html(error); });*/
-         break;
-      case "Parks":
-         sum += getParksSummary();
-         break;
       default:
          sum += "<li>Pertinent Point</li>" +
-            "<li>Salient Stat</li>";
+                "<li>Salient Stat</li>";
          break;
    }
    return sum + "</ul>";
@@ -174,9 +185,25 @@ function get_icon(page) {
       case "Concerts":
          icon += "fa-music fa-2x";
          break;
+      case "Public Art":
+         icon += "fa-picture-o fa-2x";
+         break;
       default:
          icon += "fa-question-circle-o fa-5";
          break;
    }
    return icon;
 }
+
+function toggle_map() {
+   showMap = !showMap;
+   leftContentDiv = showMap ? "left-content" : "left-content-full";
+   document.getElementById(showMap ? "hide_map" : "show_map").setAttribute("id", showMap ? "show_map" : "hide_map");
+   document.getElementById(showMap ? "left-content-full" : "left-content").setAttribute("id", showMap ? "left-content" : "left-content-full");
+   document.getElementById(showMap ? "right-content-full" : "right-content").setAttribute("id", showMap ? "right-content" : "right-content-full");
+}
+
+window.onhashchange = function () {
+   var data = document.location.hash.substr(1);
+   !!data ? render_page(data) : render_page(pages[0]);
+};

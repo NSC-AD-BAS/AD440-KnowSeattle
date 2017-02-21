@@ -3,17 +3,7 @@ var currentLoc;
 //1609 Meters in a mile
 var parks = [];
 
-function getParksSummary(loc) {
-    if(parks.length !== 0) {
-        return "<li>There are " + parks.length + " parks in your area</li>";
-    }else {
-        getParks(loc);
-        return "<li>loading park data...</li>";
-    }
-}
-
-function getParks(loc, display, error)
-{
+function getParks(loc, display, success, error) {
     if(null == currentLoc) {
         currentLoc = loc;
     }
@@ -73,6 +63,8 @@ function getParks(loc, display, error)
             }
             if(display) {
                 displayParks(display);
+            } else {
+                success("<li>There are " + parks.length + " parks in your area</li>");
             }
         }).fail(function(data){
             if(error) {
@@ -108,23 +100,11 @@ function addFeature(parkObject, newFeature) {
 
 function displayParks(display) {
     var out = '<table class=tg><th>Park Name</th><th>Park Address</th><th>Park Features</th>';
-    for (i = 0; i < parks.length; i++) {
+    for (var i = 0; i < parks.length; i++) {
         out += '<tr><td>' + parks[i].parkname + '</td><td>' + parks[i].parkaddress + '</td><td>'
             + parks[i].parkfeature + '</td></tr>';
 
     }
     out += '</table></div>';
     display(out);
-}
-
-function getLocation() {
-    loc = {
-        lat: 47.6062095,
-        lng: -122.3320708,
-        zip: null,
-        rad: 2,
-        err: null,
-        pid: null
-    };
-    return loc;
 }

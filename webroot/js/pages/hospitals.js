@@ -279,6 +279,7 @@ function get_rating(rating) {
    }
 }
 
-function get_hospital_summary() {
+function getHospSummary() {
+   getHospData(loc, false);
    return summary_data;
 }
