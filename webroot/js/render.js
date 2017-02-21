@@ -136,6 +136,19 @@ function get_summary(page) {
       case "Property":
          sum+= getPropertySummary(loc);
          break;
+      case "Food":
+         sum += '<li>Loading Data...</li>';
+         getFoodSummary(loc, function (error, data) {
+            var tileUl = document.getElementById("Food_tile");
+            if (error) {
+               tileUl.innerHTML = "<li>Error while loading!</li>";
+               return;
+            }
+            
+            if (tileUl) {
+               tileUl.innerHTML = data.html;
+            }
+         });
       default:
          sum += "<li>Pertinent Point</li>" +
             "<li>Salient Stat</li>";

@@ -10,10 +10,14 @@ var credentials = {
 var router = express.Router();
 router.route('/summary')
     .get(function(req, res) {
+        
+        
         var areaSpecification = new AreaSpecification(
-            Number(req.query.lat),
-            Number(req.query.long),
-            Number(req.query.rad));
+            Number(req.query.location.lat),
+            Number(req.query.location.lng),
+            Number(req.query.location.rad));
+            
+        console.log(areaSpecification);
         
         getFoodData(areaSpecification, function(error, data) {
             if(error) {
@@ -22,7 +26,7 @@ router.route('/summary')
                 res.render('error');
             }
             else {
-                res.render('food/summary', data);
+                res.json(data);
             }
         });
 });
@@ -44,8 +48,8 @@ function getFoodData(areaSpecification, callback) {
         
         callback(null, {
             averageRating: nearestHalfStar,
-            url: createUrl(areaSpecification),
-            count: results.length
+            count: results.length,
+            url: createUrl(areaSpecification)
         });
     });
 }
@@ -63,8 +67,8 @@ function calculateNearestHalfStar(rating) {
 }
 
 function createUrl(areaSpecification) {
-    var milesPerCoordinate = 0.01449;
-	var gpsDelta = areaSpecification.radius * milesPerCoordinate / 1.25;
+    var coordinatesPerMile = 0.01449 / 1609;
+	var gpsDelta = areaSpecification.radius * coordinatesPerMile / 1.25;
 	var gpsBox = {
 		southWestLatitude : areaSpecification.latitude - gpsDelta,
 		southWestLongitude: areaSpecification.longitude - gpsDelta,
@@ -82,7 +86,7 @@ function find(areaSpecification, callback) {
     var yelp = new Yelp(credentials);
     var resultsPerCall = 40;
     var coordinates = areaSpecification.latitude + "," + areaSpecification.longitude;
-    var radiusInMeters = areaSpecification.radius * 1609;
+    var radiusInMeters = areaSpecification.radius;
     
     function searchRecurrsive(offset, results) {
         yelp.search({ category_filter: 'restaurants', ll: coordinates, radius_filter: radiusInMeters, limit: resultsPerCall, offset: offset})
