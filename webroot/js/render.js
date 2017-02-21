@@ -149,17 +149,9 @@ function get_summary(page) {
          break;
       case "Food":
          sum += '<li>Loading Data...</li>';
-         getFoodSummary(loc, function (error, data) {
-            var tileUl = document.getElementById("Food_tile");
-            if (error) {
-               tileUl.innerHTML = "<li>Error while loading!</li>";
-               return;
-            }
-            
-            if (tileUl) {
-               tileUl.innerHTML = data.html;
-            }
-         });
+         getFoodSummary(loc, 
+            function(success) {update_div("Food_tile", success);},
+            function(error)   {update_div("Food_tile", error);  });
          break;
       default:
          sum += "<li>Pertinent Point</li>" +
