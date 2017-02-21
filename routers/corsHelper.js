@@ -17,11 +17,29 @@ router.route('/walkscore')
 
         request(url, function (error, response, body) {
             if (!error && response.statusCode == 200) {
-            var jsonResult = body;//JSON.parse(body);
-            console.log(jsonResult);
-            res.send(jsonResult);
-        }
+                var jsonResult = body;//JSON.parse(body);
+                console.log(jsonResult);
+                res.send(jsonResult);
+            }
     })
+});
+
+router.route('/concerts')
+    .get(function(req, res) {
+        var zipcode = req.query.loc.zip;
+        var key = "k5dywsuqf9vaexvg5xczcspf";
+        
+        var url = "http://api.jambase.com/events?zipCode="
+            + zipcode
+            + "&radius=0&page=0&api_key="
+            + key;
+
+        request(url, function (error, response, body) {
+            if (!error && response.statusCode == 200) {
+                var jsonResult = body;
+                res.send(jsonResult);
+            }
+    });
 });
 
 module.exports = router;
