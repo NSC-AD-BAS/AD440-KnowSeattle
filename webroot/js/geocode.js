@@ -54,8 +54,7 @@ function initMap() {
       } else {
          reverseGeocodeAddress(geocoder, gmap, loc);
       }
-      //Clear glassdoor vars when clicked
-      clear_glassdoor_vars();
+      // Enable scrolling zoom when map is in focus
       this.setOptions({scrollwheel:true});
    });
 
