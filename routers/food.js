@@ -10,14 +10,10 @@ var credentials = {
 var router = express.Router();
 router.route('/summary')
     .get(function(req, res) {
-        
-        
         var areaSpecification = new AreaSpecification(
             Number(req.query.location.lat),
             Number(req.query.location.lng),
             Number(req.query.location.rad));
-            
-        console.log(areaSpecification);
         
         getFoodData(areaSpecification, function(error, data) {
             if(error) {
