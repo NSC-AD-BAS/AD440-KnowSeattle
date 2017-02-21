@@ -3,9 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-var summary_art_data =
-        "<li>Loading Art Data...</li>";
-
 function getPublicArtData(loc, success, error, detailed) {
     //variable loc used for testing
     $.ajax({
@@ -24,7 +21,7 @@ function getPublicArtData(loc, success, error, detailed) {
     });
 }
 
-function getPublicArtSummary(loc) {
+function getPublicArtSummary(loc, success, error) {
     //variable loc used for testing
     $.ajax({
         url: "https://data.seattle.gov/resource/249z-59hj.json",
@@ -35,8 +32,9 @@ function getPublicArtSummary(loc) {
                     1500 + ")"
         }
     }).done(function (data) {
-        countPublicArtFeatures(data);
+        success(countPublicArtFeatures(data));
     }).fail(function () {
+        error("There was an error getting the Public Art Summary");
     });
 }
 
@@ -57,11 +55,7 @@ function countPublicArtFeatures(data) {
     var content = "";
     content += "<li>Art Pieces: " + data.length + "</li>";
     content += "<li>Sculptures: " + typeMap.Sculpture + "</li>";
-    summary_art_data = content;
-}
-
-function getPublicArtSummaryCount() {
-    return summary_art_data;
+    return content;
 }
 
 function parsePublicArtFeatures(data) {

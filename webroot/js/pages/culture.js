@@ -4,10 +4,6 @@
  * @author Samuel No
  */
 
-/* global type */
-var summary_culture_data =
-        "<li>Loading culture data...</li>";
-
 function getCultureData(loc, success, error) {
     //  var loc = { passing this in from the main index.html / geocode.js now };
     $.ajax({
@@ -29,8 +25,7 @@ function getCultureData(loc, success, error) {
     });
 }
 
-function getCultureDataSummary(loc) {
-    //  var loc = { passing this in from the main index.html / geocode.js now };
+function getCultureDataSummary(loc, success, error) {
     $.ajax({
         url: "https://data.seattle.gov/resource/3c4b-gdxv.json?$$app_token=IZLnwcjjGNvFpmxfooid8p5VI",
         type: "GET",
@@ -43,14 +38,12 @@ function getCultureDataSummary(loc) {
                     "OR city_feature = 'Libraries')"
         }
     }).done(function (data) {
-        countCultureFeatures(data);
+        success(countCultureFeatures(data));
     }).fail(function (data) {
         var out = '<div>There was a problem getting the culture data in your area. </div>';
         error(out);
     });
 }
-
-
 
 function parseCityFeatures(data) {
     var dataMap = [];
@@ -63,9 +56,6 @@ function parseCityFeatures(data) {
         }
     }
     return displayCultureData(dataMap);
-}
-function getCultureSummaryCount() {
-    return summary_culture_data;
 }
 
 function countCultureFeatures(data) {
@@ -85,12 +75,10 @@ function countCultureFeatures(data) {
     }
     for (var type in typeMap) {
         if (type == "Libraries" || type == "Museums and Galleries") {
-            content += type + " : " + typeMap[type] + "<br>";
+            content += "<li>" + type + " : " + typeMap[type] + "</li>";
         }
     }
-//    content += "<li>There are " + data.length + " pieces of culture</li>";
-    summary_culture_data = content;
-
+    return content;
 }
 
 function displayCultureData(typeMap) {

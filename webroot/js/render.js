@@ -1,5 +1,5 @@
 //global vars
-var pages = ["Home", "Walk Score", "Hospitals", "Parks", "Culture", "Jobs", "Schools", "Public Art", "Concerts", "Property", "Crime", "Food"];
+var pages = ["Home", "Walk Score", "Hospitals", "Parks", "Culture", "Jobs", "Schools", "Public Art", "Crime", "Property", "Concerts", "Food"];
 var currentPage = pages[0];
 var showMap = true;
 var leftContentDiv = "left-content";
@@ -74,11 +74,6 @@ function update_div(div, html) {
 }
 
 function render_tiles() {
-   //Initialize live tile data, if applicable
-   getHospData(loc, false);
-   getPublicArtSummary(loc);
-   getCultureDataSummary(loc);
-   getParks(loc);
    var tiles = "<div style='display: flex; flex-wrap: wrap'>";
    for (var i = 1; i < pages.length; i++) {     //Start at 1 to skip 'Home' tile
       var tile = "", page = pages[i].replace(" ", "");
@@ -102,10 +97,40 @@ function get_summary(page) {
    var sum = "&nbsp;" + page + "<br/><ul id=\"" + page + "_tile\">";
    switch (page) {
       case "Hospitals":
-         sum += get_hospital_summary();
+         sum += getHospSummary();
          break;
       case "Walk Score":
-         sum += getWalkScoreSummary(loc);
+         sum += "<li>Loading WalkScore Data...</li>";
+         getWalkScoreData(loc,
+            function(success) {update_div("Walk Score_tile", success);},
+            function(error)   {update_div("Walk Score_tile",  error); });
+         break;
+      case "Public Art":
+         sum += "<li>Loading Art Data...</li>";
+         getPublicArtSummary(loc,
+            function(success) {update_div("Public Art_tile", success);},
+            function(error)   {update_div("Public Art_tile",  error); });
+         break;
+      case "Culture":
+         getCultureDataSummary(loc,
+            function(success) {update_div("Culture_tile", success);},
+            function(error)   {update_div("Culture_tile",  error); });
+         // sum += getCultureSummaryCount();
+         break;
+      case "Crime":
+         sum += '<li>Loading Crime Data...</li>';
+         getCrimeSummary(loc,
+            function(success) {update_div("Crime_tile", success);},
+            function(error)   {update_div("Crime_tile", error);  });
+         break;
+      case "Parks":
+         sum += "<li>Loading Parks Data...</li>";
+         getParks(loc, false,
+            function(success) {update_div("Parks_tile", success);},
+            function(error)   {update_div("Parks_tile", error);  });
+         break;
+      case "Concerts":
+         sum += getConcertSummary(loc);
          break;
       case "Jobs":
          sum += '<div class=\"loader\"></div>';
@@ -117,27 +142,9 @@ function get_summary(page) {
             $("#Jobs_tile").fadeIn("slow", function(){});
          });
          break;
-      case "Concerts":
-         sum += getConcertSummary(loc);
-         break;
-      case "Public Art":
-         sum += getPublicArtSummaryCount();
-         break;
-      case "Culture":
-         sum += getCultureSummaryCount();
-         break;
-      case "Crime":
-         sum += '<li>Loading Data...</li>';
-         getCrimeSummary(loc,
-          function(success) {$("div.tile.Crime ul").html(success);},
-          function(error)   {$("div.tile.Crime ul").html(error); });
-         break;
-      case "Parks":
-         sum += getParksSummary();
-         break;
       default:
          sum += "<li>Pertinent Point</li>" +
-            "<li>Salient Stat</li>";
+                "<li>Salient Stat</li>";
          break;
    }
    return sum + "</ul>";
@@ -175,6 +182,9 @@ function get_icon(page) {
          break;
       case "Concerts":
          icon += "fa-music fa-2x";
+         break;
+      case "Public Art":
+         icon += "fa-picture-o fa-2x";
          break;
       default:
          icon += "fa-question-circle-o fa-5";

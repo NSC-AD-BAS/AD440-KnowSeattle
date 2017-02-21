@@ -58,7 +58,7 @@
              data: {loc: loc},
              success: function(data) {
                 var json = JSON.parse(data);
-                summary = "<li>Parsed Data goes here (object is logged to console)...</li>";
+                summary = "<li>Summary Data goes here...</li>";
                 console.log(json);
                 display ? document.getElementById(leftContentDiv).innerHTML = summary : "";
              },
@@ -70,11 +70,4 @@
        );
 	 }
 
-
-    function getConcertSummary(loc){
-    	
-    	summary_json = "hot dog";
-
-		return summary_json;
-		}
 
