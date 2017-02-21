@@ -15,6 +15,7 @@ var loc = {
 
 function initMap() {
    //Initialize and center map
+
    gmap = new google.maps.Map(document.getElementById('map'), {
       zoom: 10,
       center: loc,
@@ -34,8 +35,6 @@ function initMap() {
             rad: 1500
          };
          reverseGeocodeAddress(geocoder, gmap, loc);
-      }, function() {
-         //no-op
       });
    } else {
       console.error("Browser doesn't support Geolocation");

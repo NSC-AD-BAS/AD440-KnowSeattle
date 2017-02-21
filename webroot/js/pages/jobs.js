@@ -233,19 +233,3 @@ function doCORSRequest(options, printResult) {
       console.log(cors_api_url + options.url);
    }
 }
-
-function get_stars(rating) {
-   var str = "<div class='fa'>";
-   var i = 1;
-   while (i < avg_rating) {
-      str += "<span class='fa-star'></span>";
-      i++;
-   }
-   var temp_rating = avg_rating - i;
-   if (temp_rating >= 0.51) {
-      str += "<span class='fa-star'></span>";
-   } else if (temp_rating >= 0.333) {
-      str += "<span class='fa-star-half'></span>";
-   }
-   return str + "</div>";
-}
