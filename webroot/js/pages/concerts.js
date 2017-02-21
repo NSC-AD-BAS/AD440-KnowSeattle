@@ -50,7 +50,7 @@
       return summary;
    }
 
-    function getConcertData(loc, display) {
+    function getConcertData(loc, success, error) {
        var url="php/cors_helper.php?f=concerts";
        $.ajax( {
              url: url,
@@ -59,12 +59,13 @@
              success: function(data) {
                 var json = JSON.parse(data);
                 summary = "<li>Summary Data goes here...</li>";
+                success(summary);
                 console.log(json);
-                display ? document.getElementById(leftContentDiv).innerHTML = summary : "";
              },
              error: function(){
-                console.error("Error getting WalkScore data");
-                // displayWalkScores("");
+                summary = "Error getting Concert data";
+                console.error(summary);
+                error(summary);
              }
           }
        );

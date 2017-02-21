@@ -115,7 +115,6 @@ function get_summary(page) {
          getCultureDataSummary(loc,
             function(success) {update_div("Culture_tile", success);},
             function(error)   {update_div("Culture_tile",  error); });
-         // sum += getCultureSummaryCount();
          break;
       case "Crime":
          sum += '<li>Loading Crime Data...</li>';
@@ -130,7 +129,10 @@ function get_summary(page) {
             function(error)   {update_div("Parks_tile", error);  });
          break;
       case "Concerts":
-         sum += getConcertSummary(loc);
+         sum += "<li>Loading Concert Data...</li>";
+         getConcertData(loc,
+            function(success) {update_div("Concerts_tile", success);},
+            function(error)   {update_div("Concerts_tile", error);  });
          break;
       case "Jobs":
          sum += '<div class=\"loader\"></div>';
