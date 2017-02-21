@@ -2,16 +2,11 @@
 
 var express = require('express');
 var app = express();
-var food = require('./routers/food');
-var corsRouter = require('./routers/corsHelper');
-var propertyRouter = require('./routers/property/property');
+var mainRouter = require('./routers');
 
 app.set('view engine', 'ejs');
 app.set('views', './views');
-app.use('/food', food);
-app.use('/cors_helper', corsRouter);
-app.use('/property', propertyRouter);
-app.use('/', express.static('webroot'))
+app.use('/', mainRouter);
 
 var config = require('./serverConfig');
 app.listen(config.port, config.ip);
