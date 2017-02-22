@@ -33,7 +33,7 @@ function getSchoolsData(loc, success, error, display) {
             
          }
          //verify results (can be removed after testing)
-         console.log(arr);
+         // console.log(arr);
          //sort the array by distance from loc
          arr.sort(function (a, b) {
             return a.dist < b.dist ? -1 : 1;
