@@ -15,6 +15,7 @@ var router = express.Router();
 
 router.route('/summary').get(function(req, res) {
     // collect the location from the URL
+    console.log(req.query);
     var latitude = Number(req.query.lat);
     var longitude = Number(req.query.long);
 
@@ -28,7 +29,7 @@ router.route('/summary').get(function(req, res) {
 
 var id = 1;
 /*
-// Sample location object used for testing locally
+Sample location object used for testing locally
 var loc = {
   lng:"-122.364312",
   lat:"47.688395",

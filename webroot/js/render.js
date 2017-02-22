@@ -145,7 +145,10 @@ function get_summary(page) {
          });
          break;
       case "Property":
-         sum+= getPropertySummary(loc);
+         sum+= '<li>Loading Data...</li>';
+         getPropertySummary(loc,
+            function(success) {update_div("Property_tile", success);},
+            function(error)   {update_div("Property_tile", error);});
          break;
       case "Food":
          sum += '<li>Loading Data...</li>';
