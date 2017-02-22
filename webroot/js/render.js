@@ -83,7 +83,7 @@ function render_tiles() {
       tile += "<div class='tile " + page + "'><span class='" + get_icon(pages[i]) + "'></span>";
       tile += get_summary(pages[i]);
       tile += "</div></a>";
-      tiles += tile;
+      tiles += "<strong>" + tile + "</strong>";
    }
    tiles += "</div>";
    document.getElementById(leftContentDiv).innerHTML = tiles;
