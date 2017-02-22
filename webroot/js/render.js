@@ -124,7 +124,7 @@ function get_summary(page) {
          break;
       case "Parks":
          sum += "<li>Loading Parks Data...</li>";
-         getParks(loc, false,
+         getParksSummary(loc,
             function(success) {update_div("Parks_tile", success);},
             function(error)   {update_div("Parks_tile", error);  });
          break;
