@@ -43,7 +43,10 @@ function render_page(name) {
             function(error)   { update_div(leftContentDiv, error); },true);
          return;
       case "WalkScore":
-         getWalkScoreData(loc, true);
+      case "Walk Score":
+         getWalkScoreData(loc,
+            function(success) { update_div(leftContentDiv, success);},
+            function(error)   { update_div(leftContentDiv, error); });
          return;
       case "Jobs":
          getJobsData(loc,
@@ -51,10 +54,9 @@ function render_page(name) {
             function(error)   { update_div(leftContentDiv, error); });
          return;
       case "Concerts":
-         getConcertData(loc, true);
-         // getConcertData(loc,
-         //    function(success) { update_div(leftContentDiv, success);},
-         //    function(error)   { update_div(leftContentDiv, error); });
+         getConcertData(loc,
+            function(success) { update_div(leftContentDiv, success);},
+            function(error)   { update_div(leftContentDiv, error); });
          return;
       case "PublicArt":
          getPublicArtData(loc,
