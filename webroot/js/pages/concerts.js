@@ -51,8 +51,7 @@
    }
 
     function getConcertData(loc, success, error) {
-       var url="cors_helper/concerts";
-       //var url="php/cors_helper.php?f=concerts";
+       var url="php/cors_helper.php?f=concerts";
        $.ajax( {
              url: url,
              type:'GET',

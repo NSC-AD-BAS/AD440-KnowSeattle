@@ -1,6 +1,5 @@
 function getWalkScoreData(loc, success, error) {
-   var url="cors_Helper/walkscore";
-   //var url="php/cors_helper.php?f=walkscore";
+   var url="php/cors_helper.php?f=walkscore";
    $.ajax({
          url: url,
          type:'GET',
