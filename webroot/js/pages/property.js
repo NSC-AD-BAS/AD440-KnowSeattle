@@ -10,7 +10,7 @@ function getPropertySummary(loc, success, error) {
         success(this.responseText);
     }
     else {
-        error("error");
+        error("<li>No data found</li>");
     }
   };
   console.log("lat: " + loc.lat);

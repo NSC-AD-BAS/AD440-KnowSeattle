@@ -15,7 +15,6 @@ var router = express.Router();
 
 router.route('/summary').get(function(req, res) {
     // collect the location from the URL
-    console.log(req.query);
     var latitude = Number(req.query.lat);
     var longitude = Number(req.query.long);
 
@@ -45,19 +44,25 @@ function getNeighborhood(location, res) {
    var long = location.lng, lat = location.lat;
    MongoClient.connect("mongodb://localhost:27017/knowSeattle", function (err, db) {
        if(err) {
-           throw err;
+           res.send("<li>No data found</li>");
+           console.log("Unable to connect to MongoDB");
+           return;
        }
        db.collection('neighborhoods', function (err, collection) {
            if(err) {
-               throw err;
+               res.send("<li>No data found</li>");
+               console.log("Unable to find collection");
+               return;
            }
            var query = { geometry: { $geoIntersects: { $geometry: { type: "Point", coordinates: [ long, lat ] } } } }
            collection.findOne(query, [], function(err, document) {
-             if(err) {
-               throw err;
+             if(err || !document || !document.properties) {
+               res.send("<li>No data found</li>");
+               console.log("Query returned null");
+               return;
              }
              // This line calls gethousingprices, note that we are inside the query callback
-             gethousingprices(document.properties.REGIONID, res);
+            gethousingprices(document.properties.REGIONID, res);
            })
 
        });
