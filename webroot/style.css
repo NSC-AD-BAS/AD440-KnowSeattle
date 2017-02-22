@@ -7,14 +7,14 @@ html, body {
     height: 100%;
     margin: 0;
     padding: 0;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: 'Maven Pro', Arial, Helvetica, sans-serif;
     color: black;
 }
 
 #floating-panel {
     z-index: 5;
     text-align: center;
-    font-family: 'Roboto','sans-serif';
+    font-family: 'Maven Pro', 'sans-serif';
     line-height: 30px;
     padding: 5px 5px 10px 5px;
     margin-top: 25px;
@@ -57,49 +57,49 @@ input#address, input#submit {
     border-radius: 3px;
     padding: 10px;
     margin: 10px;
-    font-size: 1.5em;
+    font-size: 1.4em;
 }
 
 a { text-decoration: none;  }
 
 /* Page-sensitive tile styles */
 .Crime {
-    border: 1px solid darkblue;
+    border: 3px solid darkblue;
     color: darkblue;
 }
 
 .Food {
-    border: 1px solid darkred;
+    border: 3px solid darkred;
     color: darkred;
 }
 
 .Parks {
-    border: 1px solid darkgreen;
+    border: 3px solid darkgreen;
     color: darkgreen;
 }
 
 .Property {
-    border: 1px solid darkred;
+    border: 3px solid darkred;
     color: darkred;
 }
 
 .Hospitals {
-    border: 1px solid black;
+    border: 3px solid black;
     color: black;
 }
 
 .WalkScore {
-    border: 1px solid darkblue;
+    border: 3px solid darkblue;
     color: darkblue;
 }
 
 .Schools {
-    border: 1px solid forestgreen;
+    border: 3px solid forestgreen;
     color: forestgreen;
 }
 
 .Jobs {
-    border: 1px solid goldenrod;
+    border: 3px solid goldenrod;
     color: goldenrod;
 }
 
@@ -152,6 +152,17 @@ nav a:visited { color: #344873; }
     border-radius: 50%;
     width: 80px;
     height: 80px;
+    animation: spin 1s linear infinite;
+}
+
+.detail_loader {
+    border: 16px solid #f3f3f3; /* Light grey */
+    border-top: 16px solid #3498db; /* Blue */
+    border-radius: 50%;
+    width: 300px;
+    height: 300px;
+    margin-left: auto;
+    margin-right: auto;
     animation: spin 1s linear infinite;
 }
 
