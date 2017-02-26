@@ -75,25 +75,33 @@ function parsePublicArtFeatures(data) {
 
 function getArtData(dataMap) {
     var content = '<table><tr><th>Title</th><th>Artist Name</th><th>Classification</th><th>Address</th>' +
-            '<th>Location</th><th>Description</th></tr>';
+            '<th>Location</th></tr>';
     for (var i = 0; i < dataMap.length; i++) {
         if (dataMap[i] !== null) {
             var title = dataMap[i].title == null ? " " : dataMap[i].title;
-            var artist_first_name = dataMap[i].artist_first_name == null ? " " : dataMap[i].artist_first_name;
-            var artist_last_name = dataMap[i].artist_last_name == null ? " " : dataMap[i].artist_last_name;
-            var classification = dataMap[i].classification == null ? " " : dataMap[i].classification;
-            var location = dataMap[i].location == null ? " " : dataMap[i].location;
-            var address = dataMap[i].address == null ? " " : dataMap[i].address;
-            var description = dataMap[i].description == null ? " " : dataMap[i].description;
-            content += '<tr><td>' + title + '</td><td>' +
-                    artist_first_name + " " + artist_last_name + '</td><td>' +
+            var artist_first_name = dataMap[i].artist_first_name == null ? "n/a" : dataMap[i].artist_first_name;
+            var artist_last_name = dataMap[i].artist_last_name == null ? "n/a" : dataMap[i].artist_last_name;
+            var artist_name = artist_last_name == "n/a" ? "n/a" : artist_first_name + " " + artist_last_name;
+            var classification = dataMap[i].classification == null ? "n/a" : dataMap[i].classification;
+            var location = dataMap[i].location == null ? "n/a" : dataMap[i].location;
+            var address = dataMap[i].address == null ? "n/a" : dataMap[i].address;
+            var description = dataMap[i].description == "''" ? "no description" : dataMap[i].description;
+            content += '<tr><td><div class="tooltip">' + title + 
+                    getDescriptionSpan(description) + '</div></td><td>' +
+                    artist_name + '</td><td>' +
                     classification + '</td><td>' +
                     address + '</td><td>' +
-                    location + '</td><td>' +
-                    description + '</td></tr>';
+                    location + '</td></tr>';
         }
     }
     content += "</table>";
     return content;
+}
+
+function getDescriptionSpan(description){
+   var content = "<span class='tooltiptext'>";
+   content += description;
+   content += "</span>";  
+   return content;
 }
 
