@@ -64,6 +64,12 @@ function render_page(name) {
             function(error)   { update_div(leftContentDiv, error); },
             true);
          return;
+      case "Crime":
+         getCrimeDetailData(loc,
+            function(success) { update_div(leftContentDiv, success);},
+            function(error)   { update_div(leftContentDiv, error); },
+            true);
+         return;
       default:
          str = "Hey, now we're going to render " + name;
          break;
