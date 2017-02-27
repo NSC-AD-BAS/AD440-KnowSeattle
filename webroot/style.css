@@ -42,10 +42,10 @@ input#address, input#submit {
 }
 
 input#submit {
-    background-color: gray;
-    color: black;
+    background-color: #24292e;
+    color: #c8c9cb;
     font-weight: bold;
-    border: 2px solid #008CBA;
+    border: 2px solid #c8c9cb;
     margin-top: 5px;
     text-align: center;
     text-decoration: none;
