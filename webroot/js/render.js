@@ -43,7 +43,10 @@ function render_page(name) {
             function(error)   { update_div(leftContentDiv, error); },true);
          return;
       case "WalkScore":
-         getWalkScoreData(loc, true);
+      case "Walk Score":
+         getWalkScoreData(loc,
+            function(success) { update_div(leftContentDiv, success);},
+            function(error)   { update_div(leftContentDiv, error); });
          return;
       case "Jobs":
          getJobsData(loc,
@@ -51,13 +54,18 @@ function render_page(name) {
             function(error)   { update_div(leftContentDiv, error); });
          return;
       case "Concerts":
-         getConcertData(loc, true);
-         // getConcertData(loc,
-         //    function(success) { update_div(leftContentDiv, success);},
-         //    function(error)   { update_div(leftContentDiv, error); });
+         getConcertData(loc,
+            function(success) { update_div(leftContentDiv, success);},
+            function(error)   { update_div(leftContentDiv, error); });
          return;
       case "PublicArt":
          getPublicArtData(loc,
+            function(success) { update_div(leftContentDiv, success);},
+            function(error)   { update_div(leftContentDiv, error); },
+            true);
+         return;
+      case "Crime":
+         getCrimeDetailData(loc,
             function(success) { update_div(leftContentDiv, success);},
             function(error)   { update_div(leftContentDiv, error); },
             true);
@@ -81,7 +89,7 @@ function render_tiles() {
       tile += "<div class='tile " + page + "'><span class='" + get_icon(pages[i]) + "'></span>";
       tile += get_summary(pages[i]);
       tile += "</div></a>";
-      tiles += tile;
+      tiles += "<strong>" + tile + "</strong>";
    }
    tiles += "</div>";
    document.getElementById(leftContentDiv).innerHTML = tiles;
@@ -143,6 +151,18 @@ function get_summary(page) {
             document.getElementById("Jobs_tile").innerHTML = html;
             $("#Jobs_tile").fadeIn("slow", function(){});
          });
+         break;
+      case "Property":
+         sum+= '<li>Loading Data...</li>';
+         getPropertySummary(loc,
+            function(success) {update_div("Property_tile", success);},
+            function(error)   {update_div("Property_tile", error);});
+         break;
+      case "Food":
+         sum += '<li>Loading Data...</li>';
+         getFoodSummary(loc, 
+            function(success) {update_div("Food_tile", success);},
+            function(error)   {update_div("Food_tile", error);  });
          break;
       default:
          sum += "<li>Pertinent Point</li>" +

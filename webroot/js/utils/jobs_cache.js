@@ -1,9 +1,9 @@
 /*
 Client-side Jobs Cache mechanism using JSON Object
 */
-private var jobs_cache = {
-    indeed_jobs : [];
-    glassdoor_companies : [];
+var jobs_cache = {
+    indeed_jobs : [],
+    glassdoor_companies : []
 };
 
 function add_indeed_cache(blob) {
