@@ -26,6 +26,18 @@ router.route('/summary').get(function(req, res) {
     getNeighborhood(loc, res);
 });
 
+router.route('/link').get(function(req, res) {
+  var latitude = Number(req.query.lat);
+  var longitude = Number(req.query.long);
+
+  var loc = {
+      lng: longitude,
+      lat: latitude
+  };
+
+  callPageLink(loc, res);
+})
+
 var id = 1;
 /*
 Sample location object used for testing locally
@@ -66,6 +78,7 @@ function getNeighborhood(location, res) {
            })
 
        });
+       db.close();
 
    });
 
@@ -86,10 +99,6 @@ function gethousingprices(regionid, response) {
    http.get(options, function(res) {
       res.on('data', function(dataresponse) { data += dataresponse.toString(); });
       res.on('end', function() {
-         //console.log('data', data);
-         //parser.parseString(data, function(err, result) {
-         //	console.log('FINISHED', err, result);
-         //});
         data = data.split(regionid)[1];
          var neighborhood =(data.split("<name>")[1]).split("</name>")[0];
 
@@ -101,6 +110,64 @@ function gethousingprices(regionid, response) {
    }).on('error', function(e) {
       console.log("Got error: " + e.message);
    });
+}
+
+function callPageLink(location, res) {
+  // Connect to the db
+  console.log("TEST");
+   var long = location.lng, lat = location.lat;
+   MongoClient.connect("mongodb://localhost:27017/knowSeattle", function (err, db) {
+       if(err) {
+           res.send("<li>No data found</li>");
+           console.log("Unable to connect to MongoDB");
+           return;
+       }
+       db.collection('neighborhoods', function (err, collection) {
+           if(err) {
+               res.send("<li>No data found</li>");
+               console.log("Unable to find collection");
+               return;
+           }
+           var query = { geometry: { $geoIntersects: { $geometry: { type: "Point", coordinates: [ long, lat ] } } } }
+           collection.findOne(query, [], function(err, document) {
+             if(err || !document || !document.properties) {
+               res.send("<li>No data found</li>");
+               console.log("Query returned null");
+               return;
+             }
+             // This line calls gethousingprices, note that we are inside the query callback
+            getPageLink(document.properties.REGIONID, res);
+           })
+
+       });
+       db.close();
+
+   });
+ }
+
+function getPageLink(regionid, response) {
+  var options = {
+     host: 'www.zillow.com',
+     port: 80,
+     path: '/webservice/GetRegionChildren.htm?zws-id=X1-ZWz19eifb82423_85kuc&state=wa&city=seattle&childtype=neighborhood',
+     method: 'GET'
+  };
+
+  var data = "";
+
+  http.get(options, function(res) {
+     res.on('data', function(dataresponse) { data += dataresponse.toString(); });
+     res.on('end', function() {
+       data = data.split(regionid)[1];
+        var pageLink =(data.split("<url>")[1]).split("</url>")[0];
+        console.log(pageLink);
+        //console.log("The housing costs for the " + neighborhood + " neighborhood is: " + price);
+       response.send(pageLink + regionid);
+        //return price;
+     });
+  }).on('error', function(e) {
+     console.log("Got error: " + e.message);
+  });
 }
 
 module.exports = router;

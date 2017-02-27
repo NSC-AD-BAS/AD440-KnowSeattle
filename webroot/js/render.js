@@ -28,7 +28,8 @@ function render_page(name) {
          str = getHospData(loc, true);
          break;
       case "Property":
-         str = getNeighborhood(loc);
+         getPropertyData(loc);
+         str = "Loading.....";
          break;
       case "Parks":
          getParks(loc,
