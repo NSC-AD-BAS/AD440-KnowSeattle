@@ -25,7 +25,8 @@ function render_page(name) {
          str = getHospData(loc, true);
          break;
       case "Property":
-         str = getNeighborhood(loc);
+         getPropertyData(loc);
+         str = "Loading.....";
          break;
       case "Parks":
          getParks(loc,
@@ -154,7 +155,7 @@ function get_summary(page) {
          break;
       case "Food":
          sum += '<li>Loading Data...</li>';
-         getFoodSummary(loc, 
+         getFoodSummary(loc,
             function(success) {update_div("Food_tile", success);},
             function(error)   {update_div("Food_tile", error);  });
          break;
