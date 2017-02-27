@@ -168,6 +168,12 @@ function get_summary(page) {
             function(success) {update_div("Food_tile", success);},
             function(error)   {update_div("Food_tile", error);  });
          break;
+      case "Schools":
+         sum += '<li>Loading Data...</li>';
+         getSchoolsSummary(loc,
+            function(success) {update_div("Schools_tile", success);},
+            function(error)   {update_div("Schools_tile", error);  });
+         break;
       default:
          sum += "<li>Pertinent Point</li>" +
                 "<li>Salient Stat</li>";
