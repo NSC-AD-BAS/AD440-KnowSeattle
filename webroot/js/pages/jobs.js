@@ -33,7 +33,7 @@ var avg_company_rating;
 var industry_popularity = new Map();
 
 // CORS bypass
-var cors_api_url = 'http://cors.knowseattle.com/';
+var cors_api_url = 'https://knowseattle.com/cors/';
 
 function getJobsDefault() {
    return "<li>Full-time Jobs: ???</li><li>Avg Company: ???</li>";
