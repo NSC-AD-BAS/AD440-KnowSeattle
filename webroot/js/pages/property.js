@@ -7,11 +7,11 @@ function getPropertySummary(loc, success, error) {
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function() {
     if(this.readyState == 4 && this.status == 200) {
-        success(this.responseText);
+      success(this.responseText);
     }
-    else {
-        error("<li>No data found</li>");
-    }
+    // else {
+    //     error("<li>No data found</li>");
+    // }
   };
   console.log("lat: " + loc.lat);
   console.log("long: " + loc.lng);
@@ -25,7 +25,12 @@ function getPropertyData(loc, success, error) {
   xhttp.onreadystatechange = function() {
     if(this.readyState == 4 && this.status == 200) {
         //success(this.responseText);
-        window.location.replace(xhttp.responseText);
+        if(this.responseText == "<li>No data found</li>") {
+          success("<li>No data found</li>")
+        }
+        else {
+          window.location.replace(xhttp.responseText);
+        }
     }
     else {
         error("<li>No data found</li>");

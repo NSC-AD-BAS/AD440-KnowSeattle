@@ -28,9 +28,11 @@ function render_page(name) {
          str = getHospData(loc, true);
          break;
       case "Property":
-         getPropertyData(loc);
+         getPropertyData(loc,
+           function(success) { update_div(leftContentDiv, success);},
+           function(error)   { update_div(leftContentDiv, error); });
          str = "Loading.....";
-         break;
+         return;
       case "Parks":
          getParks(loc,
             function(success) { update_div(leftContentDiv, success);},
