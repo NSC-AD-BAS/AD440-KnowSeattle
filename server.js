@@ -7,7 +7,7 @@ var config = require('./serverConfig');
 // cors-anywhere integration
 var cors_proxy = require('cors-anywhere');
 var cors_host = process.env.PORT ? '0.0.0.0' : '127.0.0.1';
-var cors_port = 9999;
+var cors_port = 1111;
 
 app.use('/', mainRouter);
 app.listen(config.port, config.ip);
