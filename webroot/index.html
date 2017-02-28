@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>KnowSeatle</title>
+    <title>KnowSeattle</title>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
     <link href="/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> -->
     <link href='//fonts.googleapis.com/css?family=Maven Pro' rel='stylesheet'>
     <link rel="stylesheet" type="text/css" href="./style.css">
     <link rel="shortcut icon" href="./assets/favicon.ico" type="image/x-icon">
     <link rel="icon" href="./assets/favicon.ico" type="image/x-icon">
-</head>
 
-<body>
+
     <!-- scripts -->
     <script src="https://use.fontawesome.com/6efa9e08e6.js"></script>
 	<script src="./js/utils/data_convert.js"></script>
@@ -32,13 +32,16 @@
 	<script src="./js/utils/data_convert.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <!-- /scripts -->
+</head>
 
-    <nav id="nav">
+<body>
+
+
+    <nav id="nav" class="navbar navbar-inverse navbar-fixed-top">
         <script>render_nav()</script>
     </nav>
     <div id="header"><!-- MAIN BANNER DIV -->
         <h1>Know Seattle</h1>
-        <p>Pick a location or enter an address</p>
         <div><!-- ICON AND SEARCHBAR DIV -->
             <div><!-- ICON -->
             </div><!-- /ICON -->
@@ -51,6 +54,7 @@
             <div id="right-content"><!-- RIGHT SIDEBAR DIV -->
                 <div id="show_map">
                     <div id="floating-panel">
+                        <!-- <span>Pick a location or enter an address</span> -->
                         <input id="address" name="address" type="textbox" value="Seattle, WA">
                         <input id="submit" type="button" value="Geocode">
                     </div>
