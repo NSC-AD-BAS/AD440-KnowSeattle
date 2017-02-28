@@ -10,11 +10,12 @@ function render_nav() {
    for (var i = 0; i < pages.length; i++) {
       ul += "<li class='left'>" + linkify(pages[i]) + "</li>";
    }
+   ul += "<li class='right'><a href='javascript:void(0)' onclick='toggle_map()'>Toggle Map</a></li>"
    ul += "</ul>";
    document.getElementById("nav").innerHTML = ul;
-   document.getElementById("nav").innerHTML +=
-    "<div id=\"button-toggle\"><a href=\'javascript:void(0)\'" +
-    " onclick = \'toggle_map()\'>Toggle Map</a></div>";
+   // document.getElementById("nav").innerHTML +=
+   //  "<div id=\"button-toggle\"><a href=\'javascript:void(0)\'" +
+   //  " onclick = \'toggle_map()\'>Toggle Map</a></div>";
 }
 
 function render_page(name) {
@@ -138,7 +139,7 @@ function get_summary(page) {
          break;
       case "Parks":
          sum += "<li>Loading Parks Data...</li>";
-         getParks(loc, false,
+         getParksSummary(loc,
             function(success) {update_div("Parks_tile", success);},
             function(error)   {update_div("Parks_tile", error);  });
          break;
