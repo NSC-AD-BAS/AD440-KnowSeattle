@@ -305,3 +305,28 @@ nav a:visited { color: #344873; }
     visibility: visible;
     opacity: 1;
 }
+
+/* ------------------
+ styling for the tables
+   ------------------   */
+#hor-minimalist-b
+{
+    margin-right: 45px;
+    border-collapse: collapse;
+    text-align: left;
+}
+#hor-minimalist-b th
+{
+    padding: 10px 8px;
+    border-bottom: 2px solid #646464;
+}
+#hor-minimalist-b td
+{
+    border-bottom: 1px solid #d4d4d4;
+    color: #5a5a5a;
+    padding: 6px 8px;
+}
+#hor-minimalist-b tbody tr:hover td
+{
+    color: #232323;
+}

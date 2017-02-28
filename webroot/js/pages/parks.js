@@ -34,9 +34,9 @@ function loadParksData(loc, success, error) {
 
         for (var i = 0; i < data.length; i++) {
             // Check the name of the location for the word park. If contained, move on, else next item in the dataset
-            if (data[i].common_name != null) {
+            if (data[i].common_name !== null) {
                 if (wordInString(data[i].common_name, "park") && !wordInString(data[i].common_name, "ride")) {
-                    var p = createParkObject(data[i].common_name, data[i].address, data[i].city_feature);
+                    var p = new Park(data[i].common_name, data[i].address, (data[i].city_feature === "Parks") ? null : data[i].city_feature);
 
                     if (parks.length == 0) {
                         parks.push(p);
@@ -44,8 +44,7 @@ function loadParksData(loc, success, error) {
                         var check = false;
                         var index;
                         for (var j = 0; j < parks.length || check; j++) {
-                            var indexCheck = j + 1;
-                            check = wordInString(parks[j].parkname, p.parkname);
+                            check = parks[j].name === p.name;
                             if (check) {
                                 index = j;
                                 break;
@@ -54,7 +53,9 @@ function loadParksData(loc, success, error) {
                         if (!check) {
                             parks.push(p);
                         } else {
-                            parks[index].parkfeature = parks[index].parkfeature + ", " + p.parkfeature;
+                            if (!(p.features[0] === "Parks")) {
+                                parks[index].features.push(p.features[0]);
+                            }
                         }
                     }
                 }
@@ -70,27 +71,27 @@ function loadParksData(loc, success, error) {
     });
 }
 
-// Function to add park objects
-function createParkObject(pName, pAddress, pFeature) {
-    var parkObject = {
-        parkname: new RegExp(/(\*)+/g).test(pName) ? pName.replace(new RegExp(/(\*)+/g, '')) : pName,
-        parkaddress: pAddress,
-        parkfeature: pFeature
-    };
-    return parkObject;
+function Park(name, address, feature) {
+    this.name = new RegExp(/(\*)+/g).test(name) ? name.replace(new RegExp(/(\*)+/g, '')) : name;
+    this.address = address;
+    this.features = [];
+    if (null !== feature) {
+        this.features.push(feature);
+    }
 }
+
 
 function wordInString(s, word) {
     return new RegExp('\\b' + word + '\\b', 'i').test(s);
 }
 
 function displayParks(parks, display) {
-    var out = '<table class=tg><th>Name</th><th>Address</th><th>Additional Features</th>';
+    var out = '<table id="hor-minimalist-b"><thead><th scope="col">Name</th><th scope="col">Address</th><th scope="col">Features</th></thead><tbody>';
     for (var i = 0; i < parks.length; i++) {
-        out += '<tr><td>' + parks[i].parkname + '</td><td>' + parks[i].parkaddress + '</td><td>'
-            + parks[i].parkfeature + '</td></tr>';
+        out += '<tr><td>' + parks[i].name + '</td><td>' + parks[i].address + '</td><td>'
+            + parks[i].features + '</td></tr>';
 
     }
-    out += '</table></div>';
+    out += '</tbody></table></div>';
     display(out);
 }
