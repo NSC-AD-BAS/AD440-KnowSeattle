@@ -8,7 +8,8 @@
     "eyes": "^0.1.8",
     "mongodb": "^2.2.22",
     "request": "^2.79.0",
-    "yelp": "^1.0.2"
+    "yelp": "^1.0.2",
+    "cors-anywhere": "^0.4.0"
   },
   "devDependencies": {},
   "scripts": {
