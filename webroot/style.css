@@ -8,10 +8,12 @@ html, body {
     margin: 0;
     padding: 0;
     font-family: 'Maven Pro', Arial, Helvetica, sans-serif;
+    background-color: #F0F8FF;
     color: black;
 }
 
 #floating-panel {
+    background-color: gray;
     z-index: 5;
     text-align: center;
     font-family: 'Maven Pro', 'sans-serif';
@@ -21,27 +23,65 @@ html, body {
 }
 
 main {
-    margin: 0 10% 0 10%;
+    background-color: #f2f2f2;
+    margin: 0 5% 0 5%;
     padding: 15px;
     box-shadow: 0px 0px 15px gray;
+    margin-bottom: 2%;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
     overflow: hidden;
-}
-
-main, #floating-panel {
-    background-color: #f2f2f2;
 }
 
 input#address, input#submit {
     text-align: center;
     font-family: Verdana, sans-serif;;
     font-size: 14px;
+    border-radius: 5px;
+    width: 80%;
+}
+
+input#submit {
+    background-color: #24292e;
+    color: #c8c9cb;
+    font-weight: bold;
+    border: 2px solid #c8c9cb;
+    margin-top: 5px;
+    text-align: center;
+    text-decoration: none;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    cursor: pointer;
+}
+
+input#submit:hover {
+    background-color: #008CBA;
+    color: white;
 }
 
 #header {
-    position: relative;
+    background-image: url("./assets/seattle.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
     text-align: center;
-    height: 80px;
+    padding-top: 10%;
+    height: 15%;
+    width: 100%;
+    border: 5px solid #24292e;
+    border-radius: 5px;
     color: black;
+}
+
+#header h1, #header p {
+    width: 30%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 0px;
+    border-radius: 5px;
+    background-color: gray;
+    color: white;
+    opacity: 0.8;
 }
 
 .tile-container {
@@ -54,7 +94,7 @@ input#address, input#submit {
     height: 200px;
     background-color: white;
     border: 1px solid darkblue;
-    border-radius: 3px;
+    border-radius: 5px;
     padding: 10px;
     margin: 10px;
     font-size: 1.4em;
@@ -81,6 +121,11 @@ a { text-decoration: none;  }
 .Property {
     border: 3px solid darkred;
     color: darkred;
+}
+
+.Concerts {
+    border: 3px solid blue;
+    color: blue;
 }
 
 .Hospitals {
@@ -118,11 +163,15 @@ a.tile:visited { color: inherit; }
 
 /* nav */
 nav {
+    width: 100%;
+    position: fixed;
+    z-index: 9999;
+    background-color: #24292e;
+    color: #c8c9cb;
     font-weight: bold;
     padding: 5px;
     text-align: left;
-    border: 1px solid #999;
-    border-radius: 6px;
+    border-bottom: 1px solid #999;
 }
 
 nav ul {
@@ -133,17 +182,17 @@ nav ul {
     padding: 10px 0 10px 0;
     margin: 0 10px 0 10px;
     width: 80%;             /* Extend nav bar 80% across page */
-    border-radius: 3px;	    /* round off the nav bar corners */
 }
 
 nav a {
     text-decoration: none;
-    padding-left: 15px;
+    padding: 5px;
+    border-radius: 5px;
     font-weight: bold;
 }
 
-nav a:link { color: #000033; }
-nav a:visited { color: #344873; }
+nav a:link { color: #c8c9cb; }
+nav a:visited { color: white; }
 
 .left { float: left; }
 
@@ -151,8 +200,16 @@ nav a:visited { color: #344873; }
 .tile:hover {
     background-color: gainsboro;
     box-shadow: 0px 0px 15px black;
-    transition-duration: 0.75s;
-    -webkit-transition-duration: 0.75s; /* Safari */
+    transition-duration: 0.4s;
+    -webkit-transition-duration: 0.4s; /* Safari */
+}
+
+nav a:hover {
+    background-color: gainsboro;
+    color: black;
+    box-shadow: 0px 0px 15px black;
+    transition-duration: 0.4s;
+    -webkit-transition-duration: 0.4s; /* Safari */
 }
 
 .loader {
@@ -219,8 +276,14 @@ nav a:visited { color: #344873; }
 
 #show_map {
     float: right;
+    background-color: gray;
     color: black;
+    opacity: 0.8;
     width: 100%;
+    border-radius: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-top: 10px;
     animation: show_map 500ms 0s;
 }
 
@@ -255,15 +318,12 @@ nav a:visited { color: #344873; }
 }
 
 #button-toggle {
-    width: 30%;
+    padding: 10px 25px 10px 0;
+    margin: 0 10px 0 10px;
+    width: 10%;
     float: right;
-    color: black;
+    color: #c8c9cb;
     text-align: center;
-}
-
-#controls {
-    width: 100%;
-    height: 25px;
 }
 
 .tooltip {
@@ -311,7 +371,6 @@ nav a:visited { color: #344873; }
    ------------------   */
 #hor-minimalist-b
 {
-    margin-right: 45px;
     border-collapse: collapse;
     text-align: left;
 }
@@ -330,3 +389,4 @@ nav a:visited { color: #344873; }
 {
     color: #232323;
 }
+

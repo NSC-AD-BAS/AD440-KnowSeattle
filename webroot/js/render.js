@@ -1,4 +1,4 @@
-//global vars
+//Global vars
 var pages = ["Home", "Walk Score", "Hospitals", "Parks", "Culture", "Jobs", "Schools", "Public Art", "Crime", "Property", "Concerts", "Food"];
 var currentPage = pages[0];
 var showMap = true;
@@ -12,6 +12,9 @@ function render_nav() {
    }
    ul += "</ul>";
    document.getElementById("nav").innerHTML = ul;
+   document.getElementById("nav").innerHTML +=
+    "<div id=\"button-toggle\"><a href=\'javascript:void(0)\'" +
+    " onclick = \'toggle_map()\'>Toggle Map</a></div>";
 }
 
 function render_page(name) {
@@ -25,7 +28,8 @@ function render_page(name) {
          str = getHospData(loc, true);
          break;
       case "Property":
-         str = getNeighborhood(loc);
+         getPropertyData(loc);
+         str = "Loading.....";
          break;
       case "Parks":
          getParks(loc,
@@ -147,7 +151,8 @@ function get_summary(page) {
          getJobsSummary(loc, function(totalJobs, avgCompany) {
             $("#Jobs_tile").hide();
             var html = "<li>Fulltime Jobs: " + totalJobs + "</li>" +
-               "<li>Avg Company: " + avgCompany + "</li>";
+               "<li>Avg Company: " + get_stars(avgCompany) +
+               "&nbsp;(" + avgCompany + ")</li>";
             document.getElementById("Jobs_tile").innerHTML = html;
             $("#Jobs_tile").fadeIn("slow", function(){});
          });
@@ -160,9 +165,15 @@ function get_summary(page) {
          break;
       case "Food":
          sum += '<li>Loading Data...</li>';
-         getFoodSummary(loc, 
+         getFoodSummary(loc,
             function(success) {update_div("Food_tile", success);},
             function(error)   {update_div("Food_tile", error);  });
+         break;
+      case "Schools":
+         sum += '<li>Loading Data...</li>';
+         getSchoolsSummary(loc,
+            function(success) {update_div("Schools_tile", success);},
+            function(error)   {update_div("Schools_tile", error);  });
          break;
       default:
          sum += "<li>Pertinent Point</li>" +

@@ -19,3 +19,23 @@ function getPropertySummary(loc, success, error) {
   xhttp.open("GET", url, true);
   xhttp.send();
 }
+// function to redirect navigation to the appropriate Zillow page
+function getPropertyData(loc, success, error) {
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if(this.readyState == 4 && this.status == 200) {
+        //success(this.responseText);
+        window.location.replace(xhttp.responseText);
+    }
+    else {
+        error("<li>No data found</li>");
+    }
+  };
+  console.log("Link clicked!");
+  var url = "property/link?lat=" + loc.lat + "&long=" + loc.lng;
+  xhttp.open("GET", url, true);
+  xhttp.send();
+  console.log("Url " + xhttp.responseText);
+
+  //window.location.replace("http://www.zillow.com");
+}
