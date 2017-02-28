@@ -55,6 +55,7 @@ function getJobsSummary(loc, callback) {
       indeed_total_jobs = 0;
       indeed_total_jobs = indeed_jobs_json.response[0].totalresults[0]._text;
       indeed_jobs_array = indeed_jobs_json.response[0].results[0].result;
+      add_indeed_cache(indeed_jobs_array);
       getGlassdoorCompanies(indeed_total_jobs, indeed_jobs_array, callback);
    });
 }
@@ -79,6 +80,7 @@ function getGlassdoorCompanies(indeed_tot_jobs, indeed_jobs_arr, callback) {
          var bestMatchObj = employersArray[0];
          if (bestMatchObj && bestMatchObj.exactMatch == true) {
             glassdoor_companies.push(bestMatchObj);
+            add_glassdoor_cache(glassdoor_companies);
 
             // Count industries, skipping missing/empty industries
             if (bestMatchObj.industry && bestMatchObj.industry !== "") {
@@ -129,7 +131,7 @@ function clear_jobs_vars() {
 function getJobsData(loc, successCallback, errorCallback) {
 
     // fancy loader animation ;p
-    leftContentDiv.innerHTML = '<div class=\"loader\"></div>';
+    $("#left-content").html('<div class=\"detail_loader\"></div>');
 
     getJobsSummary(loc, function(totalJobs, avgCompany) {
        $("#left-content").hide();

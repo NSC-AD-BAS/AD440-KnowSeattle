@@ -1,4 +1,3 @@
-
 function getWalkScoreData(loc, success, error) {
    var url="php/cors_helper.php?f=walkscore";
    $.ajax({
@@ -8,7 +7,7 @@ function getWalkScoreData(loc, success, error) {
       }).done(function (data) {
          var json = JSON.parse(data);
          var summary = "<li>Walk: " + json.walkscore + "</li><li>Transit: " + json.transit.score + "</li><li>Bike: " + json.bike.score + "</li>";
-         return success(summary);
+         success(summary);
       }).fail(function() {
          var summary = "Error getting WalkScore data";
          console.error(summary);

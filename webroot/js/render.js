@@ -1,4 +1,4 @@
-//global vars
+//Global vars
 var pages = ["Home", "Walk Score", "Hospitals", "Parks", "Culture", "Jobs", "Schools", "Public Art", "Crime", "Property", "Concerts", "Food"];
 var currentPage = pages[0];
 var showMap = true;
@@ -12,6 +12,9 @@ function render_nav() {
    }
    ul += "</ul>";
    document.getElementById("nav").innerHTML = ul;
+   document.getElementById("nav").innerHTML +=
+    "<div id=\"button-toggle\"><a href=\'javascript:void(0)\'" +
+    " onclick = \'toggle_map()\'>Toggle Map</a></div>";
 }
 
 function render_page(name) {
@@ -25,7 +28,8 @@ function render_page(name) {
          str = getHospData(loc, true);
          break;
       case "Property":
-         str = getNeighborhood(loc);
+         getPropertyData(loc);
+         str = "Loading.....";
          break;
       case "Parks":
          getParks(loc,
@@ -43,7 +47,10 @@ function render_page(name) {
             function(error)   { update_div(leftContentDiv, error); },true);
          return;
       case "WalkScore":
-         getWalkScoreData(loc, true);
+      case "Walk Score":
+         getWalkScoreData(loc,
+            function(success) { update_div(leftContentDiv, success);},
+            function(error)   { update_div(leftContentDiv, error); });
          return;
       case "Jobs":
          getJobsData(loc,
@@ -51,13 +58,18 @@ function render_page(name) {
             function(error)   { update_div(leftContentDiv, error); });
          return;
       case "Concerts":
-         getConcertData(loc, true);
-         // getConcertData(loc,
-         //    function(success) { update_div(leftContentDiv, success);},
-         //    function(error)   { update_div(leftContentDiv, error); });
+         getConcertData(loc,
+            function(success) { update_div(leftContentDiv, success);},
+            function(error)   { update_div(leftContentDiv, error); });
          return;
       case "PublicArt":
          getPublicArtData(loc,
+            function(success) { update_div(leftContentDiv, success);},
+            function(error)   { update_div(leftContentDiv, error); },
+            true);
+         return;
+      case "Crime":
+         getCrimeDetailData(loc,
             function(success) { update_div(leftContentDiv, success);},
             function(error)   { update_div(leftContentDiv, error); },
             true);
@@ -81,7 +93,7 @@ function render_tiles() {
       tile += "<div class='tile " + page + "'><span class='" + get_icon(pages[i]) + "'></span>";
       tile += get_summary(pages[i]);
       tile += "</div></a>";
-      tiles += tile;
+      tiles += "<strong>" + tile + "</strong>";
    }
    tiles += "</div>";
    document.getElementById(leftContentDiv).innerHTML = tiles;
@@ -139,10 +151,29 @@ function get_summary(page) {
          getJobsSummary(loc, function(totalJobs, avgCompany) {
             $("#Jobs_tile").hide();
             var html = "<li>Fulltime Jobs: " + totalJobs + "</li>" +
-               "<li>Avg Company: " + avgCompany + "</li>";
+               "<li>Avg Company: " + get_stars(avgCompany) +
+               "&nbsp;(" + avgCompany + ")</li>";
             document.getElementById("Jobs_tile").innerHTML = html;
             $("#Jobs_tile").fadeIn("slow", function(){});
          });
+         break;
+      case "Property":
+         sum+= '<li>Loading Data...</li>';
+         getPropertySummary(loc,
+            function(success) {update_div("Property_tile", success);},
+            function(error)   {update_div("Property_tile", error);});
+         break;
+      case "Food":
+         sum += '<li>Loading Data...</li>';
+         getFoodSummary(loc,
+            function(success) {update_div("Food_tile", success);},
+            function(error)   {update_div("Food_tile", error);  });
+         break;
+      case "Schools":
+         sum += '<li>Loading Data...</li>';
+         getSchoolsSummary(loc,
+            function(success) {update_div("Schools_tile", success);},
+            function(error)   {update_div("Schools_tile", error);  });
          break;
       default:
          sum += "<li>Pertinent Point</li>" +
