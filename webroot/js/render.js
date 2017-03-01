@@ -174,7 +174,7 @@ function get_summary(page) {
          sum += '<li>Loading Data...</li>';
          getSchoolsSummary(loc,
             function(success) {update_div("Schools_tile", success);},
-            function(error)   {update_div("Schools_tile", error);  });
+            function(error)   {update_div("Schools_tile", error); }, true);
          break;
       default:
          sum += "<li>Pertinent Point</li>" +
