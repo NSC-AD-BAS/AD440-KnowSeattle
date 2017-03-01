@@ -29,9 +29,11 @@ function render_page(name) {
          str = getHospData(loc, true);
          break;
       case "Property":
-         getPropertyData(loc);
+         getPropertyData(loc,
+           function(success) { update_div(leftContentDiv, success);},
+           function(error)   { update_div(leftContentDiv, error); });
          str = "Loading.....";
-         break;
+         return;
       case "Parks":
          getParks(loc,
             function(success) { update_div(leftContentDiv, success);},
@@ -75,6 +77,11 @@ function render_page(name) {
             function(error)   { update_div(leftContentDiv, error); },
             true);
          return;
+      case "Food":
+         getFoodDetailData(loc,
+            function(success) { update_div(leftContentDiv, success);},
+            function(error)   { update_div(leftContentDiv, error);});
+         return;         
       default:
          str = "Hey, now we're going to render " + name;
          break;

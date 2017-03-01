@@ -33,7 +33,7 @@ var avg_company_rating;
 var industry_popularity = new Map();
 
 // CORS bypass
-var cors_api_url = 'https://cors-anywhere.herokuapp.com/';
+var cors_api_url = 'https://knowseattle.com/cors/';
 
 function getJobsDefault() {
    return "<li>Full-time Jobs: ???</li><li>Avg Company: ???</li>";
@@ -249,6 +249,7 @@ function doCORSRequest(options, printResult) {
 
    try {
       x.send(options.data);
+      x.setRequestHeader('x-requested-with', 'XMLHTTPREQUEST');
    } catch (err) {
       console.log("An error occured sending the request");
       console.log(cors_api_url + options.url);
