@@ -47,7 +47,7 @@ function render_page(name) {
       case "Schools":
          getSchoolsData(loc,
             function(success) { update_div(leftContentDiv, success);},
-            function(error)   { update_div(leftContentDiv, error); },true);
+            function(error)   { update_div(leftContentDiv, error); });
          return;
       case "WalkScore":
       case "Walk Score":
@@ -181,7 +181,7 @@ function get_summary(page) {
          sum += '<li>Loading Data...</li>';
          getSchoolsSummary(loc,
             function(success) {update_div("Schools_tile", success);},
-            function(error)   {update_div("Schools_tile", error); }, true);
+            function(error)   {update_div("Schools_tile", error); }, false);
          break;
       default:
          sum += "<li>Pertinent Point</li>" +

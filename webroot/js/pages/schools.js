@@ -1,5 +1,5 @@
 
-function getSchoolsData(loc, success, error, display) {
+function getSchoolsData(loc, success, error) {
 	var str = "<table>";
    $.ajax({
       url: '/data/sampleSchool.json',
@@ -42,7 +42,7 @@ function getSchoolsData(loc, success, error, display) {
          //ADD CODE HERE FOR SUMMARY TILE REGARDLESS OF DISPLAY TRUE/FALSE
 
          //if display is set to true, generate result string for detail page
-         if (display) {
+         // if (display) {
             var str = "<table><tr><th>School Name</th><th>Address</th><th>Grades</th><th>Distance</th></tr>";
             //display arbitrary number of results: 20
             for (var i = 0; i < 20; i++) {
@@ -53,7 +53,7 @@ function getSchoolsData(loc, success, error, display) {
                str += "<td>" + arr[i].dist + "</td>";
                str += "</tr>";
             }
-         }
+         // }
          str += "</table>";
          success(str);
          }
@@ -63,7 +63,7 @@ function getSchoolsData(loc, success, error, display) {
 }
 
 
-function getSchoolsSummary(loc, success, error, display) {
+function getSchoolsSummary(loc, success, error) {
 	var str = "<table>";
    $.ajax({
       url: '/data/sampleSchool.json',
@@ -106,15 +106,16 @@ function getSchoolsSummary(loc, success, error, display) {
          //ADD CODE HERE FOR SUMMARY TILE REGARDLESS OF DISPLAY TRUE/FALSE
 
          //if display is set to true, generate result string for detail page
-         if (display) {
+         // if (display) {
 
             //display arbitrary number of results: 20
             for (var i = 0; i < 1; i++) {
                str += "<tr><td>";
-               str += arr[i].name;
+               // str += arr[i].name;
+               str += "tile data";
                str += "</td></tr>";
             }
-         }
+         // }
          str += "</table>";
          success(str);
          }
