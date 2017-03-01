@@ -17,7 +17,7 @@ body {
 }
 
 #floating-panel {
-    background-color: gray;
+    background-color: #24292e;
     z-index: 5;
     text-align: center;
     font-family: 'Maven Pro', 'sans-serif';
@@ -67,26 +67,24 @@ input#submit:hover {
     background-image: url("./assets/seattle.jpg");
     background-size: cover;
     background-repeat: no-repeat;
-    background-position: center;
+    background-position: top center;
     text-align: center;
-    /*padding-top: 10%;*/
-    height: 300px;
+    padding-top: 3%;
+    height: 140px;
     width: 100%;
     border-bottom: 5px solid #1e2327;
-    /*border-radius: 5px;*/
     color: black;
 }
 
-#header h1 {
+#header h1, #header p {
     width: 30%;
     margin-left: auto;
     margin-right: auto;
-    margin-top: 0px;
     border-radius: 5px;
-    padding-top: 120px;
-    /*background-color: gray;*/
+    margin-top: 0px;
+    background-color: #24292e;
     color: white;
-    /*opacity: 0.8;*/
+    opacity: 0.8;
     font-weight: 500;
     font-size: 50px;
     text-shadow: 3px 2px 3px rgba(0,0,0,0.7);
@@ -95,6 +93,10 @@ input#submit:hover {
 .tile-container {
     display: flex;
     flex-wrap: wrap;
+}
+
+#header p {
+    font-size: 16pt;
 }
 
 .tile {
@@ -178,7 +180,7 @@ nav {
     top: 0px;
     padding: 3px;
     z-index: 9999;
-    background-color: #1e2327;
+    background-color: #24292e;
     color: #c8c9cb;
     font-weight: bold;
     text-align: left;
@@ -194,7 +196,7 @@ nav ul {
     padding-right: 40px;
 }
 
-nav a {
+nav a, #nav_active {
     text-decoration: none;
     padding: 5px;
     border-radius: 5px;
@@ -215,7 +217,7 @@ nav a:visited { color: white; }
     -webkit-transition-duration: 0.4s; /* Safari */
 }
 
-nav a:hover {
+nav a:hover, #nav_active {
     background-color: gainsboro;
     color: black;
     box-shadow: 0px 0px 15px black;
@@ -287,7 +289,7 @@ nav a:hover {
 
 #show_map {
     float: right;
-    background-color: gray;
+    background-color: #24292e;
     color: black;
     opacity: 0.8;
     width: 100%;
@@ -316,6 +318,7 @@ nav a:hover {
     width: 70%;
     color: black;
     padding: 30px;
+    padding-top: 0px;
     text-align: left;
     animation: contract_left 500ms 0s;
 }
@@ -328,14 +331,14 @@ nav a:hover {
     animation: expand_left 500ms 0s;
 }
 
-/*#button-toggle {
+#button-toggle {
     padding: 10px 25px 10px 0;
     margin: 0 10px 0 10px;
     width: 10%;
     float: right;
     color: #c8c9cb;
     text-align: center;
-}*/
+}
 
 .tooltip {
     position: relative;
@@ -400,4 +403,3 @@ nav a:hover {
 {
     color: #232323;
 }
-

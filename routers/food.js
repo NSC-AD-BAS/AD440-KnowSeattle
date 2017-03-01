@@ -15,7 +15,7 @@ router.route('/summary')
             Number(req.query.location.lng),
             Number(req.query.location.rad));
         
-        getFoodData(areaSpecification, function(error, data) {
+        getFoodSummary(areaSpecification, function(error, data) {
             if(error) {
                 console.log(error);
                 res.status(500)
@@ -27,13 +27,33 @@ router.route('/summary')
         });
 });
 
+router.route('/detail')
+    .get(function(req, res) {
+        var areaSpecification = new AreaSpecification(
+            Number(req.query.location.lat),
+            Number(req.query.location.lng),
+            Number(req.query.location.rad));
+        
+        getFoodDetail(areaSpecification, function(error, data) {
+            if(error) {
+                console.log(error);
+                res.status(500)
+                res.send('Error while retrieving yelp data.');
+            }
+            else {
+                res.json(data);
+            }
+        });
+});
+
+
 function AreaSpecification(latitude, longitude, radius) {
     this.latitude = latitude;
     this.longitude = longitude;
     this.radius = radius;
 }
 
-function getFoodData(areaSpecification, callback) {
+function getFoodSummary(areaSpecification, callback) {
     find(areaSpecification, function(error, results) {
         if (error) {
             callback(error);
@@ -47,6 +67,16 @@ function getFoodData(areaSpecification, callback) {
             count: results.length,
             url: createUrl(areaSpecification)
         });
+    });
+}
+
+function getFoodDetail(areaSpecification, callback) {
+    find(areaSpecification, function(error, results) {
+        if (error) {
+            callback(error);
+            return
+        }
+        callback(null, results);
     });
 }
 

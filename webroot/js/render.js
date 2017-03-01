@@ -8,14 +8,11 @@ var leftContentDiv = "left-content";
 function render_nav() {
    var ul = "<ul>";
    for (var i = 0; i < pages.length; i++) {
-      ul += "<li class='left'>" + linkify(pages[i]) + "</li>";
+      ul += "<li class='left' onclick='setFocus(this)'>" + linkify(pages[i]) + "</li>";
    }
    ul += "<li class='right'><a href='javascript:void(0)' onclick='toggle_map()'>Toggle Map</a></li>"
    ul += "</ul>";
    document.getElementById("nav").innerHTML = ul;
-   // document.getElementById("nav").innerHTML +=
-   //  "<div id=\"button-toggle\"><a href=\'javascript:void(0)\'" +
-   //  " onclick = \'toggle_map()\'>Toggle Map</a></div>";
 }
 
 function render_page(name) {
@@ -47,7 +44,7 @@ function render_page(name) {
       case "Schools":
          getSchoolsData(loc,
             function(success) { update_div(leftContentDiv, success);},
-            function(error)   { update_div(leftContentDiv, error); },true);
+            function(error)   { update_div(leftContentDiv, error); });
          return;
       case "WalkScore":
       case "Walk Score":
@@ -76,6 +73,11 @@ function render_page(name) {
             function(success) { update_div(leftContentDiv, success);},
             function(error)   { update_div(leftContentDiv, error); },
             true);
+         return;
+      case "Food":
+         getFoodDetailData(loc,
+            function(success) { update_div(leftContentDiv, success);},
+            function(error)   { update_div(leftContentDiv, error);});
          return;
       default:
          str = "Hey, now we're going to render " + name;
@@ -176,7 +178,7 @@ function get_summary(page) {
          sum += '<li>Loading Data...</li>';
          getSchoolsSummary(loc,
             function(success) {update_div("Schools_tile", success);},
-            function(error)   {update_div("Schools_tile", error);  });
+            function(error)   {update_div("Schools_tile", error); }, false);
          break;
       default:
          sum += "<li>Pertinent Point</li>" +
@@ -235,6 +237,14 @@ function toggle_map() {
    document.getElementById(showMap ? "hide_map" : "show_map").setAttribute("id", showMap ? "show_map" : "hide_map");
    document.getElementById(showMap ? "left-content-full" : "left-content").setAttribute("id", showMap ? "left-content" : "left-content-full");
    document.getElementById(showMap ? "right-content-full" : "right-content").setAttribute("id", showMap ? "right-content" : "right-content-full");
+}
+
+function setFocus(elem) {
+    var previous = document.getElementById('nav_active');
+    if (previous) {
+        previous.id = "";
+    }
+    elem.id = 'nav_active';
 }
 
 window.onhashchange = function () {
