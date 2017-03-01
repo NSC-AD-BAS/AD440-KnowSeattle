@@ -248,8 +248,8 @@ function doCORSRequest(options, printResult) {
    }
 
    try {
-      x.send(options.data);
       x.setRequestHeader('x-requested-with', 'XMLHTTPREQUEST');
+      x.send(options.data);
    } catch (err) {
       console.log("An error occured sending the request");
       console.log(cors_api_url + options.url);
