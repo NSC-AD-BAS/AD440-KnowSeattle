@@ -13,9 +13,6 @@ function render_nav() {
    ul += "<li class='right'><a href='javascript:void(0)' onclick='toggle_map()'>Toggle Map</a></li>"
    ul += "</ul>";
    document.getElementById("nav").innerHTML = ul;
-   // document.getElementById("nav").innerHTML +=
-   //  "<div id=\"button-toggle\"><a href=\'javascript:void(0)\'" +
-   //  " onclick = \'toggle_map()\'>Toggle Map</a></div>";
 }
 
 function render_page(name) {
