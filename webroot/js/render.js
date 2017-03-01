@@ -8,7 +8,7 @@ var leftContentDiv = "left-content";
 function render_nav() {
    var ul = "<ul>";
    for (var i = 0; i < pages.length; i++) {
-      ul += "<li class='left'>" + linkify(pages[i]) + "</li>";
+      ul += "<li class='left' onclick='setFocus(this)'>" + linkify(pages[i]) + "</li>";
    }
    ul += "<li class='right'><a href='javascript:void(0)' onclick='toggle_map()'>Toggle Map</a></li>"
    ul += "</ul>";
@@ -78,7 +78,7 @@ function render_page(name) {
          getFoodDetailData(loc,
             function(success) { update_div(leftContentDiv, success);},
             function(error)   { update_div(leftContentDiv, error);});
-         return;         
+         return;
       default:
          str = "Hey, now we're going to render " + name;
          break;
@@ -237,6 +237,14 @@ function toggle_map() {
    document.getElementById(showMap ? "hide_map" : "show_map").setAttribute("id", showMap ? "show_map" : "hide_map");
    document.getElementById(showMap ? "left-content-full" : "left-content").setAttribute("id", showMap ? "left-content" : "left-content-full");
    document.getElementById(showMap ? "right-content-full" : "right-content").setAttribute("id", showMap ? "right-content" : "right-content-full");
+}
+
+function setFocus(elem) {
+    var previous = document.getElementById('nav_active');
+    if (previous) {
+        previous.id = "";
+    }
+    elem.id = 'nav_active';
 }
 
 window.onhashchange = function () {

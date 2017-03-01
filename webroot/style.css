@@ -196,7 +196,7 @@ nav ul {
     padding-right: 40px;
 }
 
-nav a {
+nav a, #nav_active {
     text-decoration: none;
     padding: 5px;
     border-radius: 5px;
@@ -217,7 +217,7 @@ nav a:visited { color: white; }
     -webkit-transition-duration: 0.4s; /* Safari */
 }
 
-nav a:hover {
+nav a:hover, #nav_active {
     background-color: gainsboro;
     color: black;
     box-shadow: 0px 0px 15px black;
