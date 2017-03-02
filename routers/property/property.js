@@ -51,7 +51,7 @@ var loc = {
 /* getNeighborhood is used to retrieve the regionId from the DB
   it takes a callback argument for gethousingprices so that it waits until
   the query resolves before trying to use gethousingprices */
-function getNeighborhood(location, res) {
+function getNeighborhood(location, res, target) {
   // Connect to the db
    var long = location.lng, lat = location.lat;
    MongoClient.connect("mongodb://localhost:27017/knowSeattle", function (err, db) {
@@ -74,7 +74,7 @@ function getNeighborhood(location, res) {
                return;
              }
              // This line calls gethousingprices, note that we are inside the query callback
-            gethousingprices(document.properties.REGIONID, res);
+            target(document.properties.REGIONID, res);
            })
 
        });
@@ -83,6 +83,10 @@ function getNeighborhood(location, res) {
    });
 
 
+}
+
+function callGetHousingPrices(loc, res) {
+  getNeighborhood(loc, res, gethousingprices);
 }
 
 function gethousingprices(regionid, response) {
