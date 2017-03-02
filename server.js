@@ -2,18 +2,21 @@
 
 var express = require('express');
 var app = express();
-var food = require('./routers/food');
-var corsRouter = require('./routers/corsHelper');
-var propertyRouter = require('./routers/property/property');
-
-app.set('view engine', 'ejs');
-app.set('views', './views');
-app.use('/food', food);
-app.use('/cors_helper', corsRouter);
-app.use('/property', propertyRouter);
-app.use('/', express.static('webroot'))
-
+var mainRouter = require('./routers');
 var config = require('./serverConfig');
-app.listen(config.port, config.ip);
+// cors-anywhere integration
+var cors_proxy = require('cors-anywhere');
+var cors_host = process.env.PORT ? '0.0.0.0' : '127.0.0.1';
+var cors_port = 1111;
 
+app.use('/', mainRouter);
+app.listen(config.port, config.ip);
 console.log('Server running at http://' + config.ip + ':' + config.port);
+
+cors_proxy.createServer({
+    originWhitelist: [], // Allow all origins
+    requireHeader: ['origin', 'x-requested-with'],
+    removeHeaders: ['cookie', 'cookie2']
+}).listen(cors_port, cors_host, function() {
+    console.log('Running CORS Anywhere on ' + cors_host + ':' + cors_port);
+});

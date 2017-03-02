@@ -1,28 +1,19 @@
-var summary = "<li>Walk: ???</li><li>Transit: ???</li><li>Bike: ???</li>";
-
-function getWalkScoreSummary(loc) {
-   getWalkScoreData(loc, false);
-   return summary;
-}
-
-function getWalkScoreData(loc, display) {
-   var url="cors_Helper/walkscore";
-   $.ajax( {
+function getWalkScoreData(loc, success, error) {
+   var url="php/cors_helper.php?f=walkscore";
+   $.ajax({
          url: url,
          type:'GET',
-         data: {loc: loc},
-         success: function(data) {
-            var json = JSON.parse(data);
-            summary = "<li>Walk: " + json.walkscore + "</li><li>Transit: " + json.transit.score + "</li><li>Bike: " + json.bike.score + "</li>";
-            display ? document.getElementById("left-content").innerHTML = summary : "";
-         },
-         error: function(){
-            console.error("Error getting WalkScore data");
-            // displayWalkScores("");
-         }
-      }
-   );
-}
+         data: {loc: loc}
+      }).done(function (data) {
+         var json = JSON.parse(data);
+         var summary = "<li>Walk: " + json.walkscore + "</li><li>Transit: " + json.transit.score + "</li><li>Bike: " + json.bike.score + "</li>";
+         success(summary);
+      }).fail(function() {
+         var summary = "Error getting WalkScore data";
+         console.error(summary);
+         error(summary);
+      });
+   }
 
 //The code below was taken from the page source for the walk-score API documentation and is currently unused.
 //We may eventually want to add in the infoIconHtml walk score to some of the pages.

@@ -3,6 +3,7 @@ var miles = true;
 var infoWindow, geocoder;
 var detailZoom = 13;
 var zipSearch = 0;
+var gmap;
 var loc = {
    lat: 47.6062095,
    lng: -122.3320708,
@@ -14,7 +15,8 @@ var loc = {
 
 function initMap() {
    //Initialize and center map
-   var map = new google.maps.Map(document.getElementById('map'), {
+
+   gmap = new google.maps.Map(document.getElementById('map'), {
       zoom: 10,
       center: loc,
       scroll: false
@@ -22,7 +24,7 @@ function initMap() {
 
    //Stand up the google services
    geocoder    = new google.maps.Geocoder();
-   infoWindow  = new google.maps.InfoWindow({map: map});
+   infoWindow  = new google.maps.InfoWindow({map: gmap});
 
    //Try to get the browser location
    if (navigator.geolocation) {
@@ -32,16 +34,14 @@ function initMap() {
             lng: position.coords.longitude,
             rad: 1500
          };
-         reverseGeocodeAddress(geocoder, map, loc);
-      }, function() {
-         //no-op
+         reverseGeocodeAddress(geocoder, gmap, loc);
       });
    } else {
       console.error("Browser doesn't support Geolocation");
    }
 
    //Handle click events and maybe reverseGeocode the address
-   google.maps.event.addListener(map, 'click', function( event ){
+   google.maps.event.addListener(gmap, 'click', function( event ){
       loc.lat = event.latLng.lat();
       loc.lng = event.latLng.lng();
       loc.err = null;
@@ -50,27 +50,26 @@ function initMap() {
 
       if (event.placeId) {
          loc.pid = event.placeId;
-         getLocationFromPlaceId(loc.pid, map);
+         getLocationFromPlaceId(loc.pid, gmap);
       } else {
-         reverseGeocodeAddress(geocoder, map, loc);
+         reverseGeocodeAddress(geocoder, gmap, loc);
       }
-      //Clear glassdoor vars when clicked
-      clear_glassdoor_vars();
+      // Enable scrolling zoom when map is in focus
       this.setOptions({scrollwheel:true});
    });
 
    //Disable map scrollwheel when not selected
-   google.maps.event.addListener(map, 'mouseout', function(event){
+   google.maps.event.addListener(gmap, 'mouseout', function(event){
       this.setOptions({scrollwheel:false});
    });
    //Address search bar, geocode button
    document.getElementById('submit').addEventListener('click', function() {
-      geocodeUserInput(geocoder, map);
+      geocodeUserInput(geocoder, gmap);
    });
 }
 
-function getLocationFromPlaceId(placeId, map) {
-   var service = new google.maps.places.PlacesService(map);
+function getLocationFromPlaceId(placeId, gmap) {
+   var service = new google.maps.places.PlacesService(gmap);
    service.getDetails({ placeId: placeId }, function(result, status) {
       if (status !== google.maps.places.PlacesServiceStatus.OK) {
          loc.err = "Failed to reverse Geocode location";
@@ -82,12 +81,12 @@ function getLocationFromPlaceId(placeId, map) {
          loc.lat = result.geometry.location.lat();
          loc.lng = result.geometry.location.lng();
          getZip(arr, loc);
-         updateDOM(map, loc);
+         updateDOM(gmap, loc);
       }
    });
 }
 
-function geocodeUserInput(geocoder, map) {
+function geocodeUserInput(geocoder, gmap) {
    var address = document.getElementById('address').value;
    //TODO: Slider for radius, tickbox for meters/miles
    geocoder.geocode({'address': address, 'componentRestrictions': {'locality': 'Seattle'}}, function(results, status) {
@@ -103,14 +102,14 @@ function geocodeUserInput(geocoder, map) {
             loc.rad = getRadius(loc.lat, loc.lng, lat2, lon2, miles);
          }
          if (results[0].place_id) {
-            getLocationFromPlaceId(results[0].place_id, map);
+            getLocationFromPlaceId(results[0].place_id, gmap);
          } else if (neighborhood != null) {
             reverseGeocodeAddress(geocoder, loc);
          }
       } else {
          loc.err = "Sorry, No Results";
       }
-      updateDOM(map, loc);
+      updateDOM(gmap, loc);
    });
 }
 
@@ -126,7 +125,7 @@ function getZip(obj, loc) {
    console.error("No zip for latlong");
 }
 
-function reverseGeocodeAddress(geocoder, map, loc) {
+function reverseGeocodeAddress(geocoder, gmap, loc) {
    if (!loc.lat || !loc.lng) {
       console.error("Location object lacked a latitude or longitude.");
    } else {
@@ -142,12 +141,12 @@ function reverseGeocodeAddress(geocoder, map, loc) {
          } else {
             loc.err = 'Geocoder failed due to: ' + status;
          }
-         updateDOM(map, loc);
+         updateDOM(gmap, loc);
       });
    }
 }
 
-function updateDOM(map, loc) {
+function updateDOM(gmap, loc) {
    if (loc.err != null) {
       resultString = loc.err;
    } else {
@@ -159,8 +158,8 @@ function updateDOM(map, loc) {
       // infowindow.setContent(results[1].formatted_address);
       // infowindow.open(map, marker);
 
-      map.setCenter({lat: loc.lat, lng: loc.lng});
-      map.setZoom(detailZoom);
+      gmap.setCenter({lat: loc.lat, lng: loc.lng});
+      gmap.setZoom(detailZoom);
       resultString = "latitude: " + loc.lat + "<br>longitude: " + loc.lng + "<br>radius: " + loc.rad;
       if (loc.zip) {
          resultString += "<br>zip: " + loc.zip;
@@ -168,6 +167,15 @@ function updateDOM(map, loc) {
       infoWindow.setContent(resultString);
    }
    render_page(currentPage);
+}
+
+function get_gmap() {
+    if (gmap) {
+        return gmap;
+    } else {
+        console.log("No Google Map object found");
+        return null;
+    }
 }
 
 function getRadius(lat1, lon1, lat2, lon2, miles) {

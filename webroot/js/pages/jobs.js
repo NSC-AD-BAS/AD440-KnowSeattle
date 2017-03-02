@@ -9,7 +9,6 @@
 // Global vars
 var avg_rating;
 var indeed_query = "";
-var zipcode;
 var job_radius_miles = 1;
 var job_type = "fulltime";
 var limit = 1000;
@@ -28,14 +27,21 @@ var indeed_jobs_json;
 var indeed_jobs_array;
 var indeed_total_jobs = 0;
 
+// Stats
+var jobs_in_area;
+var avg_company_rating;
+var industry_popularity = new Map();
+
 // CORS bypass
-var cors_api_url = 'https://cors-anywhere.herokuapp.com/';
+var cors_api_url = 'https://knowseattle.com/cors/';
 
 function getJobsDefault() {
    return "<li>Full-time Jobs: ???</li><li>Avg Company: ???</li>";
 }
 
 function getJobsSummary(loc, callback) {
+   // clear vars to create clean requests system
+   clear_jobs_vars();
    if (!loc.zip) {
       return getJobsDefault();
    }
@@ -49,6 +55,7 @@ function getJobsSummary(loc, callback) {
       indeed_total_jobs = 0;
       indeed_total_jobs = indeed_jobs_json.response[0].totalresults[0]._text;
       indeed_jobs_array = indeed_jobs_json.response[0].results[0].result;
+      add_indeed_cache(indeed_jobs_array);
       getGlassdoorCompanies(indeed_total_jobs, indeed_jobs_array, callback);
    });
 }
@@ -72,6 +79,21 @@ function getGlassdoorCompanies(indeed_tot_jobs, indeed_jobs_arr, callback) {
          var employersArray = JSONObject.response.employers;
          var bestMatchObj = employersArray[0];
          if (bestMatchObj && bestMatchObj.exactMatch == true) {
+            glassdoor_companies.push(bestMatchObj);
+            add_glassdoor_cache(glassdoor_companies);
+
+            // Count industries, skipping missing/empty industries
+            if (bestMatchObj.industry && bestMatchObj.industry !== "") {
+                if (industry_popularity.has(bestMatchObj.industry)) {
+                    // Industry key exists
+                    var count = industry_popularity.get(bestMatchObj.industry);
+                    industry_popularity.set(bestMatchObj.industry, count + 1);
+                } else {
+                    // Industry key doesn't exist
+                    industry_popularity.set(bestMatchObj.industry, 1);
+                }
+            }
+
             var cur_rating = parseFloat(bestMatchObj.overallRating);
             // avoid unrated companies
             if (cur_rating !== 0) {
@@ -81,25 +103,100 @@ function getGlassdoorCompanies(indeed_tot_jobs, indeed_jobs_arr, callback) {
          }
          // invoking the callback when done with jobs requests
          if (total_company_requests == indeed_jobs_arr.length - 1) {
-            var avg_company = Number((rating_sum / total_matches_with_rating).toFixed(2));
-            callback(indeed_tot_jobs, avg_company);
+            jobs_in_area = indeed_tot_jobs;
+            avg_company_rating = Number((rating_sum / total_matches_with_rating).toFixed(2));
+            callback(jobs_in_area, avg_company_rating);
          }
       });
    }
 }
 
-// clear glassdoor vars, and vars to calculate average company rating
-function clear_glassdoor_vars() {
+// clear glassdoor vars, indeed vars,
+// and vars to calculate average company rating.
+function clear_jobs_vars() {
    rating_sum = 0.0;
    total_matches_with_rating = 0;
    total_company_requests = 0;
+   indeed_total_jobs = 0;
+   indeed_jobs_json = null;
+   indeed_jobs_array = null;
+   avg_rating = null;
+   total_company_requests = 0;
+   total_companies_recieved = 0;
+   industry_popularity = new Map();
 }
 
-// handler function for Jobs Detail Page, passes html to both callbacks
+// handler function for Jobs Detail Page, passes html to both callbacks.
+// UPDATE: now supports async calling from anywhere in KnowSeattle.
 function getJobsData(loc, successCallback, errorCallback) {
-   var html = "<h1> Welcome to the Jobs page!</h1>" +
-      "<div>" + JSON.stringify(indeed_jobs_array) + "</div";
-   successCallback(html);
+
+    // fancy loader animation ;p
+    $("#left-content").html('<div class=\"detail_loader\"></div>');
+
+    getJobsSummary(loc, function(totalJobs, avgCompany) {
+       $("#left-content").hide();
+
+       var jobs = indeed_jobs_array;
+       var html = "";
+       // Stats in this area
+       html += "<h1>Jobs In This Area:</h1>";
+       html += "<span>Total Jobs: " + jobs_in_area + "</span><br />";
+       html += "<span>Average Company Rating: " + avg_company_rating + "</span>";
+       // Jobs per Industry (this can be reduced to show less industries)
+       // This sorts industry popularity by keys (industries), don't think you can sort by value (count)
+       var industry_popularity_sort = new Map([...industry_popularity.entries()].sort());
+       html += "<h1>Industries In This Area:</h1>";
+       html += "<div>";
+       html +=     "<table>";
+       html +=         "<tr>";
+       html +=             "<th>Industry</th>";
+       html +=             "<th>Job Count</th>";
+       html +=         "</tr>";
+       industry_popularity.forEach(function(count, industry) {
+           html +=     "<tr>";
+           html +=         "<td>" + industry + "</td>";
+           html +=         "<td>" + count + "</td>";
+           html +=     "</tr>";
+       });
+       html +=     "</table>";
+       html += "</div>";
+
+       // Jobs
+       html += "<h1>All Jobs & Companies:</h1>";
+       html += "<div>";
+       html +=     "<table>";
+       html +=         "<tr>";
+       html +=             "<th>Job Title</th>";
+       html +=             "<th>Company</th>";
+       html +=         "</tr>";
+       jobs.forEach(function(job) {
+           var job_lat = job.latitude[0]._text;
+           var job_long = job.longitude[0]._text;
+           html +=     "<tr>";
+           html +=         "<td>";
+           html +=             "<a href=\"" + job.url[0]._text +"\">" + job.jobtitle[0]._text + "</a>";
+           html +=         "</td>";
+           html +=         "<td>";
+           html +=             job.company[0]._text;
+           html +=         "</td>";
+           html +=     "</tr>";
+           // If you want to use pinpoints in UI
+           // document.getElementById('pins').checked
+           if (true) {
+               var gmap = get_gmap();
+               var marker = new google.maps.Marker({
+                   position: new google.maps.LatLng(job_lat, job_long),
+                   map: gmap,
+                   title: 'job',
+               });
+           }
+       });
+       html +=     "</table>";
+       html += "</div>";
+       successCallback(html);
+
+       $("#left-content").fadeIn("slow", function(){});
+    });
 }
 
 function getIndeedOptions(zip) {
@@ -151,25 +248,10 @@ function doCORSRequest(options, printResult) {
    }
 
    try {
+      x.setRequestHeader('x-requested-with', 'XMLHTTPREQUEST');
       x.send(options.data);
    } catch (err) {
       console.log("An error occured sending the request");
       console.log(cors_api_url + options.url);
    }
-}
-
-function get_stars(rating) {
-   var str = "<div class='fa'>";
-   var i = 1;
-   while (i < avg_rating) {
-      str += "<span class='fa-star'></span>";
-      i++;
-   }
-   var temp_rating = avg_rating - i;
-   if (temp_rating >= 0.51) {
-      str += "<span class='fa-star'></span>";
-   } else if (temp_rating >= 0.333) {
-      str += "<span class='fa-star-half'></span>";
-   }
-   return str + "</div>";
 }

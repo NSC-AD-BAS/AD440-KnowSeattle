@@ -4,12 +4,12 @@
   "description": "Learn about Seattle neighborhoods",
   "main": "server.js",
   "dependencies": {
-    "ejs": "^2.5.5",
     "express": "^4.14.1",
     "eyes": "^0.1.8",
     "mongodb": "^2.2.22",
     "request": "^2.79.0",
-    "yelp": "^1.0.2"
+    "yelp": "^1.0.2",
+    "cors-anywhere": "^0.4.0"
   },
   "devDependencies": {},
   "scripts": {
