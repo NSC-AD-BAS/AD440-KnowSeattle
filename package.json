@@ -1,0 +1,28 @@
+{
+  "name": "know_seattle",
+  "version": "1.0.0",
+  "description": "Learn about Seattle neighborhoods",
+  "main": "server.js",
+  "dependencies": {
+    "express": "^4.14.1",
+    "eyes": "^0.1.8",
+    "mongodb": "^2.2.22",
+    "request": "^2.79.0",
+    "yelp": "^1.0.2",
+    "cors-anywhere": "^0.4.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NSC-AD-BAS/AD440-KnowSeattle.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/NSC-AD-BAS/AD440-KnowSeattle/issues"
+  },
+  "homepage": "https://github.com/NSC-AD-BAS/AD440-KnowSeattle#readme"
+}
