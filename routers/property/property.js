@@ -23,7 +23,7 @@ router.route('/summary').get(function(req, res) {
         lat: latitude
     };
 
-    getNeighborhood(loc, res);
+    callGetHousingPrices(loc, res);
 });
 
 router.route('/link').get(function(req, res) {
@@ -74,6 +74,7 @@ function getNeighborhood(location, res, target) {
                return;
              }
              // This line calls gethousingprices, note that we are inside the query callback
+             console.log(target);
             target(document.properties.REGIONID, res);
            })
 
@@ -86,6 +87,7 @@ function getNeighborhood(location, res, target) {
 }
 
 function callGetHousingPrices(loc, res) {
+  console.log("before function call");
   getNeighborhood(loc, res, gethousingprices);
 }
 
@@ -118,7 +120,6 @@ function gethousingprices(regionid, response) {
 
 function callPageLink(location, res) {
   // Connect to the db
-  console.log("TEST");
    var long = location.lng, lat = location.lat;
    MongoClient.connect("mongodb://localhost:27017/knowSeattle", function (err, db) {
        if(err) {
