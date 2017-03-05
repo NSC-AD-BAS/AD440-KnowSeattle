@@ -109,7 +109,7 @@ function gethousingprices(regionid, response) {
         var neighborhood =(data.split("<name>")[1]).split("</name>")[0];
 
         price = (data.split("<zindex currency=\"USD\">")[1]).split("</zindex>")[0];
-        response.send("<li>Neighborhood: " + neighborhood + "</li><li>Zindex: " + price + "</li>");
+        response.send("<li>Neighborhood: " + neighborhood + "</li><li>Zindex: $" + price + "</li>");
       });
    }).on('error', function(e) {
       console.log("Got error: " + e.message);
@@ -138,10 +138,10 @@ function getDetailData(regionid, response) {
        var neighborhood =(data.split("<name>")[1]).split("</name>")[0];
        price = (data.split("<zindex currency=\"USD\">")[1]).split("</zindex>")[0];
        var link = data.split("<url>")[1] + regionid;
-       response.send("<div class='cell'><span>Neighborhood: " + neighborhood
-        + "</span></div><div class='cell'><span>Zindex: " + price
-        + "</span></div><div class='cell'><span>Link to Zillow: " + link
-        + "</span></div>");
+       response.send("<div class='cell'>Neighborhood: " + neighborhood
+        + "</div><div class='cell'>Zindex: $" + price
+        + "</div><div class='cell'>Link to Zillow: <a href='" + link + "'>" + link
+        + "</a></div>");
      });
   }).on('error', function(e) {
      console.log("Got error: " + e.message);
