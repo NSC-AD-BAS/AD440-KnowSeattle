@@ -76,7 +76,6 @@ function getNeighborhood(location, res, target) {
                return;
              }
              // This line calls gethousingprices, note that we are inside the query callback
-             console.log(target);
             target(document.properties.REGIONID, res);
            })
 
@@ -87,7 +86,7 @@ function getNeighborhood(location, res, target) {
 
 
 }
-
+// Function to get the Zindex for the selected neighborhood
 function callGetHousingPrices(loc, res) {
   getNeighborhood(loc, res, gethousingprices);
 }
@@ -117,6 +116,7 @@ function gethousingprices(regionid, response) {
    });
 }
 
+// function to get all of the detailed information about the neighborhood
 function callGetDetailData(loc, res) {
   getNeighborhood(loc, res, getDetailData);
 }
@@ -138,11 +138,10 @@ function getDetailData(regionid, response) {
        var neighborhood =(data.split("<name>")[1]).split("</name>")[0];
        price = (data.split("<zindex currency=\"USD\">")[1]).split("</zindex>")[0];
        var link = data.split("<url>")[1] + regionid;
-       console.log("URL: " + link);
-       response.send("<div>Neighborhood: " + neighborhood
-        + "</div><div>Zindex: " + price
-        + "</div><div>Link to Zillow: " + link
-        + "</div>");
+       response.send("<div class='cell'><span>Neighborhood: " + neighborhood
+        + "</span></div><div class='cell'><span>Zindex: " + price
+        + "</span></div><div class='cell'><span>Link to Zillow: " + link
+        + "</span></div>");
      });
   }).on('error', function(e) {
      console.log("Got error: " + e.message);
