@@ -87,7 +87,12 @@ function getLocationFromPlaceId(placeId, gmap) {
 }
 
 function geocodeUserInput(geocoder, gmap) {
-   var address = document.getElementById('address').value;
+   if(mediaQuery()){
+      var address = document.getElementById('address').value; // get the value from the main search input
+   }else{
+      var address = document.getElementById('addressMobile').value; // get the value from the mobile search input
+   }
+   
    //TODO: Slider for radius, tickbox for meters/miles
    geocoder.geocode({'address': address, 'componentRestrictions': {'locality': 'Seattle'}}, function(results, status) {
       if (status === 'OK') {

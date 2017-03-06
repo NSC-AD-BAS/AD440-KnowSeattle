@@ -1,3 +1,16 @@
+@media (max-width: 1029px ) {
+    #pickLocHeader, #show_map, #hide_map{
+        display: none;
+    }
+}
+
+@media (min-width: 1030px){
+    #mobileSearch{
+        display: none;
+    }
+}
+
+
 #map {
     padding: 5px 5px;
     height: 400px;

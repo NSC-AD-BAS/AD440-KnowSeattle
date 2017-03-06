@@ -43,7 +43,7 @@
     </nav>
     <div id="header"><!-- MAIN BANNER DIV -->
         <h1>Know Seattle</h1>
-        <p>Pick a location or enter an address</p>
+        <p id="pickLocHeader">Pick a location or enter an address</p>
         <div><!-- ICON AND SEARCHBAR DIV -->
             <div><!-- ICON -->
             </div><!-- /ICON -->
@@ -57,13 +57,19 @@
                 <div id="show_map">
                     <div id="floating-panel">
                         <input id="address" name="address" type="textbox" value="Seattle, WA">
-                        <input id="submit" type="button" value="Geocode">
+                        <input id="submit" type="button" value="Search">
                     </div>
                     <div id="map"></div>
                     <br/>
                 </div>
             </div><!-- /RIGHT SIDEBAR DIV -->
+            <div id="mobileSearch">
+                        <p>Enter an address to learn more:</p>
+                        <input id="addressMobile" name="address" type="textbox" value="Seattle, WA">
+                        <input id="submitMobile" type="button" value="Search">
+                    </div>
             <div id="left-content">
+                
                 <script>render_tiles()</script>
             </div>
         </div><!-- /MAIN CONTENT DIV -->
