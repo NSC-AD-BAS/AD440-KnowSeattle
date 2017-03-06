@@ -416,3 +416,19 @@ nav a:hover, #nav_active {
 {
     color: #232323;
 }
+
+/*circle around score numbers for walk score*/
+.numberCircle {
+    border-radius: 50%;
+
+    width: 54px;
+    height: 36px;
+    padding: 8px;
+
+    /*background: #fff;*/
+    border: 2px solid #666;
+    color: #666;
+    text-align: center;
+
+    font: 28px Arial, sans-serif;
+}
