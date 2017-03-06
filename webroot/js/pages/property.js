@@ -28,7 +28,7 @@ function getPropertyData(loc, success, error) {
         success(this.responseText);
     }
     else {
-        error("<li>No data found</li>");
+        error("Loading....");
     }
   };
   var url = "property/detail?lat=" + loc.lat + "&long=" + loc.lng;

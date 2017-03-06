@@ -129,7 +129,7 @@ function getDetailData(regionid, response) {
      method: 'GET'
   };
 
-  var data = "", price = "";
+  var data = "", price = "", handoff = "";
 
   http.get(options, function(res) {
      res.on('data', function(dataresponse) { data += dataresponse.toString(); });
@@ -138,13 +138,35 @@ function getDetailData(regionid, response) {
        var neighborhood =(data.split("<name>")[1]).split("</name>")[0];
        price = (data.split("<zindex currency=\"USD\">")[1]).split("</zindex>")[0];
        var link = data.split("<url>")[1] + regionid;
-       response.send("<div class='cell'>Neighborhood: " + neighborhood
+       handoff = "<div class='cell'>Neighborhood: " + neighborhood
         + "</div><div class='cell'>Zindex: $" + price
         + "</div><div class='cell'>Link to Zillow: <a href='" + link + "'>" + link
-        + "</a></div>");
+        + "</a></div>";
+        getChart(regionid, response, handoff);
      });
   }).on('error', function(e) {
      console.log("Got error: " + e.message);
+  });
+}
+
+function getChart(regionid, response, handoff) {
+  var options = {
+     host: 'www.zillow.com',
+     port: 80,
+     path: '/webservice/GetRegionChart.htm?zws-id=X1-ZWz19eifb82423_85kuc&regionId=' + regionid + '&unit-type=dollar&width=350&height=200&chartDuration=5years',
+     method: 'GET'
+  };
+
+  var data = "";
+
+  http.get(options, function(res) {
+    res.on('data', function(dataresponse) { data += dataresponse.toString(); });
+    res.on('end', function() {
+      var url = (data.split("<url>")[1]).split("</url>")[0];
+      response.send(handoff + "<div class='cell'><img src='" + url + "' alt='Price Chart'></div>");
+    });
+  }).on('error', function(e) {
+    console.log("Got error: " + e.message);
   });
 }
 // Deprecated code, old functionality for page redirect
