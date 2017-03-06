@@ -9,9 +9,9 @@ function getWalkScoreData(loc, success, error) {
       var json = JSON.parse(data);
       var summary = "<li>Walk: " + json.walkscore + "</li><li>Transit: " + json.transit.score + "</li><li>Bike: " + json.bike.score + "</li>";
       success(summary);
-   }, function () {
-      var summary = "Error getting WalkScore data";
-      console.error(summary);
+   }, function (data) {
+      var summary = "Error getting WalkScore data.  ";
+      console.error(summary + data);
       error(summary);
    });
 }
