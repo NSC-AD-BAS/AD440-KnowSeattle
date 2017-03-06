@@ -4,15 +4,45 @@ var currentPage = pages[0];
 var showMap = true;
 var leftContentDiv = "left-content";
 
+//basic breakpoint where map hides but nav remains ok 
+function mediaQuery(){
+   var mq = window.matchMedia("(min-width: 1029px)");
+   if(mq.matches){
+      return true;
+   }
+}
+//secondary breakpoint where nav should be hidden/displayed differently to avoid overlap with title
+function mediaQueryNav(){
+   var mq = window.matchMedia("(min-width: 490px)");
+   if(mq.matches){
+      return true;
+   }else{
+      return false;
+   }
+}
+
+
 //Render functions
 function render_nav() {
-   var ul = "<ul>";
-   for (var i = 0; i < pages.length; i++) {
-      ul += "<li class='left' onclick='setFocus(this)'>" + linkify(pages[i]) + "</li>";
-   }
-   ul += "<li class='right'><a href='javascript:void(0)' onclick='toggle_map()'>Toggle Map</a></li>"
-   ul += "</ul>";
-   document.getElementById("nav").innerHTML = ul;
+      var ul = "<ul>";
+      for (var i = 0; i < pages.length; i++) {
+         ul += "<li class='left' onclick='setFocus(this)'>" + linkify(pages[i]) + "</li>";
+      }
+      
+      if(mediaQuery()){ //hide toggle map button if map is not currently visible at this width
+            ul += "<li class='right'><a href='javascript:void(0)' onclick='toggle_map()'>Toggle Map</a></li>";
+         }
+      ul += "</ul>";
+      if(mediaQueryNav()){
+         document.getElementById("nav").innerHTML = ul;   
+      }else{
+         //TODO: Render dropdown / mobile formatted navigation when page loads <490px wide
+         document.getElementById("nav").innerHTML = "dropdown Nav here";
+      }
+      
+   
+
+   
 }
 
 function render_page(name) {
