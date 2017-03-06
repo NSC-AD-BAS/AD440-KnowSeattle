@@ -4,6 +4,8 @@ var infoWindow, geocoder;
 var detailZoom = 13;
 var zipSearch = 0;
 var gmap;
+var geocode_markers = [];
+
 var loc = {
    lat: 47.6062095,
    lng: -122.3320708,
@@ -92,7 +94,7 @@ function geocodeUserInput(geocoder, gmap) {
    }else{
       var address = document.getElementById('addressMobile').value; // get the value from the mobile search input
    }
-   
+
    //TODO: Slider for radius, tickbox for meters/miles
    geocoder.geocode({'address': address, 'componentRestrictions': {'locality': 'Seattle'}}, function(results, status) {
       if (status === 'OK') {
@@ -204,4 +206,11 @@ function getRadius(lat1, lon1, lat2, lon2, miles) {
 
 function toRadians(coord) {
    return coord * Math.PI / 180;
+}
+
+// Deletes all markers in the array by removing references to them.
+function deleteMarkers() {
+   for (var i = 0; i < geocode_markers.length; i++) {
+      geocode_markers[i].setMap(null);
+   }
 }

@@ -4,13 +4,14 @@ var currentPage = pages[0];
 var showMap = true;
 var leftContentDiv = "left-content";
 
-//basic breakpoint where map hides but nav remains ok 
+//basic breakpoint where map hides but nav remains ok
 function mediaQuery(){
    var mq = window.matchMedia("(min-width: 1029px)");
    if(mq.matches){
       return true;
    }
 }
+
 //secondary breakpoint where nav should be hidden/displayed differently to avoid overlap with title
 function mediaQueryNav(){
    var mq = window.matchMedia("(min-width: 490px)");
@@ -21,28 +22,23 @@ function mediaQueryNav(){
    }
 }
 
-
 //Render functions
 function render_nav() {
       var ul = "<ul>";
       for (var i = 0; i < pages.length; i++) {
          ul += "<li class='left' onclick='setFocus(this)'>" + linkify(pages[i]) + "</li>";
       }
-      
-      if(mediaQuery()){ //hide toggle map button if map is not currently visible at this width
-            ul += "<li class='right'><a href='javascript:void(0)' onclick='toggle_map()'>Toggle Map</a></li>";
-         }
+
+      if (mediaQuery()) { //hide toggle map button if map is not currently visible at this width
+         ul += "<li class='right'><a href='javascript:void(0)' onclick='toggle_map()'>Toggle Map</a></li>";
+      }
       ul += "</ul>";
-      if(mediaQueryNav()){
-         document.getElementById("nav").innerHTML = ul;   
-      }else{
-         //TODO: Render dropdown / mobile formatted navigation when page loads <490px wide
+      if (mediaQueryNav()) {
+         document.getElementById("nav").innerHTML = ul;
+      } else {
+      //TODO: Render dropdown / mobile formatted navigation when page loads <490px wide
          document.getElementById("nav").innerHTML = "dropdown Nav here";
       }
-      
-   
-
-   
 }
 
 function render_page(name) {
@@ -131,7 +127,8 @@ function render_tiles() {
       tiles += "<strong>" + tile + "</strong>";
    }
    tiles += "</div>";
-   document.getElementById(leftContentDiv).innerHTML = tiles;
+   var pickLocHeader = "<p id=\"pickLocHeader\">Pick a location or enter an address</p>";
+   document.getElementById(leftContentDiv).innerHTML = pickLocHeader + tiles;
 }
 
 //Utility functions
@@ -276,6 +273,8 @@ function setFocus(elem) {
         previous.id = "";
     }
     elem.id = 'nav_active';
+    // clear markers from map on change
+    deleteMarkers();
 }
 
 window.onhashchange = function () {
