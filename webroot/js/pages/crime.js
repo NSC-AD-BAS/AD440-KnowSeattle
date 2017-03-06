@@ -102,13 +102,36 @@ function getCrimeDetailData(loc, success, error) {
 				    + crimeHtmlEncode(grouped_data[index].first_common_type) + '</td><td>'
 					+ crimeHtmlEncode(grouped_data[index].second_common_type) + '</td><td>'
 					+ crimeHtmlEncode(grouped_data[index].third_common_type) + '</td></tr>';
+
+					
 		});
+		tableString += "</table><div id='chart_div'></div>";
+		// Load the Visualization API and the corechart package.
+      	google.charts.load('current', 
+      		{'packages':['corechart']}
+  		);
+      	
+      	google.charts.setOnLoadCallback(function(){
+			// Create the data table.
+		    var data = new google.visualization.DataTable();
+		    data.addColumn('string', 'Crime');
+		    data.addColumn('number', 'Incidences');
+		    for (var i = 0; i < 10; i++){
+		    	data.addRow([grouped_data[0].types[i].name, grouped_data[0].types[i].count]);
+		    }
 
-		// Google Charts API Piechart of most common crime types. 
-		//  <WIP>
-	
+		    // Set chart options
+		    var options = {'title':'Most common crimes in '+displayMonthYear(grouped_data[0].grouped_month),
+		                   'width':800,
+		                   'height':400};
 
+		    // Instantiate and draw our chart, passing in some options.
+		    //$(".left-content").append("<div id='chart_div'></div>");
+		    var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
+		    chart.draw(data, options);
+		});
 		return success(tableString);
+	
 	}).fail(function(data){
 		var out = '<div>There was a problem getting the crime data in your area. </div>';
 		error(out);
@@ -212,3 +235,5 @@ var displayMonthYear = function(date){
 	var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", 'December'];
 	return months[date.getMonth()] + " " + date.getFullYear();
 };
+
+
