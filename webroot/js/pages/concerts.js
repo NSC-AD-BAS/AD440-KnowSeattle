@@ -50,25 +50,25 @@
       return summary;
    }
 
-    function getConcertData(loc, success, error) {
-       var url="php/cors_helper.php?f=concerts";
-       $.ajax( {
-             url: url,
-             type:'GET',
-             data: {loc: loc},
-             success: function(data) {
-                var json = JSON.parse(data);
-                summary = "<li>Summary Data goes here...</li>";
-                success(summary);
-                console.log(json);
-             },
-             error: function(){
-                summary = "Error getting Concert data";
-                console.error(summary);
-                error(summary);
-             }
-          }
-       );
-	 }
+   function getConcertData(loc, success, error) {
+      var key = "LZMwZulsa6nBIZE0";      //TODO: This should be a node or mongo get query #Security
+      var url = "http://api.songkick.com/api/3.0/events.json?apikey=LZMwZulsa6nBIZE0&location=geo:" + loc.lat + "," + loc.lng;
+
+      getCorsData({
+         method: 'GET',
+         url: url,
+         data: ""
+      }, function (data) {
+         var json = JSON.parse(data);
+         summary = json.resultsPage.results.event[0].displayName;
+         success(summary);
+         console.log(json);
+      }, function (data) {
+         summary = "Error getting Concert data.  ";
+         console.error(summary  + data);
+         error(summary);
+      });
+   }
+
 
 

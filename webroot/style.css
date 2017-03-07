@@ -1,3 +1,16 @@
+@media (max-width: 1029px ) {
+    #pickLocHeader, #show_map, #hide_map{
+        display: none;
+    }
+}
+
+@media (min-width: 1030px){
+    #mobileSearch{
+        display: none;
+    }
+}
+
+
 #map {
     padding: 5px 5px;
     height: 400px;
@@ -76,12 +89,12 @@ input#submit:hover {
     color: black;
 }
 
-#header h1, #header p {
+#header h1 {
     width: 30%;
     margin-left: auto;
     margin-right: auto;
     border-radius: 5px;
-    margin-top: 0px;
+    margin-top: 10px;
     background-color: #24292e;
     color: white;
     opacity: 0.8;
@@ -90,13 +103,18 @@ input#submit:hover {
     text-shadow: 3px 2px 3px rgba(0,0,0,0.7);
 }
 
+#pickLocHeader {
+    width: 70%;
+    margin: 0px;
+    margin-left: 5%;
+    text-align: center;
+    font-size: 16pt;
+    font-style: italic;
+}
+
 .tile-container {
     display: flex;
     flex-wrap: wrap;
-}
-
-#header p {
-    font-size: 16pt;
 }
 
 .tile {
@@ -192,15 +210,22 @@ nav ul {
     text-align: center;     /* Center each element */
     display: inline-block;  /* Display in-line */
     border: none;           /* Clear borders */
-    width: 100%;             /* Extend nav bar 80% across page */
+    width: 100%;            /* Extend nav bar 100% across page */
     padding-right: 40px;
 }
 
-nav a, #nav_active {
-    text-decoration: none;
+nav a {
     padding: 5px;
+}
+
+nav a, #nav_active {
     border-radius: 5px;
+    text-decoration: none;
     font-weight: bold;
+}
+
+#nav_active {
+    color: black;
 }
 
 nav a:link { color: #c8c9cb; }
@@ -240,8 +265,7 @@ nav a:hover, #nav_active {
     border-radius: 50%;
     width: 300px;
     height: 300px;
-    margin-left: auto;
-    margin-right: auto;
+    margin-left: 20%;
     animation: spin 1s linear infinite;
 }
 
@@ -402,4 +426,20 @@ nav a:hover, #nav_active {
 #hor-minimalist-b tbody tr:hover td
 {
     color: #232323;
+}
+
+/*circle around score numbers for walk score*/
+.numberCircle {
+    border-radius: 50%;
+
+    width: 54px;
+    height: 36px;
+    padding: 8px;
+
+    /*background: #fff;*/
+    border: 2px solid #666;
+    color: #666;
+    text-align: center;
+
+    font: 28px Arial, sans-serif;
 }

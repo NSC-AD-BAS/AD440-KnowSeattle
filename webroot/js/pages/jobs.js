@@ -189,6 +189,7 @@ function getJobsData(loc, successCallback, errorCallback) {
                    map: gmap,
                    title: 'job',
                });
+               geocode_markers.push(marker);
            }
        });
        html +=     "</table>";

@@ -64,7 +64,7 @@ function getSchoolsData(loc, success, error) {
 
 
 function getSchoolsSummary(loc, success, error) {
-	var str = "<table>";
+	var str = "";
    $.ajax({
       url: '/data/sampleSchool.json',
       dataType: 'json',
@@ -103,20 +103,37 @@ function getSchoolsSummary(loc, success, error) {
             return a.dist < b.dist ? -1 : 1;
          });
 
-         //ADD CODE HERE FOR SUMMARY TILE REGARDLESS OF DISPLAY TRUE/FALSE
+         //variables for sorting by grade range
+				 var gradeRangeMap = new Object();
+				 var gradeRangeTuple = [];
 
-         //if display is set to true, generate result string for detail page
-         // if (display) {
+				 for (var i = 0; i < 20; i++) {
+					 if (!(arr[i].grades in gradeRangeMap)) {
+						 console.log("Initialize range value in map");
+						 gradeRangeMap[arr[i].grades] = 1;
+					 } else if (arr[i].grades in gradeRangeMap) {
+						 console.log("Calling your in map increment");
+						 gradeRangeMap[arr[i].grades]++;
+					 }
+				 }
 
-            //display arbitrary number of results: 20
-            for (var i = 0; i < 1; i++) {
-               str += "<tr><td>";
-               // str += arr[i].name;
-               str += "tile data";
-               str += "</td></tr>";
-            }
+
+				 for (var key in gradeRangeMap) {
+					 gradeRangeTuple.push([key, gradeRangeMap[key]]);
+				 }
+
+				 gradeRangeTuple.sort(function(a,b) {
+					 a = a[1];
+					 b = b[1];
+					 return a < b ? -1 : (a > b ? 1 : 0);
+				 });
+
+				 for (var i = gradeRangeTuple.length -1 ; i >  gradeRangeTuple.length - 5; i--) {
+					 str += "<li>";
+					 str += gradeRangeTuple[i][0] + " : " + gradeRangeTuple[i][1];
+					 str += "</li>";
+				 }
          // }
-         str += "</table>";
          success(str);
          }
       }).fail(function (data) {
