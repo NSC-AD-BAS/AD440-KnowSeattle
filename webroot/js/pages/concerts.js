@@ -51,15 +51,16 @@
    }
 
    function getConcertData(loc, success, error) {
-      var key = "k5dywsuqf9vaexvg5xczcspf";      //TODO: This should be a node or mongo get query #Security
-      var url = "http://api.jambase.com/events?zipCode=" + loc.zip + "&radius=0&page=0&api_key=" + key;
+      var key = "LZMwZulsa6nBIZE0";      //TODO: This should be a node or mongo get query #Security
+      var url = "http://api.songkick.com/api/3.0/events.json?apikey=LZMwZulsa6nBIZE0&location=geo:" + loc.lat + "," + loc.lng;
+
       getCorsData({
          method: 'GET',
          url: url,
          data: ""
       }, function (data) {
          var json = JSON.parse(data);
-         summary = "<li>Summary Data goes here...</li>";
+         summary = json.resultsPage.results.event[0].displayName;
          success(summary);
          console.log(json);
       }, function (data) {
