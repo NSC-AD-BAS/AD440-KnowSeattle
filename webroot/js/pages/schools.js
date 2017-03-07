@@ -64,7 +64,7 @@ function getSchoolsData(loc, success, error) {
 
 
 function getSchoolsSummary(loc, success, error) {
-	var str = "<table>";
+	var str = "";
    $.ajax({
       url: '/data/sampleSchool.json',
       dataType: 'json',
@@ -129,12 +129,11 @@ function getSchoolsSummary(loc, success, error) {
 				 });
 
 				 for (var i = gradeRangeTuple.length -1 ; i >  gradeRangeTuple.length - 5; i--) {
-					 str += "<tr><td>";
+					 str += "<li>";
 					 str += gradeRangeTuple[i][0] + " : " + gradeRangeTuple[i][1];
-					 str += "</td></tr>";
+					 str += "</li>";
 				 }
          // }
-         str += "</table>";
          success(str);
          }
       }).fail(function (data) {
