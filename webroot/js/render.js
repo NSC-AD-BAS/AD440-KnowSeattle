@@ -24,21 +24,21 @@ function mediaQueryNav(){
 
 //Render functions
 function render_nav() {
-      var ul = "<ul>";
-      for (var i = 0; i < pages.length; i++) {
-         ul += "<li class='left' onclick='setFocus(this)'>" + linkify(pages[i]) + "</li>";
-      }
+   var ul = "<ul>";
+   for (var i = 0; i < pages.length; i++) {
+      ul += "<li class='left' onclick='setFocus(this)'>" + linkify(pages[i]) + "</li>";
+   }
 
-      if (mediaQuery()) { //hide toggle map button if map is not currently visible at this width
-         ul += "<li class='right'><a href='javascript:void(0)' onclick='toggle_map()'>Toggle Map</a></li>";
-      }
-      ul += "</ul>";
-      if (mediaQueryNav()) {
-         document.getElementById("nav").innerHTML = ul;
-      } else {
+   if (mediaQuery()) { //hide toggle map button if map is not currently visible at this width
+      ul += "<li class='right'><a href='javascript:void(0)' onclick='toggle_map()'>Toggle Map</a></li>";
+   }
+   ul += "</ul>";
+   if (mediaQueryNav()) {
+      document.getElementById("nav").innerHTML = ul;
+   } else {
       //TODO: Render dropdown / mobile formatted navigation when page loads <490px wide
-         document.getElementById("nav").innerHTML = "dropdown Nav here";
-      }
+      document.getElementById("nav").innerHTML = "dropdown Nav here";
+   }
 }
 
 function render_page(name) {
@@ -53,8 +53,8 @@ function render_page(name) {
          break;
       case "Property":
          getPropertyData(loc,
-           function(success) { update_div(leftContentDiv, success);},
-           function(error)   { update_div(leftContentDiv, error); });
+            function(success) { update_div(leftContentDiv, success);},
+            function(error)   { update_div(leftContentDiv, error); });
          str = "Loading.....";
          return;
       case "Parks":
@@ -209,7 +209,7 @@ function get_summary(page) {
          break;
       default:
          sum += "<li>Pertinent Point</li>" +
-                "<li>Salient Stat</li>";
+            "<li>Salient Stat</li>";
          break;
    }
    return sum + "</ul>";
@@ -267,13 +267,13 @@ function toggle_map() {
 }
 
 function setFocus(elem) {
-    var previous = document.getElementById('nav_active');
-    if (previous) {
-        previous.id = "";
-    }
-    elem.id = 'nav_active';
-    // clear markers from map on change
-    deleteMarkers();
+   var previous = document.getElementById('nav_active');
+   if (previous) {
+      previous.id = "";
+   }
+   elem.id = 'nav_active';
+   // clear markers from map on change
+   deleteMarkers();
 }
 
 window.onhashchange = function () {
