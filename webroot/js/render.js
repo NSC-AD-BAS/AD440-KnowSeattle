@@ -116,18 +116,23 @@ function update_div(div, html) {
 }
 
 function render_tiles() {
-   var tiles = "<div style='display: flex; flex-wrap: wrap'>";
-   for (var i = 1; i < pages.length; i++) {     //Start at 1 to skip 'Home' tile
-      var tile = "", page = pages[i].replace(" ", "");
-      tile += "<a href='#" + page + "'>";
-      tile += "<div class='tile " + page + "'><span class='" + get_icon(pages[i]) + "'></span>";
-      tile += get_summary(pages[i]);
-      tile += "</div></a>";
-      tiles += "<strong>" + tile + "</strong>";
+   var data = document.location.hash.substr(1);
+   if (!!data && data != "Home") {
+      render_page(data);
+   } else {
+      var tiles = "<div style='display: flex; flex-wrap: wrap'>";
+      for (var i = 1; i < pages.length; i++) {     //Start at 1 to skip 'Home' tile
+         var tile = "", page = pages[i].replace(" ", "");
+         tile += "<a href='#" + page + "'>";
+         tile += "<div class='tile " + page + "'><span class='" + get_icon(pages[i]) + "'></span>";
+         tile += get_summary(pages[i]);
+         tile += "</div></a>";
+         tiles += "<strong>" + tile + "</strong>";
+      }
+      tiles += "</div>";
+      var pickLocHeader = "<p id=\"pickLocHeader\">Pick a location or enter an address</p>";
+      document.getElementById(leftContentDiv).innerHTML = pickLocHeader + tiles;
    }
-   tiles += "</div>";
-   var tilesHeader = "<p id=\"tilesHeader\">Information About Your Area</p>";
-   document.getElementById(leftContentDiv).innerHTML = tilesHeader + tiles;
 }
 
 //Utility functions
