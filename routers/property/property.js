@@ -86,7 +86,7 @@ function getNeighborhood(location, res, target) {
 
 
 }
-// Function to get the Zindex for the selected neighborhood
+// Function to get the Zindex for the selected neighborhood (summary page)
 function callGetHousingPrices(loc, res) {
   getNeighborhood(loc, res, gethousingprices);
 }
@@ -138,7 +138,7 @@ function getDetailData(regionid, response) {
        var neighborhood =(data.split("<name>")[1]).split("</name>")[0];
        price = (data.split("<zindex currency=\"USD\">")[1]).split("</zindex>")[0];
        var link = data.split("<url>")[1] + regionid;
-       handoff = "<div class='cell'>Neighborhood: " + neighborhood
+       handoff = "<div style='display: flex; flex-wrap: wrap'><div class='cell'>Neighborhood: " + neighborhood
         + "</div><div class='cell'>Zindex: $" + price
         + "</div><div class='cell'>Link to Zillow: <a href='" + link + "'>" + link
         + "</a></div>";
@@ -163,7 +163,7 @@ function getChart(regionid, response, handoff) {
     res.on('data', function(dataresponse) { data += dataresponse.toString(); });
     res.on('end', function() {
       var url = (data.split("<url>")[1]).split("</url>")[0];
-      response.send(handoff + "<div class='cell'><img src='" + url + "' alt='Price Chart'></div>");
+      response.send(handoff + "<div class='cell'><img src='" + url + "' alt='Price Chart'></div></div>");
     });
   }).on('error', function(e) {
     console.log("Got error: " + e.message);
