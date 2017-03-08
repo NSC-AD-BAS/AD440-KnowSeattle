@@ -109,10 +109,10 @@ function getSchoolsSummary(loc, success, error) {
 
 				 for (var i = 0; i < 20; i++) {
 					 if (!(arr[i].grades in gradeRangeMap)) {
-						 console.log("Initialize range value in map");
+						 // console.log("Initialize range value in map");
 						 gradeRangeMap[arr[i].grades] = 1;
 					 } else if (arr[i].grades in gradeRangeMap) {
-						 console.log("Calling your in map increment");
+						 // console.log("Calling your in map increment");
 						 gradeRangeMap[arr[i].grades]++;
 					 }
 				 }

@@ -62,7 +62,7 @@
          var json = JSON.parse(data);
          summary = json.resultsPage.results.event[0].displayName;
          success(summary);
-         console.log(json);
+         // console.log(json);
       }, function (data) {
          summary = "Error getting Concert data.  ";
          console.error(summary  + data);
