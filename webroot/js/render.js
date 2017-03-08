@@ -1,5 +1,5 @@
 //Global vars
-var pages = ["Home", "Walk Score", "Hospitals", "Parks", "Culture", "Jobs", "Schools", "Public Art", "Crime", "Property", "Concerts", "Food"];
+var pages = ["Home", "Walk-Score", "Hospitals", "Parks", "Culture", "Jobs", "Schools", "Art", "Crime", "Property", "Concerts", "Food"];
 var currentPage = pages[0];
 var showMap = true;
 var leftContentDiv = "left-content";
@@ -72,8 +72,7 @@ function render_page(name) {
             function(success) { update_div(leftContentDiv, success);},
             function(error)   { update_div(leftContentDiv, error); });
          return;
-      case "WalkScore":
-      case "Walk Score":
+      case "Walk-Score":
          getWalkScoreData(loc,
             function(success) { update_div(leftContentDiv, success);},
             function(error)   { update_div(leftContentDiv, error); });
@@ -88,7 +87,7 @@ function render_page(name) {
             function(success) { update_div(leftContentDiv, success);},
             function(error)   { update_div(leftContentDiv, error); });
          return;
-      case "PublicArt":
+      case "Art":
          getPublicArtData(loc,
             function(success) { update_div(leftContentDiv, success);},
             function(error)   { update_div(leftContentDiv, error); },
@@ -127,8 +126,8 @@ function render_tiles() {
       tiles += "<strong>" + tile + "</strong>";
    }
    tiles += "</div>";
-   var pickLocHeader = "<p id=\"pickLocHeader\">Pick a location or enter an address</p>";
-   document.getElementById(leftContentDiv).innerHTML = pickLocHeader + tiles;
+   var tilesHeader = "<p id=\"tilesHeader\">Information About Your Area</p>";
+   document.getElementById(leftContentDiv).innerHTML = tilesHeader + tiles;
 }
 
 //Utility functions
@@ -143,18 +142,18 @@ function get_summary(page) {
       case "Hospitals":
          sum += getHospSummary();
          break;
-      case "Walk Score":
-         sum += "<li>Loading WalkScore Data...</li>";
+      case "Walk-Score":
+         sum += "<li>Loading Walk-Score Data...</li>";
 
          getWalkScoreSummary(loc,
             function(success) {update_div("Walk Score_tile", success);},
             function(error)   {update_div("Walk Score_tile",  error); });
          break;
-      case "Public Art":
+      case "Art":
          sum += "<li>Loading Art Data...</li>";
          getPublicArtSummary(loc,
-            function(success) {update_div("Public Art_tile", success);},
-            function(error)   {update_div("Public Art_tile",  error); });
+            function(success) {update_div("Art_tile", success);},
+            function(error)   {update_div("Art_tile",  error); });
          break;
       case "Culture":
          getCultureDataSummary(loc,
@@ -228,7 +227,7 @@ function get_icon(page) {
       case "Food":
          icon += "fa-yelp fa-2x";
          break;
-      case "Walk Score":
+      case "Walk-Score":
          icon += "fa-map-o fa-2x";
          break;
       case "Parks":
@@ -249,7 +248,7 @@ function get_icon(page) {
       case "Concerts":
          icon += "fa-music fa-2x";
          break;
-      case "Public Art":
+      case "Art":
          icon += "fa-picture-o fa-2x";
          break;
       default:

@@ -1,15 +1,14 @@
 @media (max-width: 1029px ) {
-    #show_map, #hide_map{
+    #tilesHeader, #show_map, #hide_map {
         display: none;
     }
 }
 
-@media (min-width: 1030px){
+@media (min-width: 1030px) {
     #mobileSearch{
         display: none;
     }
 }
-
 
 #map {
     padding: 5px 5px;
@@ -103,7 +102,7 @@ input#submit:hover {
     text-shadow: 3px 2px 3px rgba(0,0,0,0.7);
 }
 
-#pickLocHeader {
+#tilesHeader {
     width: 70%;
     margin: 0px;
     margin-left: 5%;
@@ -165,12 +164,13 @@ a { text-decoration: none;  }
     border: 3px solid blue;
     color: blue;
 }
-.PublicArt {
+
+.Art {
     border: 3px solid darkviolet;
     color: darkviolet;
 }
 
-.WalkScore {
+.Walk-Score {
     border: 3px solid darkblue;
     color: darkblue;
 }
@@ -187,7 +187,6 @@ a { text-decoration: none;  }
 
 /* Style the tile links */
 a.tile:visited { color: inherit; }
-
 
 /* nav */
 nav {

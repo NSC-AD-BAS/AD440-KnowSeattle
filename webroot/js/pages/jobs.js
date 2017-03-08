@@ -147,10 +147,10 @@ function getJobsData(loc, successCallback, errorCallback) {
        var industry_popularity_sort = new Map([...industry_popularity.entries()].sort());
        html += "<h1>Industries In This Area:</h1>";
        html += "<div>";
-       html +=     "<table>";
+       html +=     "<table id=\"hor-minimalist-b\">";
        html +=         "<tr>";
-       html +=             "<th>Industry</th>";
-       html +=             "<th>Job Count</th>";
+       html +=             "<th scope=\"col\">Industry</th>";
+       html +=             "<th scope=\"col\">Job Count</th>";
        html +=         "</tr>";
        industry_popularity.forEach(function(count, industry) {
            html +=     "<tr>";
@@ -164,10 +164,10 @@ function getJobsData(loc, successCallback, errorCallback) {
        // Jobs
        html += "<h1>All Jobs & Companies:</h1>";
        html += "<div>";
-       html +=     "<table>";
+       html +=     "<table id=\"hor-minimalist-b\">";
        html +=         "<tr>";
-       html +=             "<th>Job Title</th>";
-       html +=             "<th>Company</th>";
+       html +=             "<th scope=\"col\">Job Title</th>";
+       html +=             "<th scope=\"col\">Company</th>";
        html +=         "</tr>";
        jobs.forEach(function(job) {
            var job_lat = job.latitude[0]._text;
