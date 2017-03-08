@@ -120,7 +120,7 @@ function render_tiles() {
    if (!!data && data != "Home") {
       render_page(data);
    } else {
-      var tiles = "<div style='display: flex; flex-wrap: wrap'>";
+       var tiles = '<div class="tile-container">';
       for (var i = 1; i < pages.length; i++) {     //Start at 1 to skip 'Home' tile
          var tile = "", page = pages[i].replace(" ", "");
          tile += "<a href='#" + page + "'>";
