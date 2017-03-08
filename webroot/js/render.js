@@ -95,7 +95,11 @@ function render_tiles() {
    for (var i = 1; i < pages.length; i++) {     //Start at 1 to skip 'Home' tile
       var tile = "", page = pages[i].replace(" ", "");
       tile += "<a href='#" + page + "'>";
-      tile += "<div class='tile " + page + "'><span class='" + get_icon(pages[i]) + "'></span>";
+	  if(i == 9) {
+		  tile += "<div class='tile " + page + "'><span class='property'><img src=\"./assets/zillowlogo.png\" alt=\"Zillow Logo\" style=\"width:50px;height:50px;\"></span>";
+      } else {
+		  tile += "<div class='tile " + page + "'><span class='" + get_icon(pages[i]) + "'></span>";
+	  }
       tile += get_summary(pages[i]);
       tile += "</div></a>";
       tiles += "<strong>" + tile + "</strong>";

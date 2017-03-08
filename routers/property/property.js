@@ -141,7 +141,12 @@ function getDetailData(regionid, response) {
        handoff = "<div class='cell'>Neighborhood: " + neighborhood
         + "</div><div class='cell'>Zindex: $" + price
         + "</div><div class='cell'>Link to Zillow: <a href='" + link + "'>" + link
-        + "</a></div>";
+        + "</a></div>"
+		+ "<footer class ='propertyfooter'>"
+		+ "<img src=\"./assets/zillowlogo.png\" alt=\"Zillow Logo\" style=\"width:50px;height:50px;\">"
+		+ "<a href=\"zillow.com\">"
+		+ "powered by Zillow</a>"
+		+ "</footer>";
         getChart(regionid, response, handoff);
      });
   }).on('error', function(e) {
