@@ -1,5 +1,5 @@
 @media (max-width: 1029px ) {
-    #pickLocHeader, #show_map, #hide_map{
+    #show_map, #hide_map{
         display: none;
     }
 }
