@@ -146,8 +146,8 @@ function get_summary(page) {
          sum += "<li>Loading Walk-Score Data...</li>";
 
          getWalkScoreSummary(loc,
-            function(success) {update_div("Walk Score_tile", success);},
-            function(error)   {update_div("Walk Score_tile",  error); });
+            function(success) {update_div("Walk-Score_tile", success);},
+            function(error)   {update_div("Walk-Score_tile",  error); });
          break;
       case "Art":
          sum += "<li>Loading Art Data...</li>";
