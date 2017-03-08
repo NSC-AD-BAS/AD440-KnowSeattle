@@ -128,7 +128,7 @@ function getSchoolsSummary(loc, success, error) {
 					 return a < b ? -1 : (a > b ? 1 : 0);
 				 });
 
-				 for (var i = gradeRangeTuple.length -1 ; i >  gradeRangeTuple.length - 5; i--) {
+				 for (var i = gradeRangeTuple.length -1 ; i >  gradeRangeTuple.length - 6; i--) {
 					 str += "<li>";
 					 str += gradeRangeTuple[i][0] + " : " + gradeRangeTuple[i][1];
 					 str += "</li>";
