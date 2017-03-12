@@ -130,7 +130,7 @@ function render_tiles() {
          tiles += "<strong>" + tile + "</strong>";
       }
       tiles += "</div>";
-      var pickLocHeader = "<p id=\"pickLocHeader\">Pick a location or enter an address</p>";
+      var pickLocHeader = "<p id=\"tilesHeader\">Pick a location or enter an address</p>";
       document.getElementById(leftContentDiv).innerHTML = pickLocHeader + tiles;
    }
 }
