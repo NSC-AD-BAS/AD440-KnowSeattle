@@ -1,15 +1,14 @@
 @media (max-width: 1029px ) {
-    #pickLocHeader, #show_map, #hide_map{
+    #tilesHeader, #show_map, #hide_map {
         display: none;
     }
 }
 
-@media (min-width: 1030px){
+@media (min-width: 1030px) {
     #mobileSearch{
         display: none;
     }
 }
-
 
 #map {
     padding: 5px 5px;
@@ -103,7 +102,7 @@ input#submit:hover {
     text-shadow: 3px 2px 3px rgba(0,0,0,0.7);
 }
 
-#pickLocHeader {
+#tilesHeader {
     width: 70%;
     margin: 0px;
     margin-left: 5%;
@@ -165,12 +164,13 @@ a { text-decoration: none;  }
     border: 3px solid blue;
     color: blue;
 }
-.PublicArt {
+
+.Art {
     border: 3px solid darkviolet;
     color: darkviolet;
 }
 
-.WalkScore {
+.Walk-Score {
     border: 3px solid darkblue;
     color: darkblue;
 }
@@ -187,7 +187,6 @@ a { text-decoration: none;  }
 
 /* Style the tile links */
 a.tile:visited { color: inherit; }
-
 
 /* nav */
 nav {
@@ -364,14 +363,15 @@ nav a:hover, #nav_active {
     text-align: center;
 }
 
+/*tooltip for art description*/
 .tooltip {
     position: relative;
     display: inline-block;
     font-weight: bold;
-    /*border-bottom: 1px dotted black;*/
+    width: 250px;
 }
 
-.tooltip .tooltiptext {
+.tooltiptext {
     visibility: hidden;
     width: 300px;
     background-color: #555;
@@ -381,22 +381,14 @@ nav a:hover, #nav_active {
     padding: 5px 0;
     position: absolute;
     z-index: 1;
-    bottom: 125%;
-    left: 30%;
-    margin-left: -60px;
+    margin-top: -10px;
+    margin-right: 60px;
     opacity: 0;
-    transition: opacity 1s;
+    transition: opacity 0.5s;
 }
 
 .tooltip .tooltiptext::after {
-    content: "";
     position: absolute;
-    top: 100%;
-    left: 30%;
-    margin-left: -5px;
-    border-width: 5px;
-    border-style: solid;
-    border-color: #555 transparent transparent transparent;
 }
 
 .tooltip:hover .tooltiptext {

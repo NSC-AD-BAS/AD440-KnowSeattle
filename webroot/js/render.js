@@ -1,5 +1,5 @@
 //Global vars
-var pages = ["Home", "Walk Score", "Hospitals", "Parks", "Culture", "Jobs", "Schools", "Public Art", "Crime", "Property", "Concerts", "Food"];
+var pages = ["Home", "Walk-Score", "Hospitals", "Parks", "Culture", "Jobs", "Schools", "Art", "Crime", "Property", "Concerts", "Food"];
 var currentPage = pages[0];
 var showMap = true;
 var leftContentDiv = "left-content";
@@ -24,21 +24,21 @@ function mediaQueryNav(){
 
 //Render functions
 function render_nav() {
-      var ul = "<ul>";
-      for (var i = 0; i < pages.length; i++) {
-         ul += "<li class='left' onclick='setFocus(this)'>" + linkify(pages[i]) + "</li>";
-      }
+   var ul = "<ul>";
+   for (var i = 0; i < pages.length; i++) {
+      ul += "<li class='left' onclick='setFocus(this)'>" + linkify(pages[i]) + "</li>";
+   }
 
-      if (mediaQuery()) { //hide toggle map button if map is not currently visible at this width
-         ul += "<li class='right'><a href='javascript:void(0)' onclick='toggle_map()'>Toggle Map</a></li>";
-      }
-      ul += "</ul>";
-      if (mediaQueryNav()) {
-         document.getElementById("nav").innerHTML = ul;
-      } else {
+   if (mediaQuery()) { //hide toggle map button if map is not currently visible at this width
+      ul += "<li class='right'><a href='javascript:void(0)' onclick='toggle_map()'>Toggle Map</a></li>";
+   }
+   ul += "</ul>";
+   if (mediaQueryNav()) {
+      document.getElementById("nav").innerHTML = ul;
+   } else {
       //TODO: Render dropdown / mobile formatted navigation when page loads <490px wide
-         document.getElementById("nav").innerHTML = "dropdown Nav here";
-      }
+      document.getElementById("nav").innerHTML = "dropdown Nav here";
+   }
 }
 
 function render_page(name) {
@@ -53,8 +53,8 @@ function render_page(name) {
          break;
       case "Property":
          getPropertyData(loc,
-           function(success) { update_div(leftContentDiv, success);},
-           function(error)   { update_div(leftContentDiv, error); });
+            function(success) { update_div(leftContentDiv, success);},
+            function(error)   { update_div(leftContentDiv, error); });
          str = "Loading.....";
          return;
       case "Parks":
@@ -72,8 +72,7 @@ function render_page(name) {
             function(success) { update_div(leftContentDiv, success);},
             function(error)   { update_div(leftContentDiv, error); });
          return;
-      case "WalkScore":
-      case "Walk Score":
+      case "Walk-Score":
          getWalkScoreData(loc,
             function(success) { update_div(leftContentDiv, success);},
             function(error)   { update_div(leftContentDiv, error); });
@@ -88,7 +87,7 @@ function render_page(name) {
             function(success) { update_div(leftContentDiv, success);},
             function(error)   { update_div(leftContentDiv, error); });
          return;
-      case "PublicArt":
+      case "Art":
          getPublicArtData(loc,
             function(success) { update_div(leftContentDiv, success);},
             function(error)   { update_div(leftContentDiv, error); },
@@ -117,18 +116,23 @@ function update_div(div, html) {
 }
 
 function render_tiles() {
-   var tiles = "<div style='display: flex; flex-wrap: wrap'>";
-   for (var i = 1; i < pages.length; i++) {     //Start at 1 to skip 'Home' tile
-      var tile = "", page = pages[i].replace(" ", "");
-      tile += "<a href='#" + page + "'>";
-      tile += "<div class='tile " + page + "'><span class='" + get_icon(pages[i]) + "'></span>";
-      tile += get_summary(pages[i]);
-      tile += "</div></a>";
-      tiles += "<strong>" + tile + "</strong>";
+   var data = document.location.hash.substr(1);
+   if (!!data && data != "Home") {
+      render_page(data);
+   } else {
+      var tiles = "<div style='display: flex; flex-wrap: wrap'>";
+      for (var i = 1; i < pages.length; i++) {     //Start at 1 to skip 'Home' tile
+         var tile = "", page = pages[i].replace(" ", "");
+         tile += "<a href='#" + page + "'>";
+         tile += "<div class='tile " + page + "'><span class='" + get_icon(pages[i]) + "'></span>";
+         tile += get_summary(pages[i]);
+         tile += "</div></a>";
+         tiles += "<strong>" + tile + "</strong>";
+      }
+      tiles += "</div>";
+      var tilesHeader = "<p id=\"tilesHeader\">Information About Your Area</p>";
+      document.getElementById(leftContentDiv).innerHTML = tilesHeader + tiles;
    }
-   tiles += "</div>";
-   var pickLocHeader = "<p id=\"pickLocHeader\">Pick a location or enter an address</p>";
-   document.getElementById(leftContentDiv).innerHTML = pickLocHeader + tiles;
 }
 
 //Utility functions
@@ -143,18 +147,18 @@ function get_summary(page) {
       case "Hospitals":
          sum += getHospSummary();
          break;
-      case "Walk Score":
-         sum += "<li>Loading WalkScore Data...</li>";
+      case "Walk-Score":
+         sum += "<li>Loading Walk-Score Data...</li>";
 
          getWalkScoreSummary(loc,
-            function(success) {update_div("Walk Score_tile", success);},
-            function(error)   {update_div("Walk Score_tile",  error); });
+            function(success) {update_div("Walk-Score_tile", success);},
+            function(error)   {update_div("Walk-Score_tile",  error); });
          break;
-      case "Public Art":
+      case "Art":
          sum += "<li>Loading Art Data...</li>";
          getPublicArtSummary(loc,
-            function(success) {update_div("Public Art_tile", success);},
-            function(error)   {update_div("Public Art_tile",  error); });
+            function(success) {update_div("Art_tile", success);},
+            function(error)   {update_div("Art_tile",  error); });
          break;
       case "Culture":
          getCultureDataSummary(loc,
@@ -210,7 +214,7 @@ function get_summary(page) {
          break;
       default:
          sum += "<li>Pertinent Point</li>" +
-                "<li>Salient Stat</li>";
+            "<li>Salient Stat</li>";
          break;
    }
    return sum + "</ul>";
@@ -228,7 +232,7 @@ function get_icon(page) {
       case "Food":
          icon += "fa-yelp fa-2x";
          break;
-      case "Walk Score":
+      case "Walk-Score":
          icon += "fa-map-o fa-2x";
          break;
       case "Parks":
@@ -249,7 +253,7 @@ function get_icon(page) {
       case "Concerts":
          icon += "fa-music fa-2x";
          break;
-      case "Public Art":
+      case "Art":
          icon += "fa-picture-o fa-2x";
          break;
       default:
@@ -268,13 +272,13 @@ function toggle_map() {
 }
 
 function setFocus(elem) {
-    var previous = document.getElementById('nav_active');
-    if (previous) {
-        previous.id = "";
-    }
-    elem.id = 'nav_active';
-    // clear markers from map on change
-    deleteMarkers();
+   var previous = document.getElementById('nav_active');
+   if (previous) {
+      previous.id = "";
+   }
+   elem.id = 'nav_active';
+   // clear markers from map on change
+   deleteMarkers();
 }
 
 window.onhashchange = function () {
