@@ -72,40 +72,42 @@ function getGlassdoorCompanies(indeed_tot_jobs, indeed_jobs_arr, callback) {
          url: "http://api.glassdoor.com/api/api.htm?" + glassdoorOptions,
          data: ""
       }, function printResult(result) {
-         var JSONObject = JSON.parse(result);
-         total_company_requests++;
+         if (result) {
+            var JSONObject = JSON.parse(result);
+            total_company_requests++;
 
-         // only use exact matches
-         var employersArray = JSONObject.response.employers;
-         var bestMatchObj = employersArray[0];
-         if (bestMatchObj && bestMatchObj.exactMatch == true) {
-            glassdoor_companies.push(bestMatchObj);
-            add_glassdoor_cache(glassdoor_companies);
+            // only use exact matches
+            var employersArray = JSONObject.response.employers;
+            var bestMatchObj = employersArray[0];
+            if (bestMatchObj && bestMatchObj.exactMatch == true) {
+               glassdoor_companies.push(bestMatchObj);
+               add_glassdoor_cache(glassdoor_companies);
 
-            // Count industries, skipping missing/empty industries
-            if (bestMatchObj.industry && bestMatchObj.industry !== "") {
-                if (industry_popularity.has(bestMatchObj.industry)) {
-                    // Industry key exists
-                    var count = industry_popularity.get(bestMatchObj.industry);
-                    industry_popularity.set(bestMatchObj.industry, count + 1);
-                } else {
-                    // Industry key doesn't exist
-                    industry_popularity.set(bestMatchObj.industry, 1);
-                }
+               // Count industries, skipping missing/empty industries
+               if (bestMatchObj.industry && bestMatchObj.industry !== "") {
+                  if (industry_popularity.has(bestMatchObj.industry)) {
+                     // Industry key exists
+                     var count = industry_popularity.get(bestMatchObj.industry);
+                     industry_popularity.set(bestMatchObj.industry, count + 1);
+                  } else {
+                     // Industry key doesn't exist
+                     industry_popularity.set(bestMatchObj.industry, 1);
+                  }
+               }
+
+               var cur_rating = parseFloat(bestMatchObj.overallRating);
+               // avoid unrated companies
+               if (cur_rating !== 0) {
+                  total_matches_with_rating++;
+                  rating_sum += cur_rating;
+               }
             }
-
-            var cur_rating = parseFloat(bestMatchObj.overallRating);
-            // avoid unrated companies
-            if (cur_rating !== 0) {
-               total_matches_with_rating++;
-               rating_sum += cur_rating;
+            // invoking the callback when done with jobs requests
+            if (total_company_requests == indeed_jobs_arr.length - 1) {
+               jobs_in_area = indeed_tot_jobs;
+               avg_company_rating = Number((rating_sum / total_matches_with_rating).toFixed(2));
+               callback(jobs_in_area, avg_company_rating);
             }
-         }
-         // invoking the callback when done with jobs requests
-         if (total_company_requests == indeed_jobs_arr.length - 1) {
-            jobs_in_area = indeed_tot_jobs;
-            avg_company_rating = Number((rating_sum / total_matches_with_rating).toFixed(2));
-            callback(jobs_in_area, avg_company_rating);
          }
       });
    }
