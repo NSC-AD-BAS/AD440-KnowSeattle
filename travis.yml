@@ -3,8 +3,7 @@
 language: node_js
 
 node_js:
-  - "iojs"
   - "6"
 
 script:
-  - "node tests/console-errors-test.js"
+  - "./node_modules/jshint/bin/jshint tests/dummyTest.js"
