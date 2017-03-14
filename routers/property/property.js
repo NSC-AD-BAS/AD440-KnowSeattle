@@ -107,9 +107,14 @@ function gethousingprices(regionid, response) {
       res.on('end', function() {
         data = data.split(regionid)[1];
         var neighborhood =(data.split("<name>")[1]).split("</name>")[0];
-
-        price = (data.split("<zindex currency=\"USD\">")[1]).split("</zindex>")[0];
-        response.send("<li>Neighborhood: " + neighborhood + "</li><li>Zindex: $" + price + "</li>");
+        // error handling for neighborhoods without zindex data
+       if(data.includes("zindex")) {
+         price = "$" + (data.split("<zindex currency=\"USD\">")[1]).split("</zindex>")[0];
+       }
+       else {
+         price = "No data found";
+       }
+       response.send("<li>Neighborhood: " + neighborhood + "</li><li>Zindex: " + price + "</li>");
       });
    }).on('error', function(e) {
       console.log("Got error: " + e.message);
@@ -136,10 +141,16 @@ function getDetailData(regionid, response) {
      res.on('end', function() {
        data = data.split(regionid)[1];
        var neighborhood =(data.split("<name>")[1]).split("</name>")[0];
-       price = (data.split("<zindex currency=\"USD\">")[1]).split("</zindex>")[0];
+       // error handling for neighborhoods that don't have zindex data
+       if(data.includes("zindex")) {
+         price = "$" + (data.split("<zindex currency=\"USD\">")[1]).split("</zindex>")[0];
+       }
+       else {
+         price = "No data found";
+       }
        var link = data.split("<url>")[1] + regionid;
        handoff = "<div style='display: flex; flex-wrap: wrap'><div class='cell'>Neighborhood: " + neighborhood
-        + "</div><div class='cell'>Zindex: $" + price
+        + "</div><div class='cell'>Zindex: " + price
         + "</div><div class='cell'>Link to Zillow: <a href='" + link + "'>" + link
         + "</a></div>"
 		+ "<footer class ='propertyfooter'>"
