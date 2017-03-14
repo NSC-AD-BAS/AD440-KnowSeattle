@@ -47,7 +47,30 @@
          data: ""
       }, function (data) {
          var json = JSON.parse(data);
-         summary = json.resultsPage.results.event[0].displayName;
+         summary = "";
+         for (i = 0; i < 15; i++)//data.Info.TotalResults for all results, currently returns just 50
+    		{
+    		   //var date = json.resultsPage.results.event[i].start.date;
+    		   var time = json.resultsPage.results.event[i].start.time;
+    		   var venue = json.resultsPage.results.event[i].venue.displayName;
+    		   //var artistName = json.resultsPage.results.event[i].performance[0].artist.displayName;//loop to get all performing artists
+    		   var showTitle = json.resultsPage.results.event[i].displayName;
+    		   
+            //var split = date.split("T",2);
+           
+            
+            summary += "<div class='tile' >";
+            summary += "<b>Show:</b><br /><div style='font-size: 15px'>" +   showTitle + "</div> "; 
+            //summary += "<b>Artists:</b><br /><div style='font-size: 15px'>" +   artistName + "</div> "; 
+            summary += "<b>Venue:</b><br /><div style='font-size: 15px'>" + venue + "</div>"; 
+            //summary += "<b>Day:</b><br /><div style='font-size: 15px'> " + date + "</div>";
+            summary += "<b>Time:</b><br /><div style='font-size: 15px'> " + time + "</div>";
+            summary += "</div>";
+            
+            
+            
+            
+    		}
          success(summary);
          // console.log(json);
       }, function (data) {
