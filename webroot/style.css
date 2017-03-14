@@ -438,3 +438,23 @@ nav a:hover, #nav_active {
 
     font: 28px Arial, sans-serif;
 }
+
+/* styling for property detail page */
+.cell {
+    height: 200px;
+    width: 400px;
+    border-radius: 25px;
+    display: inline-block;
+    margin: 10px;
+    padding: 10px;
+    border-style: solid;
+    border-color: black;
+    border-radius: 5px;
+    box-shadow: 3px 3px grey;
+    text-align: center;
+    font-size: 1.8em;
+  }
+
+  .propertyfooter {
+
+  }
