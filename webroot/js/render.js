@@ -85,7 +85,8 @@ function render_page(name) {
       case "Concerts":
          getConcertData(loc,
             function(success) { update_div(leftContentDiv, success);},
-            function(error)   { update_div(leftContentDiv, error); });
+            function(error)   { update_div(leftContentDiv, error); },
+            true);
          return;
       case "Art":
          getPublicArtData(loc,

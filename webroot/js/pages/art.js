@@ -74,7 +74,7 @@ function parsePublicArtFeatures(data) {
 }
 
 function getArtData(dataMap) {
-    var content = '<table><tr><th>Title</th><th>Artist Name</th><th>Classification</th><th>Address</th>' +
+    var content = "<table class='hor-minimalist-b'><tr><th>Title</th><th>Artist Name</th><th>Classification</th><th>Address</th>" +
             '<th>Location</th></tr>';
     for (var i = 0; i < dataMap.length; i++) {
         if (dataMap[i] !== null) {

@@ -130,6 +130,10 @@ input#submit:hover {
     font-size: 1.4em;
 }
 
+.tile ul {
+    font-size: 0.8em;
+}
+
 a { text-decoration: none;  }
 
 /* Page-sensitive tile styles */
@@ -402,23 +406,23 @@ nav a:hover, #nav_active {
 /* ------------------
  styling for the tables
    ------------------   */
-#hor-minimalist-b, .hor-minimalist-b 
+.hor-minimalist-b 
 {
     border-collapse: collapse;
     text-align: left;
 }
-#hor-minimalist-b th, .hor-minimalist-b th
+.hor-minimalist-b th
 {
     padding: 10px 8px;
     border-bottom: 2px solid #646464;
 }
-#hor-minimalist-b td, .hor-minimalist-b td
+.hor-minimalist-b td
 {
     border-bottom: 1px solid #d4d4d4;
     color: #5a5a5a;
     padding: 6px 8px;
 }
-#hor-minimalist-b tbody tr:hover td, .hor-minimalist-b tbody tr:hover td
+.hor-minimalist-b tbody tr:hover td
 {
     color: #232323;
 }
