@@ -8,7 +8,7 @@ install:
   - npm install
 
 script:
-  - "node server.js &"
+  - "tests/runServer.sh"
 
 after_script:
   - "./node_modules/phantomjs/bin/phantomjs tests/console-errors-test.js"
