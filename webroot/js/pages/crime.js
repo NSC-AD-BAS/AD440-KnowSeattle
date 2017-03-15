@@ -111,6 +111,7 @@ function getCrimeDetailData(loc, success, error) {
       		{'packages':['corechart']}
   		);
       	
+		
       	google.charts.setOnLoadCallback(function(){
 			// Create the data table.
 		    var data = new google.visualization.DataTable();
@@ -121,16 +122,20 @@ function getCrimeDetailData(loc, success, error) {
 		    }
 
 		    // Set chart options
-		    var options = {'title':'Most common crimes in '+displayMonthYear(grouped_data[0].grouped_month),
+		    var options = {'title':'Most common crimes in '+ displayMonthYear(grouped_data[0].grouped_month),
 		                   'width':800,
 		                   'height':400};
 
 		    // Instantiate and draw our chart, passing in some options.
-		    //$(".left-content").append("<div id='chart_div'></div>");
+			if($("#chart_div").length == 0) {
+		    	$(".left-content").append("<div id='chart_div'></div>");
+			}
 		    var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
 		    chart.draw(data, options);
 		});
+	
 		return success(tableString);
+
 	
 	}).fail(function(data){
 		var out = '<div>There was a problem getting the crime data in your area. </div>';

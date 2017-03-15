@@ -109,10 +109,10 @@ function getSchoolsSummary(loc, success, error) {
 
 				 for (var i = 0; i < 20; i++) {
 					 if (!(arr[i].grades in gradeRangeMap)) {
-						 console.log("Initialize range value in map");
+						 // console.log("Initialize range value in map");
 						 gradeRangeMap[arr[i].grades] = 1;
 					 } else if (arr[i].grades in gradeRangeMap) {
-						 console.log("Calling your in map increment");
+						 // console.log("Calling your in map increment");
 						 gradeRangeMap[arr[i].grades]++;
 					 }
 				 }
@@ -128,7 +128,7 @@ function getSchoolsSummary(loc, success, error) {
 					 return a < b ? -1 : (a > b ? 1 : 0);
 				 });
 
-				 for (var i = gradeRangeTuple.length -1 ; i >  gradeRangeTuple.length - 5; i--) {
+				 for (var i = gradeRangeTuple.length -1 ; i >  gradeRangeTuple.length - 6; i--) {
 					 str += "<li>";
 					 str += gradeRangeTuple[i][0] + " : " + gradeRangeTuple[i][1];
 					 str += "</li>";

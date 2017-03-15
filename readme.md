@@ -23,6 +23,8 @@ Built by NSC AD, powered by Node and Apache
 1. Install mongodb:
   * Mac OS X: https://docs.mongodb.com/manual/tutorial/install-mongodb-on-os-x/
   * Windows: https://docs.mongodb.com/manual/tutorial/install-mongodb-on-windows/
+  * Once you are running the server, load the data into the DB with the following command at the root of the repo
+   `mongoimport --db knowSeattle --collection neighborhoods --drop --jsonArray --file ./webroot/data/seattle.json`
 
 2. Install Node.js and NPM:
   * https://nodejs.org/en/

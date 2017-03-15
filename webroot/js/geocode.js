@@ -68,6 +68,9 @@ function initMap() {
    document.getElementById('submit').addEventListener('click', function() {
       geocodeUserInput(geocoder, gmap);
    });
+   document.getElementById('submitMobile').addEventListener('click', function() {
+      geocodeUserInput(geocoder, gmap);
+   });
 }
 
 function getLocationFromPlaceId(placeId, gmap) {
