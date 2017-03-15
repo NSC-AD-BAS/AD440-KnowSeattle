@@ -86,7 +86,7 @@ function wordInString(s, word) {
 }
 
 function displayParks(parks, display) {
-    var out = '<table id="hor-minimalist-b"><thead><th scope="col">Name</th><th scope="col">Address</th><th scope="col">Features</th></thead><tbody>';
+    var out = '<table class="hor-minimalist-b"><thead><th scope="col">Name</th><th scope="col">Address</th><th scope="col">Features</th></thead><tbody>';
     for (var i = 0; i < parks.length; i++) {
         out += '<tr><td>' + parks[i].name + '</td><td>' + parks[i].address + '</td><td>'
             + parks[i].features + '</td></tr>';
