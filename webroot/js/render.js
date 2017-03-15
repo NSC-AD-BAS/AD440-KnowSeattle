@@ -120,7 +120,7 @@ function render_tiles() {
    if (!!data && data != "Home") {
       render_page(data);
    } else {
-      var tiles = "<div style='display: flex; flex-wrap: wrap'>";
+       var tiles = '<div class="tile-container">';
       for (var i = 1; i < pages.length; i++) {     //Start at 1 to skip 'Home' tile
          var tile = "", page = pages[i].replace(" ", "");
          tile += "<a href='#" + page + "'>";
@@ -149,7 +149,6 @@ function get_summary(page) {
          break;
       case "Walk-Score":
          sum += "<li>Loading Walk-Score Data...</li>";
-
          getWalkScoreSummary(loc,
             function(success) {update_div("Walk-Score_tile", success);},
             function(error)   {update_div("Walk-Score_tile",  error); });
@@ -181,7 +180,8 @@ function get_summary(page) {
          sum += "<li>Loading Concert Data...</li>";
          getConcertData(loc,
             function(success) {update_div("Concerts_tile", success);},
-            function(error)   {update_div("Concerts_tile", error);  });
+            function(error)   {update_div("Concerts_tile", error);  },
+            false);
          break;
       case "Jobs":
          sum += '<div class=\"loader\"></div>';

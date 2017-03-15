@@ -1,0 +1,9 @@
+# Config File for Travis CI tests
+
+language: node_js
+
+node_js:
+  - "6"
+
+script:
+  - "./node_modules/jshint/bin/jshint tests/dummyTest.js"

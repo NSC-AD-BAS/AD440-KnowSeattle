@@ -1,12 +1,20 @@
-@media (max-width: 1029px ) {
+ @media (max-width: 1029px ) {
     #tilesHeader, #show_map, #hide_map {
         display: none;
+    }
+    .tile-container {
+        width: 20%;
+        margin: 0 auto;
     }
 }
 
 @media (min-width: 1030px) {
     #mobileSearch{
         display: none;
+    }
+    .tile-container {
+        display: flex;
+        flex-wrap: wrap;
     }
 }
 
@@ -109,11 +117,6 @@ input#submit:hover {
     text-align: center;
     font-size: 16pt;
     font-style: italic;
-}
-
-.tile-container {
-    display: flex;
-    flex-wrap: wrap;
 }
 
 .tile {
@@ -399,23 +402,23 @@ nav a:hover, #nav_active {
 /* ------------------
  styling for the tables
    ------------------   */
-#hor-minimalist-b
+#hor-minimalist-b, .hor-minimalist-b 
 {
     border-collapse: collapse;
     text-align: left;
 }
-#hor-minimalist-b th
+#hor-minimalist-b th, .hor-minimalist-b th
 {
     padding: 10px 8px;
     border-bottom: 2px solid #646464;
 }
-#hor-minimalist-b td
+#hor-minimalist-b td, .hor-minimalist-b td
 {
     border-bottom: 1px solid #d4d4d4;
     color: #5a5a5a;
     padding: 6px 8px;
 }
-#hor-minimalist-b tbody tr:hover td
+#hor-minimalist-b tbody tr:hover td, .hor-minimalist-b tbody tr:hover td
 {
     color: #232323;
 }
@@ -435,3 +438,23 @@ nav a:hover, #nav_active {
 
     font: 28px Arial, sans-serif;
 }
+
+/* styling for property detail page */
+.cell {
+    height: 200px;
+    width: 400px;
+    border-radius: 25px;
+    display: inline-block;
+    margin: 10px;
+    padding: 10px;
+    border-style: solid;
+    border-color: black;
+    border-radius: 5px;
+    box-shadow: 3px 3px grey;
+    text-align: center;
+    font-size: 1.8em;
+  }
+
+  .propertyfooter {
+
+  }
