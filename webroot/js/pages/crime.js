@@ -26,7 +26,7 @@ function getCrimeDetailData(loc, success, error) {
 	}).done(function (data) {
 		//Build 6 month recap table headers
 		var tableCols = ["Month/Year", "Incident Count", "Most common", "2nd Most Common", "3rd Most Common"];
-		var tableString = '<table class=tg>';
+		var tableString = '<table class="hor-minimalist-b">';
 		for (var i = 0; i < tableCols.length; i++){
 			tableString += '<th>' + tableCols[i] + '</th>';
 		}
