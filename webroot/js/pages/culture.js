@@ -85,7 +85,7 @@ function countCultureFeatures(data) {
 }
 
 function displayCultureData(typeMap) {
-    var content = "<table><tr><th>Name</th><th>Address</th><th>City Feature</th></tr>";
+    var content = "<table class='hor-minimalist-b'><tr><th>Name</th><th>Address</th><th>City Feature</th></tr>";
     for (var i = 0; i < typeMap.length; i++) {
         if (typeMap[i] !== null) {
             var name = typeMap[i].common_name == null ? "" : typeMap[i].common_name;
