@@ -301,13 +301,13 @@ nav a:hover, #nav_active {
 }
 
 @keyframes expand_right {
-    from { width: 0;  }
-    to   { width: 30%;}
+    from { width: 0;   opacity: 0;}
+    to   { width: 30%; opacity: 1;}
 }
 
 @keyframes contract_right {
-    from { width: 30%;}
-    to   { width: 0;  }
+    from { width: 30%; opacity: 1;}
+    to   { width: 0  ; opacity: 0;}
 }
 
 #hide_map {
@@ -341,6 +341,7 @@ nav a:hover, #nav_active {
     width: 0;
     float: right;
     color: black;
+    opacity: 0;
     animation: contract_right 500ms 0s;
 }
 
