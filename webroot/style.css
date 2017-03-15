@@ -130,6 +130,10 @@ input#submit:hover {
     font-size: 1.4em;
 }
 
+.tile ul {
+    font-size: 0.8em;
+}
+
 a { text-decoration: none;  }
 
 /* Page-sensitive tile styles */
