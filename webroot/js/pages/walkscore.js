@@ -20,7 +20,6 @@ function getWalkScoreSummary(loc, success, error) {
 function getWalkScoreData(loc, success, error) {
    var key = "10284fa9f60a76d6175a7fb5d834ad20";      //TODO: This should be a node or mongo get query #Security
    var url = "http://api.walkscore.com/score?format=json&lat=" + loc.lat + "&lon=" + loc.lng + "&transit=1&bike=1&wsapikey=" + key;
-   var url2 = "http://transit.walkscore.com/score?format=json&lat=" + loc.lat + "&lon=" + loc.lng + "&transit=1&bike=1&wsapikey=" + key;
    getCorsData({
       method: 'GET',
       url: url,
