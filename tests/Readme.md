@@ -9,5 +9,8 @@ Docs: https://docs.travis-ci.com/user/for-beginners
    		`./node_modules/phantomjs/bin/phantomjs tests/console-errors-test.js`
 3. Run dummy test:
         `./node_modules/jshint/bin/jshint tests/dummyTest.js`
-
+3. Run Selenium test:
+                `node tests/dummyTest.js`
+http://chromedriver.storage.googleapis.com/index.html?path=2.9/
+visit above link to install chrome driver for Selenium.
 These tests are running on merge with Travis CI.
