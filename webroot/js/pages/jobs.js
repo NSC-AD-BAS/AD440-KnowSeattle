@@ -149,7 +149,7 @@ function getJobsData(loc, successCallback, errorCallback) {
        var industry_popularity_sort = new Map([...industry_popularity.entries()].sort());
        html += "<h1>Industries In This Area:</h1>";
        html += "<div>";
-       html +=     "<table id=\"hor-minimalist-b\">";
+       html +=     "<table class=\"hor-minimalist-b\">";
        html +=         "<tr>";
        html +=             "<th scope=\"col\">Industry</th>";
        html +=             "<th scope=\"col\">Job Count</th>";
@@ -166,7 +166,7 @@ function getJobsData(loc, successCallback, errorCallback) {
        // Jobs
        html += "<h1>All Jobs & Companies:</h1>";
        html += "<div>";
-       html +=     "<table id=\"hor-minimalist-b\">";
+       html +=     "<table class=\"hor-minimalist-b\">";
        html +=         "<tr>";
        html +=             "<th scope=\"col\">Job Title</th>";
        html +=             "<th scope=\"col\">Company</th>";
