@@ -7,8 +7,6 @@ node_js:
 install:
   - npm install
 
-deploy:
-  - node server.js
-
 script:
+  - "node server.js"
   - "./node_modules/phantomjs/bin/phantomjs tests/console-errors-test.js"
