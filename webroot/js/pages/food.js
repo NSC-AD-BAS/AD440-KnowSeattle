@@ -31,8 +31,6 @@ function getStars(rating) {
         return wholeStar + getStars(rating - 1);
 }
 
-
-
 function getFoodDetailData(location, success, error) { 
     $.ajax( {
          url: "food/detail",
@@ -46,7 +44,7 @@ function getFoodDetailData(location, success, error) {
                  return acc + item;
              }, tableHeader);
              
-             success("<table>" + tableRows + "</table>");
+             success("<table class='hor-minimalist-b'><tbody>" + tableRows + "</tbody></table>");
          },
          error: function(error){
             error("Unable to load yelp data.");
