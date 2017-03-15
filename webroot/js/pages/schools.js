@@ -43,7 +43,7 @@ function getSchoolsData(loc, success, error) {
 
          //if display is set to true, generate result string for detail page
          // if (display) {
-            var str = "<table><tr><th>School Name</th><th>Address</th><th>Grades</th><th>Distance</th></tr>";
+            var str = "<table class='hor-minimalist-b'><tr><th>School Name</th><th>Address</th><th>Grades</th><th>Distance</th></tr>";
             //display arbitrary number of results: 20
             for (var i = 0; i < 20; i++) {
                str += "<tr>";
