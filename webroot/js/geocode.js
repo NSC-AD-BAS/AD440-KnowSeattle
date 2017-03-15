@@ -2,7 +2,6 @@ var resultString = "";
 var miles = true;
 var infoWindow, geocoder;
 var detailZoom = 13;
-var zipSearch = 0;
 var gmap;
 var geocode_markers = [];
 
@@ -17,59 +16,60 @@ var loc = {
 
 function initMap() {
    //Initialize and center map
-
-   gmap = new google.maps.Map(document.getElementById('map'), {
-      zoom: 10,
-      center: loc,
-      scroll: false
-   });
-
-   //Stand up the google services
-   geocoder    = new google.maps.Geocoder();
-   infoWindow  = new google.maps.InfoWindow({map: gmap});
-
-   //Try to get the browser location
-   if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(function(position) {
-         loc = {
-            lat: position.coords.latitude,
-            lng: position.coords.longitude,
-            rad: 1500
-         };
-         reverseGeocodeAddress(geocoder, gmap, loc);
+   $("#right-content").bind("animationend webkitAnimationEnd oAnimationEnd MSAnimationEnd",
+      function(){
+         gmap = new google.maps.Map(document.getElementById('map'), {
+         zoom: 10,
+         center: loc,
+         scroll: false
       });
-   } else {
-      console.error("Browser doesn't support Geolocation");
-   }
+      //Stand up the google services
+      geocoder    = new google.maps.Geocoder();
+      infoWindow  = new google.maps.InfoWindow({map: gmap});
 
-   //Handle click events and maybe reverseGeocode the address
-   google.maps.event.addListener(gmap, 'click', function( event ){
-      loc.lat = event.latLng.lat();
-      loc.lng = event.latLng.lng();
-      loc.err = null;
-      loc.pid = null;
-      loc.zip = null;
-
-      if (event.placeId) {
-         loc.pid = event.placeId;
-         getLocationFromPlaceId(loc.pid, gmap);
+      //Try to get the browser location
+      if (navigator.geolocation) {
+         navigator.geolocation.getCurrentPosition(function(position) {
+            loc = {
+               lat: position.coords.latitude,
+               lng: position.coords.longitude,
+               rad: 1500
+            };
+            reverseGeocodeAddress(geocoder, gmap, loc);
+         });
       } else {
-         reverseGeocodeAddress(geocoder, gmap, loc);
+         console.error("Browser doesn't support Geolocation");
       }
-      // Enable scrolling zoom when map is in focus
-      this.setOptions({scrollwheel:true});
-   });
 
-   //Disable map scrollwheel when not selected
-   google.maps.event.addListener(gmap, 'mouseout', function(event){
-      this.setOptions({scrollwheel:false});
-   });
-   //Address search bar, geocode button
-   document.getElementById('submit').addEventListener('click', function() {
-      geocodeUserInput(geocoder, gmap);
-   });
-   document.getElementById('submitMobile').addEventListener('click', function() {
-      geocodeUserInput(geocoder, gmap);
+      //Handle click events and maybe reverseGeocode the address
+      google.maps.event.addListener(gmap, 'click', function( event ){
+         loc.lat = event.latLng.lat();
+         loc.lng = event.latLng.lng();
+         loc.err = null;
+         loc.pid = null;
+         loc.zip = null;
+
+         if (event.placeId) {
+            loc.pid = event.placeId;
+            getLocationFromPlaceId(loc.pid, gmap);
+         } else {
+            reverseGeocodeAddress(geocoder, gmap, loc);
+         }
+         // Enable scrolling zoom when map is in focus
+         this.setOptions({scrollwheel:true});
+      });
+
+      //Disable map scrollwheel when not selected
+      google.maps.event.addListener(gmap, 'mouseout', function(event){
+         this.setOptions({scrollwheel:false});
+      });
+      //Address search bar, geocode button
+      document.getElementById('submit').addEventListener('click', function() {
+         geocodeUserInput(geocoder, gmap);
+      });
+      document.getElementById('submitMobile').addEventListener('click', function() {
+         geocodeUserInput(geocoder, gmap);
+      });
    });
 }
 

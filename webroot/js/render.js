@@ -191,7 +191,7 @@ function get_summary(page) {
             var html = "<li>Fulltime Jobs: " + totalJobs + "</li>" +
                "<li>Avg Company: " + get_stars(avgCompany) +
                "&nbsp;(" + avgCompany + ")</li>";
-            document.getElementById("Jobs_tile").innerHTML = html;
+            update_div("Jobs_tile", html);
             $("#Jobs_tile").fadeIn("slow", function(){});
          });
          break;
