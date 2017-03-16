@@ -47,7 +47,7 @@ function getSchoolsData(loc, success, error) {
             //display arbitrary number of results: 20
             for (var i = 0; i < 20; i++) {
                str += "<tr>";
-               str += "<td><a href='" + arr[i].url + "'>" + arr[i].name + "</a></td>";
+               str += "<td class='hor-td-link'><a href='" + arr[i].url + "'>" + arr[i].name + "</a></td>";
                str += "<td>" + arr[i].address + "</td>";
                str += "<td>" + arr[i].grades + "</td>";
                str += "<td>" + arr[i].dist + "</td>";

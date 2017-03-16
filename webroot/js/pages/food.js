@@ -31,7 +31,7 @@ function getStars(rating) {
         return wholeStar + getStars(rating - 1);
 }
 
-function getFoodDetailData(location, success, error) { 
+function getFoodDetailData(location, success, error) {
     $.ajax( {
          url: "food/detail",
          type:'GET',
@@ -43,7 +43,7 @@ function getFoodDetailData(location, success, error) {
              var tableRows = items.reduce(function (acc, item) {
                  return acc + item;
              }, tableHeader);
-             
+
              success("<table class='hor-minimalist-b'><tbody>" + tableRows + "</tbody></table>");
          },
          error: function(error){
@@ -59,12 +59,11 @@ function CreateTableHeader(columnNames) {
 }
 
 function buildTableRow(business) {
-    return "<tr><td><a href=\""
+    return "<tr><td class='hor-td-link'><a href=\""
                     + business.url
                     + "\">"
-                    + business.name 
+                    + business.name
                     + "</a></td><td><img src=\""
                     + business.rating_img_url_large
                     + "\"></td></tr>";
 }
-

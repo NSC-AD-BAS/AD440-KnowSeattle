@@ -376,7 +376,6 @@ nav a:hover, #nav_active {
     position: relative;
     display: inline-block;
     font-weight: bold;
-    width: 250px;
 }
 
 .tooltiptext {
@@ -407,10 +406,11 @@ nav a:hover, #nav_active {
 /* ------------------
  styling for the tables
    ------------------   */
-.hor-minimalist-b 
+.hor-minimalist-b
 {
     border-collapse: collapse;
     text-align: left;
+    width: 90%;
 }
 .hor-minimalist-b th
 {
@@ -426,6 +426,21 @@ nav a:hover, #nav_active {
 .hor-minimalist-b tbody tr:hover td
 {
     color: #232323;
+}
+.hor-td-link
+{
+    background-color: #d9d9d9;
+    text-shadow: 0px 0px 10px white;
+}
+.hor-td-link a
+{
+    color: black;
+}
+.hor-td-link:hover
+{
+    background-color: #cccccc;
+    transition-duration: 0.4s;
+    -webkit-transition-duration: 0.4s; /* Safari */
 }
 
 
@@ -458,7 +473,7 @@ nav a:hover, #nav_active {
    padding: 0;
    width: 6em;
    height: 6em;
-   background-color: #F2E9E1; 
+   background-color: #F2E9E1;
    border-radius: 50%;
    line-height: 6em;
 }
@@ -486,13 +501,13 @@ nav a:hover, #nav_active {
     color: #53777A;
     z-index: 2;
 }
-.left-half-clipper { 
+.left-half-clipper {
    /* a round circle */
    border-radius: 50%;
    width: 6em;
    height: 6em;
    position: absolute; /* needed for clipping */
-   clip: rect(0, 6em, 6em, 3em); /* clips the whole left half*/ 
+   clip: rect(0, 6em, 6em, 3em); /* clips the whole left half*/
 }
 /* when p>50, don't clip left half*/
 .progress-circle.over50 .left-half-clipper {
@@ -501,7 +516,7 @@ nav a:hover, #nav_active {
 .value-bar {
    /*This is an overlayed square, that is made round with the border radius,
    then it is cut to display only the left half, then rotated clockwise
-   to escape the outer clipping path.*/ 
+   to escape the outer clipping path.*/
    position: absolute; /*needed for clipping*/
    clip: rect(0, 3em, 6em, 0);
    width: 6em;
@@ -510,7 +525,7 @@ nav a:hover, #nav_active {
    border: 0.45em solid #E9967A; /*The border is 0.35 but making it larger removes visual artifacts */
    /*background-color: #4D642D;*/ /* for debug */
    box-sizing: border-box;
-  
+
 }
 /* Progress bar filling the whole right half for values above 50% */
 .progress-circle.over50 .first50-bar {
