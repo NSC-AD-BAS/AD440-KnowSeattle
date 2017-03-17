@@ -1,3 +1,6 @@
+// CORS bypass
+var cors_api_url = 'https://knowseattle.com/cors/';
+
 function getCorsData(jsonOpts, success, fail) {
    var x = new XMLHttpRequest();  var msg = "";
    x.open(jsonOpts.method, cors_api_url + jsonOpts.url);
