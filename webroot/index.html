@@ -8,36 +8,63 @@
     <link rel="stylesheet" type="text/css" href="./style.css">
     <link rel="shortcut icon" href="./assets/favicon.ico" type="image/x-icon">
     <link rel="icon" href="./assets/favicon.ico" type="image/x-icon">
-
+    <!-- HID THESE SCRIPTS TO FIX DROPDOWN NAV ISSUE, REPLACED WITH NETDNA CDN
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.js"></script>   -->
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
     <!-- scripts -->
-    <script src="https://use.fontawesome.com/6efa9e08e6.js"></script>
-    <script src="./js/utils/cors_helper.js"></script>
+  <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+  <script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+  <script src="https://use.fontawesome.com/6efa9e08e6.js"></script>
+  <script src="./js/utils/cors_helper.js"></script>
 	<script src="./js/utils/data_convert.js"></script>
 	<script src="./js/utils/jobs_cache.js"></script>
-    <script src="./js/geocode.js"></script>
-    <script src="./js/render.js"></script>
-    <script src="./js/pages/hospitals.js"></script>
-    <script src="./js/pages/culture.js"></script>
-    <script src="./js/pages/parks.js"></script>
-    <script src="./js/pages/walkscore.js"></script>
-    <script src="./js/pages/property.js"></script>
-    <script src="./js/pages/schools.js"></script>
-    <script src="./js/pages/jobs.js"></script>
-    <script src="./js/pages/concerts.js"></script>
-    <script src="./js/pages/art.js"></script>
+  <script src="./js/geocode.js"></script>
+  <script src="./js/render.js"></script>
+  <script src="./js/pages/hospitals.js"></script>
+  <script src="./js/pages/culture.js"></script>
+  <script src="./js/pages/parks.js"></script>
+  <script src="./js/pages/walkscore.js"></script>
+  <script src="./js/pages/property.js"></script>
+  <script src="./js/pages/schools.js"></script>
+  <script src="./js/pages/jobs.js"></script>
+  <script src="./js/pages/concerts.js"></script>
+  <script src="./js/pages/art.js"></script>
 	<script src="./js/pages/crime.js"></script>
 	<script src="./js/pages/food.js"></script>
 	<script src="./js/utils/data_convert.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
     <!-- /scripts -->
+    <!-- Latest compiled and minified CSS -->
+
 </head>
 
 <body>
-    <nav id="nav" class="navbar navbar-inverse navbar-fixed-top">
+    <!-- <nav id="nav" class="navbar navbar-inverse navbar-fixed-top">
         <script>render_nav()</script>
-    </nav>
-    <div id="header"><!-- MAIN BANNER DIV -->
+    </nav> -->
+    <!-- Navigation -->
+    <!-- NavBar -->
+<nav class="navbar navbar-inverse navbar-fixed-top" id="my-navbar">
+    <div class="container">
+	 <div class="navbar-header">
+	  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#nav-collapse">
+	   <span class="icon-bar"></span>
+	   <span class="icon-bar"></span>
+	   <span class="icon-bar"></span>
+	  </button>
+
+	  <a href="#" class="navbar-brand">Home</a>
+	 </div>
+	 <div class="collapse navbar-collapse" id="nav-collapse">
+	   <ul id="dropdown" class="nav navbar-nav">
+	    <script>render_nav()</script>
+	   </ul>
+	 </div>
+	</div>
+</nav>
+<div id="header"><!-- MAIN BANNER DIV -->
         <h1>Know Seattle</h1>
         <div><!-- ICON AND SEARCHBAR DIV -->
             <div><!-- ICON -->
@@ -45,8 +72,8 @@
             <div><!-- SEARCHBAR -->
             </div><!-- /SEARCHBAR -->
         </div><!-- /ICON AND SEARCHBAR DIV -->
-    </div><!-- /MAIN BANNER DIV -->
-    <main>
+</div><!-- /MAIN BANNER DIV -->
+<main>
         <div><!-- MAIN CONTENT DIV -->
             <div id="right-content"><!-- RIGHT SIDEBAR DIV -->
                 <div id="show_map">
@@ -67,9 +94,11 @@
                 <script>render_tiles()</script>
             </div>
         </div><!-- /MAIN CONTENT DIV -->
-    </main>
+</main>
     <script async defer
             src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDStPouQGHiSJv3cbnFH8fctXX1OuBvKXw&callback=initMap&libraries=places">
     </script>
+
+
 </body>
 </html>

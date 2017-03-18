@@ -195,66 +195,6 @@ a { text-decoration: none;  }
 /* Style the tile links */
 a.tile:visited { color: inherit; }
 
-/* nav */
-nav {
-    box-sizing: border-box;
-    height: 60px;
-    width: 100%;
-    position: fixed;
-    top: 0px;
-    padding: 3px;
-    z-index: 9999;
-    background-color: #24292e;
-    color: #c8c9cb;
-    font-weight: bold;
-    text-align: left;
-}
-
-nav ul {
-    box-sizing: border-box;
-    list-style-type: none;  /* No list style in nav list */
-    text-align: center;     /* Center each element */
-    display: inline-block;  /* Display in-line */
-    border: none;           /* Clear borders */
-    width: 100%;            /* Extend nav bar 100% across page */
-    padding-right: 40px;
-}
-
-nav a {
-    padding: 5px;
-}
-
-nav a, #nav_active {
-    border-radius: 5px;
-    text-decoration: none;
-    font-weight: bold;
-}
-
-#nav_active {
-    color: black;
-}
-
-nav a:link { color: #c8c9cb; }
-nav a:visited { color: white; }
-
-.left { float: left; }
-.right { float: right; }
-
-/* Animations */
-.tile:hover {
-    background-color: gainsboro;
-    box-shadow: 0px 0px 15px black;
-    transition-duration: 0.4s;
-    -webkit-transition-duration: 0.4s; /* Safari */
-}
-
-nav a:hover, #nav_active {
-    background-color: gainsboro;
-    color: black;
-    box-shadow: 0px 0px 15px black;
-    transition-duration: 0.4s;
-    -webkit-transition-duration: 0.4s; /* Safari */
-}
 
 .loader {
     border: 16px solid #f3f3f3; /* Light grey */
