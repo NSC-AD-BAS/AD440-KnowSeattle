@@ -42,6 +42,7 @@
          data: ""
       }, function (data) {
          var json = JSON.parse(data);
+         console.log(json);
          summary = "";
          if (display) {
              summary = "<div style='display: flex; flex-wrap: wrap'>";
@@ -63,7 +64,7 @@
          	summary += "</div>";
             	success(summary);
          } else {
-            success("<li>" + json.resultsPage.results.event.length + " concerts in your area" + "</li>");
+            success("<li>" + json.resultsPage.results.event[0].performance[0].artist.displayName + " at " + json.resultsPage.results.event[0].venue.displayName + "</li>");
          }
       }, function (data) {
          summary = "Error getting Concert data.  ";
