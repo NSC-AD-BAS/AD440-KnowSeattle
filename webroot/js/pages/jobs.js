@@ -12,6 +12,7 @@ var indeed_query = "";
 var job_radius_miles = 1;
 var job_type = "fulltime";
 var limit = 1000;
+var cur_zip;
 
 // Glassdoor vars and JSON to avoid redundant API requests
 var total_company_requests = 0;
@@ -45,6 +46,7 @@ function getJobsSummary(loc, callback) {
    if (!loc.zip) {
       return getJobsDefault();
    }
+   cur_zip = loc.zip;
    var indeed_options = getIndeedOptions(loc.zip);
    doCORSRequest({
       method: 'GET',
@@ -133,7 +135,7 @@ function clear_jobs_vars() {
 function getJobsData(loc, successCallback, errorCallback) {
 
     // fancy loader animation ;p
-    $("#left-content").html('<div class=\"detail_loader\"></div>');
+    $("#left-content").html('<div class="detail_loader"></div>');
 
     getJobsSummary(loc, function(totalJobs, avgCompany) {
        $("#left-content").hide();
@@ -149,10 +151,10 @@ function getJobsData(loc, successCallback, errorCallback) {
        var industry_popularity_sort = new Map([...industry_popularity.entries()].sort());
        html += "<h1>Industries In This Area:</h1>";
        html += "<div>";
-       html +=     "<table class=\"hor-minimalist-b\">";
+       html +=     "<table class='hor-minimalist-b'>";
        html +=         "<tr>";
-       html +=             "<th scope=\"col\">Industry</th>";
-       html +=             "<th scope=\"col\">Job Count</th>";
+       html +=             "<th>Industry</th>";
+       html +=             "<th>Job Count</th>";
        html +=         "</tr>";
        industry_popularity.forEach(function(count, industry) {
            html +=     "<tr>";
@@ -161,21 +163,56 @@ function getJobsData(loc, successCallback, errorCallback) {
            html +=     "</tr>";
        });
        html +=     "</table>";
-       html += "</div>";
+       html += "</div><div id='chart_div'></div>";
+       console.log(industry_popularity.entries());
+       // google pie chart visualization
+       google.charts.load('current',
+           {'packages':['corechart']}
+       );
+       google.charts.setOnLoadCallback(function(){
+           // Create the data table.
+           var data = new google.visualization.DataTable();
+           data.addColumn('string', 'Industry');
+           data.addColumn('number', 'Job-Count');
+           data.addRows([
+               ['Mushrooms', 3],
+               ['Onions', 1],
+               ['Olives', 1],
+               ['Zucchini', 1],
+               ['Pepperoni', 2]
+           ]);
+           //data.addRows(industry_popularity);
+           /*
+           industry_popularity.forEach(function(count, industry) {
+               data.addRow(industry, count);
+           });*/
 
-       // Jobs
+           // Set chart options
+           var options = {'title':'Jobs In Each Industry: ' + cur_zip,
+                          'width':800,
+                          'height':400};
+
+           // Instantiate and draw our chart, passing in some options.
+           if($("#chart_div").length == 0) {
+               $(".left-content").append("<div id='chart_div'></div>");
+           }
+           var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
+           chart.draw(data, options);
+       });
+
+       // Jobs & Companies list
        html += "<h1>All Jobs & Companies:</h1>";
        html += "<div>";
-       html +=     "<table class=\"hor-minimalist-b\">";
+       html +=     "<table class='hor-minimalist-b'>";
        html +=         "<tr>";
-       html +=             "<th scope=\"col\">Job Title</th>";
-       html +=             "<th scope=\"col\">Company</th>";
+       html +=             "<th>Job Title</th>";
+       html +=             "<th>Company</th>";
        html +=         "</tr>";
        jobs.forEach(function(job) {
            var job_lat = job.latitude[0]._text;
            var job_long = job.longitude[0]._text;
            html +=     "<tr>";
-           html +=         "<td>";
+           html +=         "<td class='hor-td-link'>";
            html +=             "<a href=\"" + job.url[0]._text +"\">" + job.jobtitle[0]._text + "</a>";
            html +=         "</td>";
            html +=         "<td>";

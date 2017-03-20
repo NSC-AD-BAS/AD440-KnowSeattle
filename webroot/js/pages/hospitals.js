@@ -231,7 +231,7 @@ function getHospData(loc, display) {
       var str = "<table class='hor-minimalist-b'><tr><th>Hospital Name</th><th>Address</th><th>Distance</th><th>Mortality Rate</th> <th>Cost for Heart Surgery</th></tr>";
       for (var i = 0; i < arr.length; i++) {
          str += "<tr>";
-         str += "<td><a href='" + arr[i].url + "'>" + arr[i].name + "</a></td>";
+         str += "<td class='hor-td-link'><a href='" + arr[i].url + "'>" + arr[i].name + "</a></td>";
          str += "<td>" + arr[i].address + "</td>";
          str += "<td>" + arr[i].dist + "</td>";
 

@@ -6,12 +6,12 @@ function getCrimeDetailData(loc, success, error) {
 	//Figure out the last six months and get in range
 	var date_marker = new Date(new Date().getFullYear(),new Date().getMonth(),01);
 
-	var start_range = '\'' + date_marker.getFullYear().toString() + '-' + 
+	var start_range = '\'' + date_marker.getFullYear().toString() + '-' +
 		('0' + (date_marker.getMonth()+1).toString()).slice(-2) + '-01T00:00:00\'';
-	
+
 	date_marker.setMonth(date_marker.getMonth() -5);
-	
-	var end_range = '\'' + date_marker.getFullYear().toString() + '-' + 
+
+	var end_range = '\'' + date_marker.getFullYear().toString() + '-' +
 		('0' + (date_marker.getMonth()).toString()).slice(-2) + '-01T00:00:00\'';
 
 	//Preform Ajax and Update UI
@@ -20,7 +20,7 @@ function getCrimeDetailData(loc, success, error) {
 		type: "GET",
 		data: {
 				"$limit" : 50000,
-				"$where": 'within_circle(location,' + loc_lat + ',' + loc_long + ', ' + radiusMeters + ')' 
+				"$where": 'within_circle(location,' + loc_lat + ',' + loc_long + ', ' + radiusMeters + ')'
 				+ ' and date_reported between ' + end_range + ' and ' + start_range
 		}
 	}).done(function (data) {
@@ -41,7 +41,7 @@ function getCrimeDetailData(loc, success, error) {
 			monthdate.setSeconds(1);
 
 			var selectedMonthGroup = null;
-			
+
 			var alreadyInList = false;
 			grouped_data.forEach(function(element) {
 				if(element.grouped_month.getTime() == monthdate.getTime()) {
@@ -59,9 +59,9 @@ function getCrimeDetailData(loc, success, error) {
 				nw.types = [];
 				grouped_data.push(nw);
 				selectedMonthGroup = nw;
-			} 
-			
-			//Now we we will always have a selected Month group that is the right 
+			}
+
+			//Now we we will always have a selected Month group that is the right
 			//element to add the type record to with a types attr.
 			var alreadyInListType = false;
 			selectedMonthGroup.types.forEach(function(element) {
@@ -78,7 +78,7 @@ function getCrimeDetailData(loc, success, error) {
 				nw.count = 1;
 				selectedMonthGroup.types.push(nw);
 			}
-		
+
 		});
 
 		$.each(grouped_data, function( index, value ) {
@@ -87,7 +87,7 @@ function getCrimeDetailData(loc, success, error) {
 			};
 
 			sort(simplePropertyRetriever, value.types);
-			
+
 			value.first_common_type = value.types[0].name + ' (' + value.types[0].count + ')';
 			value.second_common_type = value.types[1].name+ ' (' + value.types[1].count + ')';
 			value.third_common_type = value.types[2].name+ ' (' + value.types[2].count + ')';
@@ -103,15 +103,15 @@ function getCrimeDetailData(loc, success, error) {
 					+ crimeHtmlEncode(grouped_data[index].second_common_type) + '</td><td>'
 					+ crimeHtmlEncode(grouped_data[index].third_common_type) + '</td></tr>';
 
-					
+
 		});
 		tableString += "</table><div id='chart_div'></div>";
 		// Load the Visualization API and the corechart package.
-      	google.charts.load('current', 
+      	google.charts.load('current',
       		{'packages':['corechart']}
   		);
-      	
-		
+
+
       	google.charts.setOnLoadCallback(function(){
 			// Create the data table.
 		    var data = new google.visualization.DataTable();
@@ -133,10 +133,10 @@ function getCrimeDetailData(loc, success, error) {
 		    var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
 		    chart.draw(data, options);
 		});
-	
+
 		return success(tableString);
 
-	
+
 	}).fail(function(data){
 		var out = '<div>There was a problem getting the crime data in your area. </div>';
 		error(out);
@@ -147,12 +147,12 @@ function getCrimeSummary(loc, success, error) {
 	var loc_lat = loc.lat;
 	var loc_long = loc.lng;
 	var radiusMeters = loc.rad;
-	
+
 	var date_marker = new Date(new Date().getFullYear(),new Date().getMonth(),01);
-	var start_range = '\'' + date_marker.getFullYear().toString() + '-' + 
+	var start_range = '\'' + date_marker.getFullYear().toString() + '-' +
 		('0' + (date_marker.getMonth() +1).toString()).slice(-2) + '-01T00:00:00\'';
 	date_marker.setMonth(date_marker.getMonth() -2);
-	var end_range = '\'' + date_marker.getFullYear().toString() + '-' + 
+	var end_range = '\'' + date_marker.getFullYear().toString() + '-' +
 		('0' + (date_marker.getMonth() +1).toString()).slice(-2) + '-01T00:00:00\'';
 
 	//Preform Ajax and Update UI
@@ -161,8 +161,8 @@ function getCrimeSummary(loc, success, error) {
 		type: "GET",
 		data: {
 			"$limit" : 50000,
-			"$where": 'within_circle(location,' + loc_lat + ',' + loc_long + ', ' + radiusMeters + ')' 
-			+ ' and date_reported between ' + end_range + ' and ' + start_range	
+			"$where": 'within_circle(location,' + loc_lat + ',' + loc_long + ', ' + radiusMeters + ')'
+			+ ' and date_reported between ' + end_range + ' and ' + start_range
 		}
 	}).done(function (data) {
 		var grouped_data = [];
@@ -188,7 +188,7 @@ function getCrimeSummary(loc, success, error) {
 				nw.grouped_month = monthdate;
 				nw.total_report_count = 1;
 				grouped_data.push(nw);
-			} 
+			}
 		});
 		var month = new Array();
 		month[0] = "Jan";
@@ -203,9 +203,9 @@ function getCrimeSummary(loc, success, error) {
 		month[9] = "Oct";
 		month[10] = "Nov";
 		month[11] = "Dec";
-		var htmlToReturn = "<li>Incidents in " + month[grouped_data[1].grouped_month.getMonth()]  + ": " + 
+		var htmlToReturn = "<li>Incidents in " + month[grouped_data[1].grouped_month.getMonth()]  + ": " +
 			grouped_data[1].total_report_count + "</li>" +
-			"<li>Incidents in " + month[grouped_data[0].grouped_month.getMonth()]  + ": " + 
+			"<li>Incidents in " + month[grouped_data[0].grouped_month.getMonth()]  + ": " +
 			grouped_data[0].total_report_count + "</li>";
 		return success(htmlToReturn);
 	}).fail(function(data){
@@ -240,5 +240,3 @@ var displayMonthYear = function(date){
 	var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", 'December'];
 	return months[date.getMonth()] + " " + date.getFullYear();
 };
-
-

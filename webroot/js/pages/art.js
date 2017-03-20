@@ -1,4 +1,4 @@
-/* 
+/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -86,7 +86,7 @@ function getArtData(dataMap) {
             var location = dataMap[i].location == null ? "n/a" : dataMap[i].location;
             var address = dataMap[i].address == null ? "n/a" : dataMap[i].address;
             var description = dataMap[i].description == "''" ? "no description" : dataMap[i].description;
-            content += '<tr><td><div class="tooltip">' + title + 
+            content += '<tr><td><div class="tooltip">' + title +
                     getDescriptionSpan(description) + '</div></td><td>' +
                     artist_name + '</td><td>' +
                     classification + '</td><td>' +
@@ -101,7 +101,6 @@ function getArtData(dataMap) {
 function getDescriptionSpan(description){
    var content = "<span class='tooltiptext'>";
    content += description;
-   content += "</span>";  
+   content += "</span>";
    return content;
 }
-
