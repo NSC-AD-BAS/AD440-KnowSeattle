@@ -28,7 +28,7 @@ html, body {
     margin: 0;
     padding: 0;
     font-family: 'Maven Pro', Arial, Helvetica, sans-serif !important;
-    background-color: #F0F8FF;
+    background-color: #F0F8FF !important;
     color: black;
 }
 
@@ -213,6 +213,17 @@ a.tile:visited { color: inherit; }
     height: 300px;
     margin-left: 20%;
     animation: spin 1s linear infinite;
+}
+
+.tile:hover {
+   box-shadow: 0px 0px 15px gray;
+   -webkit-transition-duration: 0.4s; /* Safari */
+   transition-duration: 0.4s;
+   cursor: pointer;
+}
+
+.tile-container a:hover {
+   text-decoration: none;
 }
 
 @keyframes spin {
