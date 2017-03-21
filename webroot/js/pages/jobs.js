@@ -162,7 +162,7 @@ function getJobsData(loc, successCallback, errorCallback) {
        html +=     "</table>";
        html += "</div><div id='chart_div'></div>";
        console.log(industry_popularity.entries());
-       // google pie chart visualization
+       /* google pie chart visualization
        google.charts.load('current',
            {'packages':['corechart']}
        );
@@ -182,7 +182,7 @@ function getJobsData(loc, successCallback, errorCallback) {
            /*
            industry_popularity.forEach(function(count, industry) {
                data.addRow(industry, count);
-           });*/
+           });
 
            // Set chart options
            var options = {'title':'Jobs In Each Industry: ' + cur_zip,
@@ -195,7 +195,7 @@ function getJobsData(loc, successCallback, errorCallback) {
            }
            var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
            chart.draw(data, options);
-       });
+       });*/
 
        // Jobs & Companies list
        html += "<h1>All Jobs & Companies:</h1>";

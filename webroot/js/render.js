@@ -14,7 +14,7 @@ function mediaQuery(){
 
 //secondary breakpoint where nav should be hidden/displayed differently to avoid overlap with title
 function mediaQueryNav(){
-   var mq = window.matchMedia("(min-width: 490px)");
+   var mq = window.matchMedia("(max-width: 490px)");
    if(mq.matches){
       return true;
    }else{
@@ -24,16 +24,34 @@ function mediaQueryNav(){
 
 //Render functions
 function render_nav() {
-   var ul = "";
-   for (var i = 1; i < pages.length; i++) {
-      ul += "<li>" + linkify(pages[i]) + "</li>";
-
+   var navbar = "";
+   if (mediaQueryNav()) {
+      navbar += '<div class="navbar-header" style="display:in-line;">' +
+         '<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#nav-collapse">' +
+         '<span class="icon-bar"></span>' +
+         '<span class="icon-bar"></span>' +
+         '<span class="icon-bar"></span></button>' +
+  	     '<a href="#" class="navbar-brand">Home</a></div>"' +
+         '<div class="collapse navbar-collapse" id="nav-collapse">' +
+    	 '<ul id="dropdown" class="nav navbar-nav">';
+      // Avoid the home nav entry for mobile
+      for (var i = 1; i < pages.length; i++) {
+         navbar += "<li>" + linkify(pages[i]) + "</li>";
+      }
+  } else {
+      navbar = '<div class="collapse navbar-collapse" id="nav-collapse">' +
+      '<ul id="dropdown" class="nav navbar-nav">';
+      // Include the home nav entry for desktop
+      for (var i = 0; i < pages.length; i++) {
+         navbar += "<li>" + linkify(pages[i]) + "</li>";
+      }
    }
-   if (mediaQuery()) { //hide toggle map button if map is not currently visible at this width
-      ul += "<li class='right'><a href='javascript:void(0)' onclick='toggle_map()'>Toggle Map</a></li>";
-    }
-
-  document.getElementById("dropdown").innerHTML = ul;
+   // Hide toggle map button if map is not currently visible at this width
+   if (mediaQuery()) {
+      navbar += "<li class='right'><a href='javascript:void(0)' onclick='toggle_map()'>Toggle Map</a></li>";
+   }
+   navbar += '</ul></div>';
+   document.getElementById("my-container").innerHTML = navbar;
 }
 
 function render_page(name) {
@@ -134,7 +152,8 @@ function render_tiles() {
 //Utility functions
 function linkify(page) {
    page = page.replace(" ", "");
-   return "<a href='#" + page + "'>" + page + "</a>";
+   return "<a href='#" + page +
+      "' style='padding:10px;' id='ksnav'>" + page + "</a>";
 }
 
 function get_summary(page) {
