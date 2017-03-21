@@ -33,9 +33,6 @@ var jobs_in_area;
 var avg_company_rating;
 var industry_popularity = new Map();
 
-// CORS bypass
-var cors_api_url = 'https://knowseattle.com/cors/';
-
 function getJobsDefault() {
    return "<li>Full-time Jobs: ???</li><li>Avg Company: ???</li>";
 }
@@ -165,7 +162,7 @@ function getJobsData(loc, successCallback, errorCallback) {
        html +=     "</table>";
        html += "</div><div id='chart_div'></div>";
        console.log(industry_popularity.entries());
-       // google pie chart visualization
+       /* google pie chart visualization
        google.charts.load('current',
            {'packages':['corechart']}
        );
@@ -185,7 +182,7 @@ function getJobsData(loc, successCallback, errorCallback) {
            /*
            industry_popularity.forEach(function(count, industry) {
                data.addRow(industry, count);
-           });*/
+           });
 
            // Set chart options
            var options = {'title':'Jobs In Each Industry: ' + cur_zip,
@@ -198,7 +195,7 @@ function getJobsData(loc, successCallback, errorCallback) {
            }
            var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
            chart.draw(data, options);
-       });
+       });*/
 
        // Jobs & Companies list
        html += "<h1>All Jobs & Companies:</h1>";

@@ -27,13 +27,13 @@ html, body {
     height: 100%;
     margin: 0;
     padding: 0;
-    font-family: 'Maven Pro', Arial, Helvetica, sans-serif;
-    background-color: #F0F8FF;
+    font-family: 'Maven Pro', Arial, Helvetica, sans-serif !important;
+    background-color: #F0F8FF !important;
     color: black;
 }
 
 body {
-    padding-top: 60px;
+    padding-top: 50px;
 }
 
 #floating-panel {
@@ -213,6 +213,17 @@ a.tile:visited { color: inherit; }
     height: 300px;
     margin-left: 20%;
     animation: spin 1s linear infinite;
+}
+
+.tile:hover {
+   box-shadow: 0px 0px 15px gray;
+   -webkit-transition-duration: 0.4s; /* Safari */
+   transition-duration: 0.4s;
+   cursor: pointer;
+}
+
+.tile-container a:hover {
+   text-decoration: none;
 }
 
 @keyframes spin {
@@ -585,3 +596,19 @@ a.tile:visited { color: inherit; }
 
 /* ////////////// percentage circle ends here /////////////// */
 /* ////////////////////////////////////////////////////////// */
+
+/* Bootstrap Mods */
+#ksnav {
+   margin-top: 5px;
+}
+#ksnav:hover {
+   background-color: black;
+   border-radius: 5px;
+   text-decoration: none;
+   -webkit-transition-duration: 0.4s; /* Safari */
+   transition-duration: 0.4s;
+   cursor: pointer;
+}
+#my-navbar {
+   margin-bottom: 0px;
+}

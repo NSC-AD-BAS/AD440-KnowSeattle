@@ -1,6 +1,6 @@
-/* 
+/*
  * Gets a address and prefills a lat long value needed
- * 
+ *
  * @author Samuel No
  */
 
@@ -38,7 +38,9 @@ function getCultureDataSummary(loc, success, error) {
                     "OR city_feature = 'Libraries')"
         }
     }).done(function (data) {
-        success(countCultureFeatures(data));
+        if (data) {
+            success(countCultureFeatures(data));
+        }
     }).fail(function (data) {
         var out = '<div>There was a problem getting the culture data in your area. </div>';
         error(out);
