@@ -1,5 +1,5 @@
 # Config File for Travis CI tests
-language: node_js
+language: java
 
 node_js:
   - "6"
