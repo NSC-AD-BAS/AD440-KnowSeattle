@@ -1,8 +1,6 @@
 #KnowSeattle
 ![alt text](https://github.com/NSC-AD-BAS/AD440-KnowSeattle/blob/master/webroot/assets/seattle.jpg "Know Seattle")
 
-[![Stories in Ready](https://badge.waffle.io/GelLiNN/AD440-KnowSeattle.png?label=ready&title=Ready)](http://waffle.io/GelLiNN/AD440-KnowSeattle)
-
 ##KnowSeattle is a location-based webservice
 Built by NSC AD, powered by Node and Apache
 
@@ -20,23 +18,28 @@ Built by NSC AD, powered by Node and Apache
 * Food
 
 ##Installation & Run
-1. Install mongodb:
-  * Mac OS X: https://docs.mongodb.com/manual/tutorial/install-mongodb-on-os-x/
-  * Windows: https://docs.mongodb.com/manual/tutorial/install-mongodb-on-windows/
-  * Once you are running the server, load the data into the DB with the following command at the root of the repo
-   `mongoimport --db knowSeattle --collection neighborhoods --drop --jsonArray --file ./webroot/data/seattle.json`
+**1. Install mongodb:**
+- Mac OS X: https://docs.mongodb.com/manual/tutorial/install-mongodb-on-os-x/
+- Windows: https://docs.mongodb.com/manual/tutorial/install-mongodb-on-windows/
+- Once you are running the server, load the DB with the following command from **root directory**:
+```
+mongoimport --db knowSeattle --collection neighborhoods --drop --jsonArray --file ./webroot/data/seattle.json
+```
 
-2. Install Node.js and NPM:
-  * https://nodejs.org/en/
+**2. Install Node.js and NPM:**
+- https://nodejs.org/en/
 
-3. Clone this repo and get to the root directory via command line (i.e.):
+**3. Clone this repo and get to the root directory via your command line:**
+```
+cd ad440-knowseattle
+```
 
-   		`cd ad440-knowseattle`
+**4. Install necessary Node dependencies:**
+```
+npm install
+```
 
-4. Install necessary Node dependencies:
-
-   		`npm install`
-
-4. Run the server:
-
-   		`node server.js`
+**4. Run the server:**
+```
+node server.js
+```
